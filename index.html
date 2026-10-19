@@ -1,137 +1,93 @@
 <!DOCTYPE html>
-<html lang="uz" class="dark">
+<html lang="uz">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gateway to the World B1 - Vocabulary Master (Units 1-10)</title>
-  <!-- Tailwind CSS -->
+  <title>Gateway to the World B1 - Vocabulary Master Complete</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-          },
-          animation: {
-            'shake': 'shake 0.4s ease-in-out',
-            'pulse-green': 'pulseGreen 0.5s ease-in-out',
-          },
-          keyframes: {
-            shake: {
-              '0%, 100%': { transform: 'translateX(0)' },
-              '20%, 60%': { transform: 'translateX(-8px)' },
-              '40%, 80%': { transform: 'translateX(8px)' },
-            },
-            pulseGreen: {
-              '0%, 100%': { transform: 'scale(1)' },
-              '50%': { transform: 'scale(1.02)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
     .perspective { perspective: 1000px; }
     .transform-style-3d { transform-style: preserve-3d; }
-    .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .backface-hidden { backface-visibility: hidden; }
     .rotate-y-180 { transform: rotateY(180deg); }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+    
+    /* Dynamic status borders & glows */
+    .status-learned {
+      border: 3px solid #10b981 !important;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4) !important;
     }
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
+    .status-repeat {
+      border: 3px solid #ef4444 !important;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.4) !important;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
 
   <!-- Header -->
-  <header class="border-b border-slate-800/80 bg-slate-900/90 sticky top-0 z-50 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+  <header class="border-b border-slate-800 bg-slate-950/80 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white p-2.5 sm:p-3 rounded-2xl shadow-lg shadow-indigo-500/20">
-          <i class="fa-solid fa-book-open text-xl sm:text-2xl"></i>
+        <div class="bg-indigo-600 text-white p-3 rounded-xl shadow-lg shadow-indigo-500/30">
+          <i class="fa-solid fa-book-open text-2xl"></i>
         </div>
         <div>
-          <h1 class="text-lg sm:text-xl font-extrabold bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
-            Gateway B1 Vocab Master
-          </h1>
-          <p class="text-xs text-slate-400 font-medium">1–10 Unitlar (450+ Lug'at, IPA & Misollar)</p>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Gateway B1 Vocab Master</h1>
+          <p class="text-xs text-slate-400">Units 1–10 Complete (650+ Words & Interactive Status)</p>
         </div>
       </div>
 
-      <!-- Navigation Modes -->
-      <nav class="flex bg-slate-800/80 p-1 rounded-2xl border border-slate-700/60 text-xs sm:text-sm font-semibold shadow-inner w-full sm:w-auto justify-center">
-        <button onclick="switchMode('cards')" id="btn-cards" class="flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl bg-indigo-600 text-white shadow-md transition-all duration-200 flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-clone text-sm"></i> <span>Cards</span>
+      <!-- Mode Selector -->
+      <nav class="flex bg-slate-800/80 p-1 rounded-xl border border-slate-700/50 text-sm font-medium">
+        <button onclick="switchMode('cards')" id="btn-cards" class="px-4 py-2 rounded-lg bg-indigo-600 text-white transition-all duration-200">
+          <i class="fa-solid fa-clone mr-1.5"></i> Cards
         </button>
-        <button onclick="switchMode('quiz')" id="btn-quiz" class="flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-circle-question text-sm"></i> <span>Quiz</span>
+        <button onclick="switchMode('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200">
+          <i class="fa-solid fa-circle-question mr-1.5"></i> Quiz
         </button>
-        <button onclick="switchMode('match')" id="btn-match" class="flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-puzzle-piece text-sm"></i> <span>Match</span>
+        <button onclick="switchMode('match')" id="btn-match" class="px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200">
+          <i class="fa-solid fa-puzzle-piece mr-1.5"></i> Match
         </button>
-        <button onclick="switchMode('dict')" id="btn-dict" class="flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-book text-sm"></i> <span>Lug'at</span>
+        <button onclick="switchMode('dict')" id="btn-dict" class="px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200">
+          <i class="fa-solid fa-list mr-1.5"></i> Dictionary
         </button>
       </nav>
     </div>
   </header>
 
   <!-- Controls Bar -->
-  <div class="bg-slate-900/50 border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-      <div class="flex items-center gap-3 w-full sm:w-auto">
-        <label for="unit-select" class="text-xs sm:text-sm font-semibold text-slate-300 whitespace-nowrap flex items-center gap-1.5">
-          <i class="fa-solid fa-layer-group text-indigo-400"></i> Unit:
-        </label>
-        <select id="unit-select" onchange="changeUnit(this.value)" class="w-full sm:w-80 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition">
-          <option value="1">Unit 1: Ages, Family & Personality</option>
-          <option value="2">Unit 2: Travel, Transport & Accommodation</option>
-          <option value="3">Unit 3: Cities, Houses & Living Space</option>
-          <option value="4">Unit 4: Food, Cooking & Nutrition</option>
-          <option value="5">Unit 5: School, Education & Exams</option>
-          <option value="6">Unit 6: Technology & Digital World</option>
-          <option value="7">Unit 7: Sports, Fitness & Hobbies</option>
-          <option value="8">Unit 8: Arts, Entertainment & Media</option>
-          <option value="9">Unit 9: Nature, Environment & Planet</option>
-          <option value="10">Unit 10: Shopping, Money & Economy</option>
-          <option value="all">Barcha Unitlar (All 1-10 Combined)</option>
-        </select>
+  <div class="max-w-7xl mx-auto w-full px-4 py-4 flex flex-wrap justify-between items-center gap-4 border-b border-slate-800/60">
+    <div class="flex items-center gap-3">
+      <label class="text-sm font-semibold text-slate-300">Unit Tanlang:</label>
+      <select id="unit-select" onchange="changeUnit(this.value)" class="bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
+        <option value="1">Unit 1: Happy families</option>
+        <option value="2">Unit 2: Law and order</option>
+        <option value="3">Unit 3: Plurilingual</option>
+        <option value="4">Unit 4: Take care! (Injuries & Health)</option>
+        <option value="5">Unit 5: Screen time</option>
+        <option value="6">Unit 6: Changing climates</option>
+        <option value="7">Unit 7: Get to the top!</option>
+        <option value="8">Unit 8: Friendly advice</option>
+        <option value="9">Unit 9: Facts about fiction</option>
+        <option value="10">Unit 10: Computer update</option>
+        <option value="all">Barcha Unitlar (All 1-10)</option>
+      </select>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="flex items-center gap-6 text-sm">
+      <div class="flex gap-3 text-xs">
+        <span class="px-3 py-1 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">
+          <i class="fa-solid fa-check mr-1"></i> Yodlandi: <strong id="count-learned">0</strong>
+        </span>
+        <span class="px-3 py-1 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30 font-semibold">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Takrorlash: <strong id="count-repeat">0</strong>
+        </span>
       </div>
 
-      <!-- Progress Bar Indicator -->
-      <div class="flex items-center gap-4 text-xs sm:text-sm w-full sm:w-auto justify-between sm:justify-end">
-        <div class="text-slate-400 font-medium">
-          O'zlashtirildi: <span id="learned-count" class="text-emerald-400 font-bold text-sm sm:text-base">0</span> / <span id="total-count" class="text-slate-200 font-semibold">0</span>
-        </div>
-        <div class="w-28 sm:w-40 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700/60 p-0.5 shadow-inner">
-          <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-0 rounded-full transition-all duration-500"></div>
-        </div>
-        <button onclick="resetUnitProgress()" title="Progressni qayta nolga tushirish" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition">
-          <i class="fa-solid fa-arrows-rotate text-xs"></i>
-        </button>
+      <div class="w-32 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700">
+        <div id="progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
       </div>
     </div>
   </div>
@@ -141,816 +97,845 @@
 
     <!-- 1. FLASHCARDS MODE -->
     <div id="mode-cards" class="w-full max-w-xl flex flex-col items-center">
-      
-      <!-- Card Flip Box -->
-      <div class="perspective w-full h-80 sm:h-96 cursor-pointer select-none group" onclick="flipCard()">
-        <div id="card-inner" class="relative w-full h-full duration-500 transform-style-3d shadow-2xl rounded-3xl border border-slate-700/80 bg-slate-800/90 transition-all duration-300">
+      <div class="perspective w-full h-80 cursor-pointer" onclick="flipCard()">
+        <div id="card-inner" class="relative w-full h-full duration-500 transform-style-3d shadow-2xl rounded-2xl border border-slate-700/80 bg-slate-800/90 flex flex-col justify-between p-6 text-center transition-all">
           
           <!-- Card Front -->
-          <div id="card-front" class="absolute inset-0 backface-hidden flex flex-col justify-between p-6 sm:p-8 bg-slate-900/90 rounded-3xl border-2 border-slate-700/80 transition-colors duration-300">
-            <div class="flex justify-between items-center text-xs text-slate-400 font-medium">
-              <span id="card-unit-tag" class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full font-semibold">Unit 1</span>
-              <span id="card-status-badge" class="hidden px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
-                <!-- Status Badge Injected JS -->
+          <div class="absolute inset-0 backface-hidden flex flex-col justify-between p-6 bg-slate-800 rounded-2xl">
+            <div class="flex justify-between items-center text-xs text-slate-400">
+              <span id="card-unit-tag" class="bg-indigo-500/20 text-indigo-300 px-2.5 py-1 rounded-full font-medium">Unit 1</span>
+              
+              <!-- Status Badge (Yashil/Qizil/Nomalum) -->
+              <span id="card-status-badge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-700 text-slate-300">
+                O'rganilmagan
               </span>
-              <span class="text-slate-400 opacity-80 flex items-center gap-1">
-                <i class="fa-solid fa-rotate"></i> Aylantirish
-              </span>
+
+              <span>Aylantirish 🔄</span>
             </div>
             
-            <div class="my-auto text-center px-2">
-              <h2 id="card-word" class="text-3xl sm:text-4xl font-extrabold text-white mb-2 tracking-tight">Word</h2>
-              <p id="card-phonetic" class="text-indigo-400 text-base sm:text-lg font-mono mb-4 font-semibold">/phonetic/</p>
-              
-              <div class="inline-flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/80 rounded-xl px-3.5 py-1.5 text-xs text-slate-300 shadow-sm max-w-full">
-                <i class="fa-solid fa-key text-amber-400 text-xs shrink-0"></i> 
-                <span id="card-keywords" class="truncate">Key words</span>
+            <div class="my-auto">
+              <h2 id="card-word" class="text-3xl font-extrabold text-white mb-2">Word</h2>
+              <p id="card-phonetic" class="text-indigo-400 text-sm font-mono mb-3">/phonetic/</p>
+              <div class="inline-block bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-1.5 text-xs text-slate-300">
+                <i class="fa-solid fa-key text-amber-400 mr-1"></i> <span id="card-keywords">Key words</span>
               </div>
             </div>
 
-            <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800/80">
-              <button onclick="speakCurrentWord(event)" class="text-indigo-400 hover:text-indigo-300 p-2.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 transition flex items-center gap-2 font-medium">
-                <i class="fa-solid fa-volume-high text-base"></i> <span>Taffuz</span>
+            <div class="flex justify-between items-center text-xs text-slate-400">
+              <button onclick="speakCurrentWord(event)" class="text-indigo-400 hover:text-indigo-300 p-2 rounded-full bg-slate-700/50 transition">
+                <i class="fa-solid fa-volume-high text-lg"></i>
               </button>
-              <span id="card-index" class="font-semibold text-slate-400 bg-slate-800 px-3 py-1 rounded-lg">1 / 45</span>
+              <span id="card-index">1 / 70</span>
             </div>
           </div>
 
           <!-- Card Back -->
-          <div id="card-back" class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col justify-between p-6 sm:p-8 bg-slate-900/95 rounded-3xl border-2 border-slate-700/80 transition-colors duration-300">
-            <div class="flex justify-between items-center text-xs">
-              <span class="text-indigo-400 font-bold uppercase tracking-wider bg-indigo-500/10 px-2.5 py-1 rounded-md border border-indigo-500/20">O'zbekcha Ma'nosi</span>
-              <span class="text-slate-400 flex items-center gap-1"><i class="fa-solid fa-rotate"></i> Orqaga</span>
-            </div>
+          <div class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col justify-between p-6 bg-indigo-950/90 rounded-2xl border border-indigo-500/40">
+            <div class="text-xs text-indigo-300 font-semibold uppercase tracking-wider">O'zbekcha Ma'nosi</div>
             
-            <div class="my-auto text-center px-2">
-              <h3 id="card-translation" class="text-2xl sm:text-3xl font-bold text-emerald-400 mb-4">Таржима</h3>
-              <div class="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/60 text-left">
-                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Misol:</div>
-                <p id="card-example" class="text-slate-200 text-xs sm:text-sm italic font-medium leading-relaxed">"Example sentence goes here."</p>
-              </div>
+            <div class="my-auto">
+              <h3 id="card-translation" class="text-2xl font-bold text-white mb-4">Таржима</h3>
+              <p id="card-example" class="text-slate-300 text-sm italic bg-slate-900/60 p-3 rounded-xl border border-indigo-500/20">"Example sentence goes here."</p>
             </div>
 
-            <div class="text-center text-xs text-slate-400 pt-2 border-t border-slate-800/80 font-medium">
-              Klaviatura: <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300">→</kbd> O'tkazish | <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300">Space</kbd> Burish
-            </div>
+            <div class="text-xs text-slate-400">Pastdagi tugmalar orqali holatni belgilang 👇</div>
           </div>
 
         </div>
       </div>
 
-      <!-- Card Action Controls -->
-      <div class="flex items-center justify-between w-full mt-6 gap-2 sm:gap-4">
-        <button onclick="prevCard()" class="px-3 sm:px-4 py-3 bg-slate-800 hover:bg-slate-700 active:scale-95 rounded-2xl text-slate-200 border border-slate-700/80 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md">
-          <i class="fa-solid fa-chevron-left"></i> <span class="hidden sm:inline">Oldingi</span>
+      <!-- Action Buttons (Red / Green Functional Controls) -->
+      <div class="flex items-center justify-between w-full mt-6 gap-3">
+        <button onclick="prevCard()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-200 border border-slate-700 text-sm font-semibold transition">
+          <i class="fa-solid fa-chevron-left mr-1"></i> Oldingi
         </button>
         
         <div class="flex gap-2">
-          <!-- Repeat / Not Learned Button -->
-          <button id="btn-repeat" onclick="markLearned(false)" class="px-3 sm:px-4 py-3 bg-rose-500/10 hover:bg-rose-500/20 active:bg-rose-500/30 active:scale-95 text-rose-300 border border-rose-500/30 rounded-2xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md">
-            <i class="fa-solid fa-rotate-right text-rose-400"></i> <span>Takrorlash</span>
+          <!-- QIZIL: Takrorlash -->
+          <button onclick="setStatus('repeat')" id="btn-mark-repeat" class="px-4 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-rose-600/30 transition-all transform active:scale-95">
+            <i class="fa-solid fa-rotate-right mr-1.5"></i> Takrorlash
           </button>
-          <!-- Learned Button -->
-          <button id="btn-learned" onclick="markLearned(true)" class="px-3 sm:px-4 py-3 bg-emerald-500/10 hover:bg-emerald-500/20 active:bg-emerald-500/30 active:scale-95 text-emerald-300 border border-emerald-500/30 rounded-2xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md">
-            <i class="fa-solid fa-check text-emerald-400"></i> <span>Yodladim</span>
+          
+          <!-- YASHIL: Yodladim -->
+          <button onclick="setStatus('learned')" id="btn-mark-learned" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-emerald-600/30 transition-all transform active:scale-95">
+            <i class="fa-solid fa-check mr-1.5"></i> Yodladim
           </button>
         </div>
 
-        <button onclick="nextCard()" class="px-3 sm:px-4 py-3 bg-slate-800 hover:bg-slate-700 active:scale-95 rounded-2xl text-slate-200 border border-slate-700/80 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md">
-          <span class="hidden sm:inline">Keyingi</span> <i class="fa-solid fa-chevron-right"></i>
+        <button onclick="nextCard()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-200 border border-slate-700 text-sm font-semibold transition">
+          Keyingi <i class="fa-solid fa-chevron-right ml-1"></i>
         </button>
       </div>
-
     </div>
 
     <!-- 2. QUIZ MODE -->
     <div id="mode-quiz" class="w-full max-w-2xl hidden">
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-        
-        <!-- Top Status -->
-        <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-          <div class="flex items-center gap-2">
-            <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs px-3 py-1 rounded-full font-bold">Quiz Test</span>
-            <span id="quiz-question-num" class="text-xs text-slate-400 font-semibold">Savol: 1</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span id="quiz-score" class="text-sm font-bold text-amber-400 flex items-center gap-1.5 bg-amber-500/10 px-3 py-1 rounded-xl border border-amber-500/20">
-              <i class="fa-solid fa-trophy"></i> Ball: 0
-            </span>
-          </div>
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-xl">
+        <div class="flex justify-between items-center mb-6">
+          <span class="text-xs bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full font-semibold">Quiz Test</span>
+          <span id="quiz-score" class="text-sm font-bold text-amber-400">Score: 0</span>
         </div>
 
-        <!-- Question Title -->
-        <div class="text-center my-6">
-          <p class="text-xs sm:text-sm text-slate-400 font-medium mb-2">Quyidagi so'zning тўғри ўзбекча таржимасини топинг:</p>
-          <div class="flex items-center justify-center gap-3">
-            <h2 id="quiz-word" class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Word</h2>
-            <button onclick="speakWord(document.getElementById('quiz-word').innerText)" class="text-indigo-400 hover:text-indigo-300 p-2 rounded-xl bg-slate-800 border border-slate-700">
-              <i class="fa-solid fa-volume-high"></i>
-            </button>
-          </div>
-          <p id="quiz-phonetic" class="text-indigo-400 text-sm font-mono mt-1">/phonetic/</p>
+        <div class="text-center mb-8">
+          <p class="text-xs text-slate-400 mb-1">To'g'ri o'zbekcha tarjimasini tanlang:</p>
+          <h2 id="quiz-word" class="text-3xl font-extrabold text-white">Word</h2>
         </div>
 
-        <!-- Options Grid -->
-        <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          <!-- Options injected via JS -->
-        </div>
+        <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6"></div>
 
-        <!-- Next Question Button -->
-        <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl text-sm transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
-          <span>Keyingi Savol</span> <i class="fa-solid fa-arrow-right"></i>
+        <button onclick="generateQuizQuestion()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-sm transition">
+          Keyingi Savol <i class="fa-solid fa-arrow-right ml-2"></i>
         </button>
-
       </div>
     </div>
 
     <!-- 3. MATCHING GAME MODE -->
-    <div id="mode-match" class="w-full max-w-4xl hidden">
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
-        
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 border-b border-slate-800 pb-4">
-          <div>
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-              <i class="fa-solid fa-puzzle-piece text-indigo-400"></i> Juftlikni Topish O'yini
-            </h2>
-            <p class="text-xs text-slate-400">Inglizcha so'z va uning tarjimasini tanlab juftlang!</p>
-          </div>
-          <div class="flex items-center gap-3 text-xs sm:text-sm font-bold">
-            <span class="bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 text-slate-300">
-              Vaqt: <span id="match-timer" class="text-cyan-400">0s</span>
-            </span>
-            <span class="bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 text-slate-300">
-              Juftlar: <span id="match-pairs" class="text-emerald-400">0/6</span>
-            </span>
-            <button onclick="startMatchGame()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition">
-              <i class="fa-solid fa-rotate-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <div id="match-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 min-h-[280px]">
-          <!-- Match Cards injected dynamically -->
-        </div>
-
+    <div id="mode-match" class="w-full max-w-3xl hidden">
+      <div class="text-center mb-4">
+        <p class="text-slate-400 text-sm">Inglizcha va o'zbekcha so'zlarni juftlab toping:</p>
       </div>
+      <div id="match-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 w-full"></div>
     </div>
 
     <!-- 4. DICTIONARY MODE -->
-    <div id="mode-dict" class="w-full max-w-5xl hidden">
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
-        
-        <!-- Search and Filter Bar -->
-        <div class="flex flex-col sm:flex-row gap-4 mb-6">
-          <div class="relative flex-1">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            <input type="text" id="dict-search" oninput="renderDictionary()" placeholder="So'z, tarjima yoki kalit so'z bo'yicha qidirish..." class="w-full pl-11 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-2xl text-slate-100 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
-          </div>
-          <div class="text-xs text-slate-400 flex items-center justify-end px-2 font-medium">
-            Jami: <span id="dict-count" class="text-indigo-400 font-bold ml-1">0</span> ta so'z
-          </div>
-        </div>
-
-        <!-- Dictionary Table / List -->
-        <div id="dict-list" class="space-y-3 max-h-[550px] overflow-y-auto pr-1">
-          <!-- Dictionary Items Injected via JS -->
-        </div>
-
+    <div id="mode-dict" class="w-full max-w-4xl hidden">
+      <div class="relative mb-6">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+        <input type="text" id="dict-search" oninput="renderDictionary()" placeholder="So'z, kalit so'z yoki tarjima bo'yicha qidirish..." class="w-full pl-11 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500">
       </div>
+
+      <div id="dict-list" class="space-y-3 max-h-[600px] overflow-y-auto pr-2"></div>
     </div>
 
   </main>
 
   <script>
-    // Comprehensive Gateway to the World B1 Database (Units 1 to 10)
+    // COMPLETE VOCABULARY DATABASE (UNITS 1 - 10) - OVER 650 WORDS
     const vocabData = {
       1: [
-        { id: "1_1", w: "Adolescence", p: "/ˌæd.əˈles.əns/", k: "Life stage, Teen, Youth", t: "Ўсмирлик даври", e: "Adolescence is a time of major emotional changes." },
-        { id: "1_2", w: "Adult", p: "/ˈæd.ʌlt/", k: "Grown-up, Age 18+, Mature", t: "Катта ёшли инсон", e: "You become an adult legally at eighteen." },
-        { id: "1_3", w: "Baby", p: "/ˈbeɪ.bi/", k: "Infant, Newborn, Child", t: "Чақалоқ", e: "The baby fell asleep peacefully in her crib." },
-        { id: "1_4", w: "Birth", p: "/bɜːθ/", k: "Beginning, Life, Birthday", t: "Туғилиш", e: "They celebrated the birth of their baby boy." },
-        { id: "1_5", w: "Childhood", p: "/ˈtʃaɪld.hʊd/", k: "Youth memories, Early life", t: "Болалик даври", e: "He had a happy childhood in a small village." },
-        { id: "1_6", w: "Death", p: "/deθ/", k: "End of life, Passing away", t: "Ўлим", e: "The grandfather's death saddened the family." },
-        { id: "1_7", w: "Generation", p: "/ˌdʒen.əˈreɪ.ʃən/", k: "Age group, Era, Family tree", t: "Авлод", e: "Three generations gathered for the reunion." },
-        { id: "1_8", w: "Middle-aged", p: "/ˌmɪd.əlˈeɪdʒd/", k: "Age 40-60, Adult", t: "Ўрта ёшли", e: "My father is a middle-aged university teacher." },
-        { id: "1_9", w: "Senior citizen", p: "/ˌsiː.ni.ə ˈsɪt.ɪ.zən/", k: "Elderly, Pensioner, Age 65+", t: "Кекса ёшли фуқаро", e: "Senior citizens get discounts on public buses." },
-        { id: "1_10", w: "Teenager", p: "/ˈtiːnˌeɪ.dʒər/", k: "Adolescent, Age 13-19", t: "Ўсмир", e: "Teenagers enjoy spending time with friends." },
-        { id: "1_11", w: "Toddler", p: "/ˈtɒd.lər/", k: "Young child, Ages 1-3", t: "Юришни энди бошлаган бола", e: "The toddler took his very first steps today." },
-        { id: "1_12", w: "Ancestor", p: "/ˈæn.ses.tər/", k: "History, Roots, Past family", t: "Аждод, бобокалон", e: "Our ancestors built this historical city." },
-        { id: "1_13", w: "Descendant", p: "/dɪˈsen.dənt/", k: "Offspring, Family tree", t: "Авлод, чевара", e: "He claims to be a descendant of royals." },
-        { id: "1_14", w: "Immediate family", p: "/ɪˈmiː.di.ət/", k: "Parents, Siblings", t: "Яқин оила аъзолари", e: "Only immediate family joined the wedding." },
-        { id: "1_15", w: "Extended family", p: "/ɪkˈsten.dɪd/", k: "Uncles, Aunts, Relatives", t: "Кенгайтирилган оила", e: "We visit our extended family during holidays." },
-        { id: "1_16", w: "Bossy", p: "/ˈbɒs.i/", k: "Personality, Orders people", t: "Ҳукмронликни ёқтирадиган", e: "Nobody likes bossy group leaders." },
-        { id: "1_17", w: "Cheerful", p: "/ˈtʃɪə.fəl/", k: "Personality, Happy, Positive", t: "Шўх, қувноқ", e: "She always gives a cheerful smile to everyone." },
-        { id: "1_18", w: "Easy-going", p: "/ˌiː.ziˈɡəʊ.ɪŋ/", k: "Personality, Calm, Relaxed", t: "Оғир-вазмин, муросачи", e: "Our English teacher is very easy-going." },
-        { id: "1_19", w: "Hard-working", p: "/ˌhɑːdˈwɜː.kɪŋ/", k: "Personality, Diligent", t: "Меҳнатсевар, тиришқоқ", e: "Hard-working pupils get excellent grades." },
-        { id: "1_20", w: "Impatient", p: "/ɪmˈpeɪ.ʃənt/", k: "Personality, Restless", t: "Сабрсиз", e: "Don't get impatient; the bus is coming soon." },
-        { id: "1_21", w: "Reliable", p: "/rɪˈlaɪ.ə.bəl/", k: "Personality, Trustworthy", t: "Ишончли", e: "Dilshod is a reliable and honest friend." },
-        { id: "1_22", w: "Selfish", p: "/ˈsel.fɪʃ/", k: "Personality, Self-centered", t: "Худбин", e: "It is selfish to take everything for yourself." },
-        { id: "1_23", w: "Talkative", p: "/ˈtɔː.kə.tɪv/", k: "Personality, Chatty, Vocal", t: "Сергап, гапдон", e: "She is a talkative student in class." },
-        { id: "1_24", w: "Tidy", p: "/ˈtaɪ.di/", k: "Neat, Organized, Clean", t: "Саранжом-саришта", e: "Keep your study desk clean and tidy." },
-        { id: "1_25", w: "Generous", p: "/ˈdʒen.ər.əs/", k: "Gives freely, Kind", t: "Сахий, қўли очиқ", e: "He is generous and helps poor people." }
+        { w: "Adolescence", p: "/ˌæd.əˈles.əns/", k: "Ages & stages", t: "Ўсмирлик даври", e: "Adolescence brings emotional changes." },
+        { w: "Adult", p: "/ˈæd.ʌlt/", k: "Ages & stages", t: "Катта ёшли инсон", e: "You are an adult at 18." },
+        { w: "Baby", p: "/ˈbeɪ.bi/", k: "Ages & stages", t: "Чақалоқ", e: "The newborn baby sleeps." },
+        { w: "Birth", p: "/bɜːθ/", k: "Ages & stages", t: "Туғилиш", e: "They celebrated the birth." },
+        { w: "Childhood", p: "/ˈtʃaɪld.hʊd/", k: "Ages & stages", t: "Болалик даври", e: "He had a happy childhood." },
+        { w: "Death", p: "/deθ/", k: "Ages & stages", t: "Ўлим", e: "His death saddened everyone." },
+        { w: "Generation", p: "/ˌdʒen.əˈreɪ.ʃən/", k: "Ages & stages", t: "Авлод", e: "Three generations live together." },
+        { w: "Middle-aged", p: "/ˌmɪd.əlˈeɪdʒd/", k: "Ages & stages", t: "Ўрта ёшли", e: "My father is middle-aged." },
+        { w: "Senior citizen", p: "/ˌsiː.ni.ə ˈsɪt.ɪ.zən/", k: "Ages & stages", t: "Кекса ёшли фуқаро", e: "Senior citizens get bus discounts." },
+        { w: "Teenager", p: "/ˈtiːnˌeɪ.dʒər/", k: "Ages & stages", t: "Ўсмир", e: "Teenagers love online chats." },
+        { w: "Toddler", p: "/ˈtɒd.lər/", k: "Ages & stages", t: "Энди юрган бола", e: "The toddler is walking now." },
+        { w: "Ancestor", p: "/ˈæn.ses.tər/", k: "Family tree", t: "Аждод", e: "Our ancestors built this town." },
+        { w: "Descendant", p: "/dɪˈsen.dənt/", k: "Family tree", t: "Авлод, чевара", e: "He is a royal descendant." },
+        { w: "Immediate family", p: "/ɪˈmiː.di.ət/", k: "Family relations", t: "Яқин оила аъзолари", e: "Immediate family attended dinner." },
+        { w: "Extended family", p: "/ɪkˈsten.dɪd/", k: "Family relations", t: "Кенгайтирилган оила", e: "Extended family joined holidays." },
+        { w: "Stepfather", p: "/ˈstepˌfɑː.ðər/", k: "Family words", t: "Ўгай ота", e: "His stepfather is very kind." },
+        { w: "Stepmother", p: "/ˈstepˌmʌð.ər/", k: "Family words", t: "Ўгай она", e: "Her stepmother baked a pie." },
+        { w: "Half-brother", p: "/ˈhɑːfˌbrʌð.ər/", k: "Family words", t: "Бир ота ёки онадан ака-ука", e: "My half-brother lives abroad." },
+        { w: "In-laws", p: "/ˈɪn.lɔːz/", k: "Family words", t: "Қайнота-қайнона томон", e: "Visiting in-laws this weekend." },
+        { w: "Only child", p: "/ˈəʊn.li tʃaɪld/", k: "Family words", t: "Ёлғиз фарзанд", e: "She is an only child." },
+        { w: "Twin", p: "/twɪn/", k: "Family words", t: "Эгизак", e: "They are twin brothers." },
+        { w: "Orphan", p: "/ˈɔː.fən/", k: "Family words", t: "Етим бола", e: "The orphanage supports orphans." },
+        { w: "Nephew", p: "/ˈnev.juː/", k: "Family words", t: "Ўғил жиян", e: "My nephew started school." },
+        { w: "Niece", p: "/niːs/", k: "Family words", t: "Қиз жиян", e: "She bought a doll for niece." },
+        { w: "Sibling", p: "/ˈsɪb.lɪŋ/", k: "Family words", t: "Туғишган ака-ука/опа-сингил", e: "I have two siblings." },
+        { w: "Spouse", p: "/spaʊs/", k: "Family words", t: "Турмуш ўртоқ (эр/хотин)", e: "Bring your spouse along." },
+        { w: "Argument", p: "/ˈɑːɡ.jə.mənt/", k: "Suffix -ment", t: "Тортишув", e: "They had a small argument." },
+        { w: "Development", p: "/dɪˈvel.əp.mənt/", k: "Suffix -ment", t: "Ривожланиш", e: "Child development is fast." },
+        { w: "Equipment", p: "/ɪˈkwɪp.mənt/", k: "Suffix -ment", t: "Жиҳозлар", e: "Gym equipment is modern." },
+        { w: "Improvement", p: "/ɪmˈpruːv.mənt/", k: "Suffix -ment", t: "Яхшиланиш", e: "Grades show improvement." },
+        { w: "Movement", p: "/ˈmuːv.mənt/", k: "Suffix -ment", t: "Ҳаракат", e: "Smooth physical movement." },
+        { w: "Collection", p: "/kəˈlek.ʃən/", k: "Suffix -ion", t: "Тўплам", e: "Stamp collection hobby." },
+        { w: "Connection", p: "/kəˈnek.ʃən/", k: "Suffix -ion", t: "Алоқа", e: "Internet connection failed." },
+        { w: "Discussion", p: "/dɪˈskʌʃ.ən/", k: "Suffix -ion", t: "Муҳокама", e: "Classroom discussion on topics." },
+        { w: "Education", p: "/ˌedʒ.uˈkeɪ.ʃən/", k: "Suffix -ion", t: "Таълим", e: "Quality school education." },
+        { w: "Protection", p: "/prəˈtek.ʃən/", k: "Suffix -ion", t: "Ҳимоя", e: "Sun protection cream." },
+        { w: "Difference", p: "/ˈdɪf.ər.əns/", k: "Suffix -ence", t: "Фарқ", e: "Spot the difference." },
+        { w: "Independence", p: "/ˌɪn.dɪˈpen.dəns/", k: "Suffix -ence", t: "Мустақиллик", e: "Day of independence." },
+        { w: "Patience", p: "/ˈpeɪ.ʃəns/", k: "Suffix -ence", t: "Сабр", e: "Teaching needs patience." },
+        { w: "Confidence", p: "/ˈkɒn.fɪ.dəns/", k: "Suffix -ence", t: "Ишонч", e: "Boost speaking confidence." },
+        { w: "Bossy", p: "/ˈbɒs.i/", k: "Personality", t: "Буйруқ беришни ёқтирадиган", e: "Stop being bossy." },
+        { w: "Cheerful", p: "/ˈtʃɪə.fəl/", k: "Personality", t: "Қувноқ", e: "A cheerful personality." },
+        { w: "Easy-going", p: "/ˌiː.ziˈɡəʊ.ɪŋ/", k: "Personality", t: "Оғир-вазмин, муросачи", e: "My boss is easy-going." },
+        { w: "Hard-working", p: "/ˌhɑːdˈwɜː.kɪŋ/", k: "Personality", t: "Меҳнатсевар", e: "Hard-working students win." },
+        { w: "Impatient", p: "/ɪmˈpeɪ.ʃənt/", k: "Personality", t: "Сабрсиз", e: "Don't be impatient." },
+        { w: "Reliable", p: "/rɪˈlaɪ.ə.bəl/", k: "Personality", t: "Ишончли", e: "A reliable car." },
+        { w: "Selfish", p: "/ˈsel.fɪʃ/", k: "Personality", t: "Худбин", e: "It is selfish to hoard." },
+        { w: "Talkative", p: "/ˈtɔː.kə.tɪv/", k: "Personality", t: "Сергап", e: "She is very talkative." },
+        { w: "Tidy", p: "/ˈtaɪ.di/", k: "Personality", t: "Ораста", e: "Keep your room tidy." },
+        { w: "Curly", p: "/ˈkɜː.li/", k: "Appearance", t: "Бўйра соч", e: "Natural curly hair." },
+        { w: "Straight", p: "/streɪt/", k: "Appearance", t: "Тўғри соч", e: "Straight blonde hair." },
+        { w: "Generous", p: "/ˈdʒen.ər.əs/", k: "Personality", t: "Саховатли", e: "Generous donations." },
+        { w: "Stubborn", p: "/ˈstʌb.ən/", k: "Personality", t: "Қайсар", e: "He is too stubborn." },
+        { w: "Modest", p: "/ˈmɒd.ɪst/", k: "Personality", t: "Камтар", e: "A modest young artist." },
+        { w: "Moody", p: "/ˈmuː.di/", k: "Personality", t: "Кайфияти ўзгарувчан", e: "Moody teenager mood." },
+        { w: "Punctual", p: "/ˈpʌŋk.tʃu.əl/", k: "Personality", t: "Аниқ вақтида келувчи", e: "Always punctual for work." },
+        { w: "Arrogant", p: "/ˈær.ə.ɡənt/", k: "Personality", t: "Манман, кеккайган", e: "Arrogant behavior." },
+        { w: "Ambitious", p: "/æmˈbɪʃ.əs/", k: "Personality", t: "Интилувчан", e: "Ambitious business goals." },
+        { w: "Jealous", p: "/ˈdʒel.əs/", k: "Personality", t: "Рашкчи", e: "Jealous of success." },
+        { w: "Sensible", p: "/ˈsen.sə.bəl/", k: "Personality", t: "Оқилона", e: "Sensible decisions." },
+        { w: "Sensitive", p: "/ˈsen.sɪ.tɪv/", k: "Personality", t: "Таъсирчан", e: "Sensitive skin." },
+        { w: "Loyal", p: "/ˈlɔɪ.əl/", k: "Personality", t: "Садоқатли", e: "Loyal friends." },
+        { w: "Rebellious", p: "/rɪˈbel.i.əs/", k: "Personality", t: "Исёнкор", e: "Rebellious spirit." },
+        { w: "Anxious", p: "/ˈæŋk.ʃəs/", k: "Personality", t: "Хавотирли", e: "Anxious about tests." },
+        { w: "Shy", p: "/ʃaɪ/", k: "Personality", t: "Тортинчоқ", e: "Shy children." },
+        { w: "Clever", p: "/ˈklev.ər/", k: "Personality", t: "Ақлли", e: "Clever answers." },
+        { w: "Lazy", p: "/ˈleɪ.zi/", k: "Personality", t: "Дангаса", e: "Lazy Sunday." },
+        { w: "Outgoing", p: "/ˈaʊtˌɡəʊ.ɪŋ/", k: "Personality", t: "Очиқкўнгил", e: "Outgoing person." },
+        { w: "Patient", p: "/ˈpeɪ.ʃənt/", k: "Personality", t: "Сабрли", e: "Patient teacher." },
+        { w: "Wavy", p: "/ˈweɪ.vi/", k: "Appearance", t: "Тўлқинли соч", e: "Wavy brown hair." }
       ],
+
       2: [
-        { id: "2_1", w: "Accommodation", p: "/əˌkɒm.əˈdeɪ.ʃən/", k: "Hotel, Stay, Lodging", t: "Турар жой, меҳмонхона", e: "We booked hotel accommodation online." },
-        { id: "2_2", w: "Adventure", p: "/ədˈven.tʃər/", k: "Excitement, Journey", t: "Саргузашт", e: "Hiking in mountains was a real adventure." },
-        { id: "2_3", w: "Backpacking", p: "/ˈbækˌpæk.ɪŋ/", k: "Budget travel, Rucksack", t: "Рюкзак билан саёҳат", e: "They went backpacking across Europe." },
-        { id: "2_4", w: "Border", p: "/ˈbɔː.dər/", k: "Country edge, Passport", t: "Чегара", e: "Show your passport at the border check." },
-        { id: "2_5", w: "Destination", p: "/ˌdes.tɪˈneɪ.ʃən/", k: "Arrival place, Target", t: "Борадиган манзил", e: "Khiva is a historic travel destination." },
-        { id: "2_6", w: "Excursion", p: "/ɪkˈskɜː.ʃən/", k: "Trip, Tour, Outing", t: "Экскурсия, сайр", e: "We took a day excursion to the lake." },
-        { id: "2_7", w: "Journey", p: "/ˈdʒɜː.ni/", k: "Long trip, Travel route", t: "Узоқ масофали сафар", e: "The train journey took five hours." },
-        { id: "2_8", w: "Luggage", p: "/ˈlʌɡ.ɪdʒ/", k: "Baggage, Suitcases", t: "Багаж, юклар", e: "Keep an eye on your luggage." },
-        { id: "2_9", w: "Passenger", p: "/ˈpæs.ən.dʒər/", k: "Traveler, Commuter", t: "Йўловчи", e: "Passengers boarded the airplane smoothly." },
-        { id: "2_10", w: "Passport", p: "/ˈpɑːs.pɔːt/", k: "ID document, Travel", t: "Паспорт", e: "You need a passport to fly abroad." },
-        { id: "2_11", w: "Platform", p: "/ˈplæt.fɔːm/", k: "Train station, Tracks", t: "Платформа", e: "The express train arrives at platform 2." },
-        { id: "2_12", w: "Reservation", p: "/ˌrez.əˈveɪ.ʃən/", k: "Advance booking", t: "Бронь қилиш", e: "I have a dinner table reservation." },
-        { id: "2_13", w: "Scenery", p: "/ˈsiː.nər.i/", k: "Landscape, Views", t: "Табиат манзараси", e: "Mountain scenery was truly stunning." },
-        { id: "2_14", w: "Sightseeing", p: "/ˈsaɪtˌsiː.ɪŋ/", k: "Tourism, Landmarks", t: "Диққатга сазовор жойлар", e: "We spent Sunday sightseeing in Rome." },
-        { id: "2_15", w: "Tour guide", p: "/ˈtʊə ɡaɪd/", k: "Leader, Expert", t: "Гид, йўлбошчи", e: "The tour guide explained local myths." },
-        { id: "2_16", w: "Traffic jam", p: "/ˈtræf.ɪk dʒæm/", k: "Cars stopped, Congestion", t: "Транспорт тирбандлиги", e: "We were stuck in a heavy traffic jam." },
-        { id: "2_17", w: "Board", p: "/bɔːd/", k: "Get on plane or ship", t: "Транспортга чиқмоқ", e: "Passengers began to board the plane." },
-        { id: "2_18", w: "Check in", p: "/tʃek ɪn/", k: "Airport or hotel entry", t: "Рўйхатдан ўтмоқ", e: "Check in two hours before flight." },
-        { id: "2_19", w: "Delay", p: "/dɪˈleɪ/", k: "Postponed, Late", t: "Кечиктирмоқ / кечикиш", e: "Snowstorms caused a flight delay." },
-        { id: "2_20", w: "Set off", p: "/set ɒf/", k: "Start journey", t: "Йўлга чиқмоқ", e: "We set off early in the morning." }
+        { w: "Burglary", p: "/ˈbɜː.ɡlər.i/", k: "Crimes", t: "Уйга ўғриликка кириш", e: "House burglary reported." },
+        { w: "Burglar", p: "/ˈbɜː.ɡlər/", k: "Crimes", t: "Уй ўғриси", e: "Burglar caught by police." },
+        { w: "Robbery", p: "/ˈrɒb.ər.i/", k: "Crimes", t: "Босқинчилик", e: "Bank robbery investigation." },
+        { w: "Robber", p: "/ˈrɒb.ər/", k: "Crimes", t: "Қароқчи", e: "Robber escaped." },
+        { w: "Shoplifting", p: "/ˈʃɒp.lɪf.tɪŋ/", k: "Crimes", t: "Дўкондан ўғирлик", e: "Shoplifting in stores." },
+        { w: "Shoplifter", p: "/ˈʃɒp.lɪf.tər/", k: "Crimes", t: "Дўкон ўғриси", e: "Shoplifter detained." },
+        { w: "Theft", p: "/θeft/", k: "Crimes", t: "Ўғрилик", e: "Car theft case." },
+        { w: "Thief", p: "/θiːf/", k: "Crimes", t: "Ўғри", e: "Thief stole money." },
+        { w: "Vandalism", p: "/ˈvæn.dəl.ɪz.əm/", k: "Crimes", t: "Мулкка зарар етказиш", e: "Street vandalism." },
+        { w: "Vandal", p: "/ˈvæn.dəl/", k: "Crimes", t: "Вандал", e: "Vandals broke lights." },
+        { w: "Mugging", p: "/ˈmʌɡ.ɪŋ/", k: "Crimes", t: "Кўча босқинчилиги", e: "Night mugging." },
+        { w: "Mugger", p: "/ˈmʌɡ.ər/", k: "Crimes", t: "Кўча қароқчиси", e: "Mugger grabbed bag." },
+        { w: "Arson", p: "/ˈɑː.sən/", k: "Crimes", t: "Қасддан ўт қўйиш", e: "Building arson." },
+        { w: "Arsonist", p: "/ˈɑː.sən.ɪst/", k: "Crimes", t: "Ўт қўювчи", e: "Arsonist arrested." },
+        { w: "Forgery", p: "/ˈfɔː.dʒər.i/", k: "Crimes", t: "Қалбакилаштириш", e: "Document forgery." },
+        { w: "Accuse", p: "/əˈkjuːz/", k: "Detective work", t: "Айбламоқ", e: "Accused of crime." },
+        { w: "Arrest", p: "/əˈrest/", k: "Detective work", t: "Ҳибсга олмоқ", e: "Police arrest suspect." },
+        { w: "Charge", p: "/tʃɑːdʒ/", k: "Detective work", t: "Айблов қўймоқ", e: "Charged with theft." },
+        { w: "Collect evidence", p: "/kəˈlekt/", k: "Detective work", t: "Делил тўпламоқ", e: "Collect crime evidence." },
+        { w: "Investigate", p: "/ɪnˈves.tɪ.ɡeɪt/", k: "Detective work", t: "Тергов қилмоқ", e: "Investigate case." },
+        { w: "Question", p: "/ˈkwes.tʃən/", k: "Detective work", t: "Сўроқ қилмоқ", e: "Question witnesses." },
+        { w: "Suspect", p: "/ˈsʌs.pekt/", k: "Detective work", t: "Гумондор", e: "Prime suspect." },
+        { w: "Witness", p: "/ˈwɪt.nəs/", k: "Detective work", t: "Гувоҳ", e: "Eyewitness account." },
+        { w: "Court", p: "/kɔːt/", k: "Detective work", t: "Суд", e: "Go to court." },
+        { w: "Judge", p: "/dʒʌdʒ/", k: "Detective work", t: "Судья", e: "Judge verdict." },
+        { w: "Jury", p: "/ˈdʒʊə.ri/", k: "Detective work", t: "Ҳайъат", e: "Jury decision." },
+        { w: "Proof", p: "/pruːf/", k: "Detective work", t: "Исбот", e: "Clear proof." },
+        { w: "Fingerprint", p: "/ˈfɪŋ.ɡə.prɪnt/", k: "Detective work", t: "Бармоқ изи", e: "Find fingerprints." },
+        { w: "Crime scene", p: "/kraɪm siːn/", k: "Detective work", t: "Жиноят содир жой", e: "Secure crime scene." },
+        { w: "Look into", p: "/lʊk ˈɪn.tuː/", k: "Phrasal verbs", t: "Ўрганиб чиқмоқ", e: "Look into details." },
+        { w: "Look for", p: "/lʊk fɔːr/", k: "Phrasal verbs", t: "Қидирмоқ", e: "Look for clues." },
+        { w: "Find out", p: "/faɪnd aʊt/", k: "Phrasal verbs", t: "Аниқламоқ", e: "Find out truth." },
+        { w: "Work out", p: "/wɜːk aʊt/", k: "Phrasal verbs", t: "Ечим топмоқ", e: "Work out puzzle." },
+        { w: "Turn up", p: "/tɜːn ʌp/", k: "Phrasal verbs", t: "Пайдо бўлмоқ", e: "Missing ring turned up." },
+        { w: "Come across", p: "/kʌm əˈkrɒs/", k: "Phrasal verbs", t: "Топиб олмоқ", e: "Come across notes." },
+        { w: "Run away", p: "/rʌn əˈweɪ/", k: "Phrasal verbs", t: "Қочмоқ", e: "Run away fast." },
+        { w: "Get away with", p: "/ɡet əˈweɪ/", k: "Phrasal verbs", t: "Жазосиз қолмоқ", e: "Get away with crime." },
+        { w: "Fine", p: "/faɪn/", k: "Legal penalty", t: "Жарима", e: "Pay speeding fine." },
+        { w: "Prison", p: "/ˈprɪz.ən/", k: "Legal penalty", t: "Қамоқхона", e: "Sent to prison." },
+        { w: "Sentence", p: "/ˈsen.təns/", k: "Legal penalty", t: "Ҳукм", e: "Prison sentence." },
+        { w: "Guilty", p: "/ˈɡɪl.ti/", k: "Legal term", t: "Айбдор", e: "Found guilty." },
+        { w: "Innocent", p: "/ˈɪn.ə.sənt/", k: "Legal term", t: "Айбсиз", e: "Proven innocent." },
+        { w: "Handcuffs", p: "/ˈhænd.kʌfs/", k: "Police tool", t: "Кишан", e: "Put on handcuffs." },
+        { w: "Sirens", p: "/ˈsaɪə.rənz/", k: "Police tool", t: "Сирена", e: "Police sirens." },
+        { w: "Clue", p: "/kluː/", k: "Detective work", t: "Ишора, далил", e: "Valuable clue." },
+        { w: "Customs", p: "/ˈkʌs.təmz/", k: "Border", t: "Божхона", e: "Pass customs." },
+        { w: "Smuggling", p: "/ˈsmʌɡ.əl.ɪŋ/", k: "Crimes", t: "Контрабанда", e: "Drug smuggling." },
+        { w: "Kidnapping", p: "/ˈkɪd.næp.ɪŋ/", k: "Crimes", t: "Одам ўғирлаш", e: "Child kidnapping." },
+        { w: "Blackmail", p: "/ˈblæk.meɪl/", k: "Crimes", t: "Шантаж", e: "Money blackmail." },
+        { w: "Bribery", p: "/ˈbraɪ.bər.i/", k: "Crimes", t: "Порахўрлик", e: "Bribery charges." },
+        { w: "Verdict", p: "/ˈvɜː.dɪkt/", k: "Legal term", t: "Суд ҳукми", e: "Jury verdict." },
+        { w: "Prosecutor", p: "/ˈprɒs.ɪ.kjuː.tər/", k: "Legal job", t: "Прокурор", e: "State prosecutor." },
+        { w: "Lawyer", p: "/ˈlɔː.jər/", k: "Legal job", t: "Адвокат", e: "Defense lawyer." },
+        { w: "Offence", p: "/əˈfens/", k: "Legal term", t: "Қонунбузарлик", e: "Minor offence." },
+        { w: "Penalty", p: "/ˈpen.əl.ti/", k: "Legal term", t: "Жазо", e: "Severe penalty." },
+        { w: "Bail", p: "/beɪl/", k: "Legal term", t: "Гаров пули билан озод қилиш", e: "Released on bail." },
+        { w: "Interrogate", p: "/ɪnˈter.ə.ɡeɪt/", k: "Detective work", t: "Қаттиқ сўроқ қилмоқ", e: "Interrogate suspect." },
+        { w: "Alibi", p: "/ˈæl.ɪ.bi/", k: "Legal term", t: "Алиби (ўша вақтда бошқа жойда бўлганлик)", e: "Solid alibi." },
+        { w: "Motive", p: "/ˈməʊ.tɪv/", k: "Crime term", t: "Жиноят содир этиш сабаби", e: "Hidden crime motive." },
+        { w: "Vandalize", p: "/ˈvæn.də.laɪz/", k: "Crimes", t: "Бузиб вайрон қилмоқ", e: "Vandalize cars." }
       ],
+
       3: [
-        { id: "3_1", w: "Suburbs", p: "/ˈsʌb.ɜːbz/", k: "Outskirts, Quiet zone", t: "Шаҳар атрофи", e: "Families prefer living in peaceful suburbs." },
-        { id: "3_2", w: "Downtown", p: "/ˌdaʊnˈtaʊn/", k: "City center, Shops", t: "Шаҳар маркази", e: "We took a bus to downtown shopping mall." },
-        { id: "3_3", w: "Crowded", p: "/ˈkraʊ.dɪd/", k: "Full of people, Packed", t: "Одам билан гавжум", e: "Subway cars are crowded at 8 AM." },
-        { id: "3_4", w: "Pollution", p: "/pəˈluː.ʃən/", k: "Smog, Waste air", t: "Ифлосланиш", e: "Cars create urban air pollution." },
-        { id: "3_5", w: "Pavement", p: "/ˈpeɪv.mənt/", k: "Sidewalk, Walkway", t: "Пиёдалар йўлаги", e: "Walk safely on the concrete pavement." },
-        { id: "3_6", w: "Basement", p: "/ˈbeɪs.mənt/", k: "Underground floor", t: "Ертўла, подвал", e: "Store old boxes in the basement." },
-        { id: "3_7", w: "Balcony", p: "/ˈbæl.kə.ni/", k: "Terrace, Outside view", t: "Балкон", e: "Enjoy morning coffee on the balcony." },
-        { id: "3_8", w: "Skyscraper", p: "/ˈskaɪˌskreɪ.pər/", k: "High-rise tower", t: "Осмонўпар бино", e: "Tashkent City features many skyscrapers." },
-        { id: "3_9", w: "Neighbourhood", p: "/ˈneɪ.bə.hʊd/", k: "Local area, Mahalla", t: "Маҳалла, қўшничилик", e: "Our neighbourhood is safe and friendly." },
-        { id: "3_10", w: "Public transport", p: "/ˈpʌb.lɪk/", k: "Buses, Subways, Trams", t: "Жамоат транспорти", e: "Use public transport to avoid jams." },
-        { id: "3_11", w: "Cosy", p: "/ˈkəʊ.zi/", k: "Warm, Comfortable", t: "Шинам, иссиқ", e: "The living room feels warm and cosy." },
-        { id: "3_12", w: "Spacious", p: "/ˈspeɪ.ʃəs/", k: "Large room, Roomy", t: "Кенг ва шинам", e: "The master kitchen is very spacious." },
-        { id: "3_13", w: "Rent", p: "/rent/", k: "Monthly home payment", t: "Ижара ҳақи", e: "Pay monthly rent on time to landlord." },
-        { id: "3_14", w: "Landlord", p: "/ˈlænd.lɔːd/", k: "Property owner", t: "Уй эгаси", e: "The landlord repaired broken doors." }
+        { w: "Mother tongue", p: "/ˈmʌð.ə tʌŋ/", k: "Languages", t: "Она тили", e: "Uzbek native mother tongue." },
+        { w: "Bilingual", p: "/baɪˈlɪŋ.ɡwəl/", k: "Languages", t: "Икки тилли", e: "Bilingual speaker." },
+        { w: "Multilingual", p: "/ˌmʌl.tiˈlɪŋ.ɡwəl/", k: "Languages", t: "Кўп тилли", e: "Multilingual expert." },
+        { w: "Fluent", p: "/ˈfluː.ənt/", k: "Languages", t: "Равон", e: "Fluent in English." },
+        { w: "Accent", p: "/ˈæk.sənt/", k: "Languages", t: "Акцент", e: "Foreign accent." },
+        { w: "Pronunciation", p: "/prəˌnʌn.siˈeɪ.ʃən/", k: "Languages", t: "Талаффуз", e: "Clear pronunciation." },
+        { w: "Grammar", p: "/ˈɡræm.ər/", k: "Languages", t: "Грамматика", e: "Grammar rules." },
+        { w: "Vocabulary", p: "/vəˈkæb.jə.lər.i/", k: "Languages", t: "Луғат бойлиги", e: "Expand vocabulary." },
+        { w: "Translation", p: "/trænˈsleɪ.ʃən/", k: "Languages", t: "Таржима", e: "Accurate translation." },
+        { w: "Interpreter", p: "/ɪnˈtɜː.prə.tər/", k: "Languages", t: "Оғзаки таржимон", e: "Conference interpreter." },
+        { w: "Translator", p: "/trænˈsleɪ.tər/", k: "Languages", t: "Ёзма таржимон", e: "Book translator." },
+        { w: "Dialect", p: "/ˈdaɪ.ə.lekt/", k: "Languages", t: "Шева", e: "Regional dialect." },
+        { w: "Official language", p: "/əˈfɪʃ.əl/", k: "Languages", t: "Расмий тил", e: "Official state language." },
+        { w: "Foreign language", p: "/ˈfɒr.ən/", k: "Languages", t: "Чет тили", e: "Study foreign languages." },
+        { w: "Nationality", p: "/ˌnæʃ.ənˈæl.ə.ti/", k: "Nationalities", t: "Миллат", e: "State nationality." },
+        { w: "Citizen", p: "/ˈsɪt.ɪ.zən/", k: "Nationalities", t: "Фуқаро", e: "Local citizen." },
+        { w: "Unbelievable", p: "/ˌʌn.bɪˈliː.və.bəl/", k: "Negative prefix", t: "Ишонгисиз", e: "Unbelievable news." },
+        { w: "Uncomfortable", p: "/ʌnˈkʌm.fə.tə.bəl/", k: "Negative prefix", t: "Ноқулай", e: "Uncomfortable chair." },
+        { w: "Unfair", p: "/ʌnˈfeər/", k: "Negative prefix", t: "Адолатсиз", e: "Unfair treatment." },
+        { w: "Incomplete", p: "/ˌɪn.kəmˈpliːt/", k: "Negative prefix", t: "Чала, тўлиқ эмас", e: "Incomplete homework." },
+        { w: "Inexpensive", p: "/ˌɪn.ɪkˈspen.sɪv/", k: "Negative prefix", t: "Арзон", e: "Inexpensive meal." },
+        { w: "Informal", p: "/ɪnˈfɔː.məl/", k: "Negative prefix", t: "Норасмий", e: "Informal style." },
+        { w: "Impossible", p: "/ɪmˈpɒs.ə.bəl/", k: "Negative prefix", t: "Имконсиз", e: "Impossible task." },
+        { w: "Polite", p: "/pəˈlaɪt/", k: "Prefix base", t: "Хушмуомала", e: "Polite manners." },
+        { w: "Impolite", p: "/ˌɪm.pəˈlaɪt/", k: "Negative prefix", t: "Қўпол", e: "Impolite behavior." },
+        { w: "Impatient", p: "/ɪmˈpeɪ.ʃənt/", k: "Negative prefix", t: "Сабрсиз", e: "Impatient driver." },
+        { w: "Irresponsible", p: "/ˌɪr.ɪˈspɒn.sə.bəl/", k: "Negative prefix", t: "Масъулиятсиз", e: "Irresponsible action." },
+        { w: "Irregular", p: "/ɪˈreɡ.jə.lər/", k: "Negative prefix", t: "Нонўғри (феъл)", e: "Irregular verbs list." },
+        { w: "Illegal", p: "/ɪˈliː.ɡəl/", k: "Negative prefix", t: "Ноқонуний", e: "Illegal parking." },
+        { w: "Illiterate", p: "/ɪˈlɪt.ər.ət/", k: "Negative prefix", t: "Саводсиз", e: "Illiterate adults." },
+        { w: "Communication", p: "/kəˌmjuː.nɪˈkeɪ.ʃən/", k: "Language skill", t: "Мулоқот", e: "Good communication." },
+        { w: "Fluency", p: "/ˈfluː.ən.si/", k: "Language skill", t: "Равонлик", e: "Speaking fluency." },
+        { w: "Native speaker", p: "/ˈneɪ.tɪv/", k: "Language skill", t: "Тил соҳиби", e: "Native speaker chat." },
+        { w: "Subtitles", p: "/ˈsʌbˌtaɪ.təlz/", k: "Language tool", t: "Субтитр", e: "Movie subtitles." },
+        { w: "Phrasal verb", p: "/ˈfreɪ.zəl/", k: "Grammar", t: "Иборали феъл", e: "English phrasal verbs." },
+        { w: "Slang", p: "/slæŋ/", k: "Language", t: "Сленг", e: "Modern slang." },
+        { w: "Idiom", p: "/ˈɪd.i.əm/", k: "Language", t: "Идиома", e: "Useful idioms." },
+        { w: "Bilingualism", p: "/baɪˈlɪŋ.ɡwə.lɪz.əm/", k: "Theory", t: "Икки тиллилик", e: "Bilingualism benefits." },
+        { w: "Misunderstand", p: "/ˌmɪs.ʌn.dəˈstænd/", k: "Prefix mis-", t: "Нонўғри тушунмоқ", e: "Misunderstand instructions." },
+        { w: "Mispronounce", p: "/ˌmɪs.prəˈnaʊns/", k: "Prefix mis-", t: "Нонўғри талаффуз", e: "Mispronounce words." },
+        { w: "Accuracy", p: "/ˈæk.jə.rə.si/", k: "Skill", t: "Аниқлик", e: "Grammar accuracy." },
+        { w: "Context", p: "/ˈkɒn.tekst/", k: "Skill", t: "Контекст", e: "Word context." },
+        { w: "Dictionary", p: "/ˈdɪk.ʃən.ər.i/", k: "Tool", t: "Луғат", e: "Online dictionary." },
+        { w: "Definition", p: "/ˌdef.ɪˈnɪʃ.ən/", k: "Tool", t: "Таъриф", e: "Word definition." },
+        { w: "Phonetics", p: "/fəˈnet.ɪks/", k: "Tool", t: "Фонетика", e: "Phonetic symbols." },
+        { w: "Monolingual", p: "/ˌmɒn.əˈlɪŋ.ɡwəl/", k: "Languages", t: "Бир тилда сўзлашувчи", e: "Monolingual dictionary." },
+        { w: "Expression", p: "/ɪkˈspreʃ.ən/", k: "Language", t: "Ифода, ибора", e: "Common expression." },
+        { w: "Linguist", p: "/ˈlɪŋ.ɡwɪst/", k: "Job", t: "Тилшунос", e: "Famous linguist." },
+        { w: "Acquire", p: "/əˈkwaɪər/", k: "Verb", t: "Ўзлаштирмоқ, эгаллармоқ", e: "Acquire language skills." },
+        { w: "Mastery", p: "/ˈmɑː.stər.i/", k: "Skill", t: "Мукаммал эгаллаш", e: "Language mastery." }
       ],
+
       4: [
-        { id: "4_1", w: "Baked", p: "/beɪkt/", k: "Oven cooked, Bread, Cake", t: "Печда пиширилган", e: "Baked potatoes are tasty and light." },
-        { id: "4_2", w: "Boiled", p: "/bɔɪld/", k: "Cooked in hot water", t: "Қайнатилган", e: "Eat boiled eggs for breakfast." },
-        { id: "4_3", w: "Dairy products", p: "/ˈdeə.ri/", k: "Milk, Cheese, Yogurt", t: "Сут маҳсулотлари", e: "Milk and cheese are dairy products." },
-        { id: "4_4", w: "Fast food", p: "/ˌfɑːst ˈfuːd/", k: "Quick burger, Fries", t: "Тезкор таом", e: "Avoid eating fast food every day." },
-        { id: "4_5", w: "Fresh", p: "/freʃ/", k: "Natural, Crisp, Raw", t: "Янги, табиий", e: "Fresh fruits contain essential vitamins." },
-        { id: "4_6", w: "Grilled", p: "/ɡrɪld/", k: "Cooked on grill, BBQ", t: "Грильда қовурилган", e: "Grilled chicken tastes smoky and good." },
-        { id: "4_7", w: "Ingredients", p: "/ɪnˈɡriː.di.ənts/", k: "Recipe parts", t: "Масаллиқлар", e: "Check cake ingredients before baking." },
-        { id: "4_8", w: "Nutritious", p: "/njuːˈtrɪʃ.əs/", k: "Healthy, Vitamin rich", t: "Тўйимли ва фойдали", e: "Nuts are a highly nutritious snack." },
-        { id: "4_9", w: "Spicy", p: "/ˈspaɪ.si/", k: "Hot, Chili, Spiced", t: "Аччиқ ва зираворли", e: "Curry is famous for its spicy taste." },
-        { id: "4_10", w: "Vegetarian", p: "/ˌvedʒ.ɪˈteə.ri.ən/", k: "No meat diet", t: "Вегетариан", e: "She cooks delicious vegetarian pasta." }
+        { w: "Injury", p: "/ˈɪn.dʒər.i/", k: "Health problems", t: "Жароҳат", e: "He suffered a leg injury during football." },
+        { w: "Injure", p: "/ˈɪn.dʒər/", k: "Health verbs", t: "Жароҳатламоқ", e: "Be careful not to injure your knee." },
+        { w: "Sprain", p: "/spreɪn/", k: "Health problems", t: "Чўзилиб кетиш (пай/бўғим)", e: "She fell and managed to sprain her wrist." },
+        { w: "Swollen", p: "/ˈswɒl.ən/", k: "Health conditions", t: "Шишган, пуфланган", e: "His ankle became red and swollen." },
+        { w: "Ankle", p: "/ˈæŋ.kəl/", k: "Body parts", t: "Тўпиқ", e: "She twisted her ankle." },
+        { w: "Chest", p: "/tʃest/", k: "Body parts", t: "Кўкрак қафаси", e: "Chest pain check." },
+        { w: "Chin", p: "/tʃɪn/", k: "Body parts", t: "Ияк", e: "Rest chin on hand." },
+        { w: "Elbow", p: "/ˈel.bəʊ/", k: "Body parts", t: "Тирсак", e: "Scraped elbow." },
+        { w: "Heart", p: "/hɑːt/", k: "Body parts", t: "Юрак", e: "Heart beat rate." },
+        { w: "Knee", p: "/niː/", k: "Body parts", t: "Тизза", e: "Knee injury." },
+        { w: "Shoulder", p: "/ˈʃəʊl.dər/", k: "Body parts", t: "Елка", e: "Shoulder pain." },
+        { w: "Skin", p: "/skɪn/", k: "Body parts", t: "Тери", e: "Skin allergy." },
+        { w: "Thigh", p: "/θaɪ/", k: "Body parts", t: "Сон", e: "Thigh muscle." },
+        { w: "Throat", p: "/θrəʊt/", k: "Body parts", t: "Томоқ", e: "Sore throat." },
+        { w: "Thumb", p: "/θʌm/", k: "Body parts", t: "Баш бармоқ", e: "Thumb injury." },
+        { w: "Toe", p: "/təʊ/", k: "Body parts", t: "Оёқ бармоғи", e: "Stubbed toe." },
+        { w: "Wrist", p: "/rɪst/", k: "Body parts", t: "Билак", e: "Wrist sprain." },
+        { w: "Brain", p: "/breɪn/", k: "Body parts", t: "Мия", e: "Brain activity." },
+        { w: "Spine", p: "/spaɪn/", k: "Body parts", t: "Умуртқа", e: "Spine posture." },
+        { w: "Lungs", p: "/lʌŋz/", k: "Body parts", t: "Ўпка", e: "Healthy lungs." },
+        { w: "Cough", p: "/kɒf/", k: "Health problems", t: "Йўтал", e: "Bad cough." },
+        { w: "Fever", p: "/ˈfiː.vər/", k: "Health problems", t: "Иситма", e: "High fever." },
+        { w: "Headache", p: "/ˈhed.eɪk/", k: "Health problems", t: "Бош оғриғи", e: "Severe headache." },
+        { w: "Stomach ache", p: "/ˈstʌm.ək eɪk/", k: "Health problems", t: "Қорин оғриғи", e: "Stomach ache medicine." },
+        { w: "Toothache", p: "/ˈtuːθ.eɪk/", k: "Health problems", t: "Тиш оғриғи", e: "Dentist for toothache." },
+        { w: "Flu", p: "/fluː/", k: "Health problems", t: "Грипп", e: "Winter flu season." },
+        { w: "Cold", p: "/kəʊld/", k: "Health problems", t: "Шамоллаш", e: "Catch a cold." },
+        { w: "Dizzy", p: "/ˈdɪz.i/", k: "Health problems", t: "Бош айланиши", e: "Feel dizzy." },
+        { w: "Painkiller", p: "/ˈpeɪnˌkɪl.ər/", k: "Healthcare", t: "Оғриқ қолдирувчи", e: "Take painkillers." },
+        { w: "First aid", p: "/ˌfɜːst ˈeɪd/", k: "Healthcare", t: "Биринчи ёрдам", e: "First aid kit." },
+        { w: "Healthcare", p: "/ˈhelθ.keər/", k: "Healthcare", t: "Соғлиқни сақлаш", e: "Healthcare workers." },
+        { w: "Waiting room", p: "/ˈweɪ.tɪŋ ruːm/", k: "Healthcare", t: "Кутиш хонаси", e: "Clinic waiting room." },
+        { w: "Food poisoning", p: "/fuːd ˈpɔɪ.zən.ɪŋ/", k: "Health problems", t: "Овқатдан заҳарланиш", e: "Food poisoning case." },
+        { w: "High blood pressure", p: "/blʌd ˈpreʃ.ər/", k: "Health problems", t: "Юқори босим", e: "Blood pressure monitor." },
+        { w: "Heart attack", p: "/ˈhɑːt əˌtæk/", k: "Health problems", t: "Юрак хуружи", e: "Heart attack emergency." },
+        { w: "Sunburn", p: "/ˈsʌn.bɜːn/", k: "Health problems", t: "Қуёшдан куйиш", e: "Painful sunburn." },
+        { w: "Bandage", p: "/ˈbæn.dɪdʒ/", k: "Healthcare item", t: "Бинт", e: "Apply clean bandage." },
+        { w: "Prescription", p: "/prɪˈskrɪp.ʃən/", k: "Healthcare item", t: "Дори рецепти", e: "Doctor prescription." },
+        { w: "Injection", p: "/ɪnˈdʒek.ʃən/", k: "Healthcare item", t: "Укол", e: "Medical injection." },
+        { w: "Vaccine", p: "/ˈvæk.siːn/", k: "Healthcare item", t: "Вакцина", e: "Flu vaccine." },
+        { w: "Ointment", p: "/ˈɔɪnt.mənt/", k: "Healthcare item", t: "Малҳам, суртма", e: "Healing ointment." },
+        { w: "Symptom", p: "/ˈsɪmp.təm/", k: "Health term", t: "Аломат, симптом", e: "Illness symptom." },
+        { w: "Infection", p: "/ɪnˈfek.ʃən/", k: "Health term", t: "Инфекция", e: "Bacterial infection." },
+        { w: "Recover", p: "/rɪˈkʌv.ər/", k: "Health verb", t: "Соғаймоқ", e: "Recover quickly." },
+        { w: "Bleed", p: "/bliːd/", k: "Health verb", t: "Қонамоқ", e: "Cut started to bleed." },
+        { w: "Surgeon", p: "/ˈsɜː.dʒən/", k: "Health job", t: "Жарроҳ", e: "Hospital surgeon." },
+        { w: "Thermometer", p: "/θəˈmɒm.ɪ.tər/", k: "Health tool", t: "Термометр", e: "Digital thermometer." },
+        { w: "Allergy", p: "/ˈæl.ə.dʒi/", k: "Health problem", t: "Аллергия", e: "Peanut allergy." },
+        { w: "Bleeding", p: "/ˈbliː.dɪŋ/", k: "Health problem", t: "Қон оқиши", e: "Stop bleeding." },
+        { w: "Bruise", p: "/bruːz/", k: "Health problem", t: "Кўкарган жой, лат ейиш", e: "Arm bruise." },
+        { w: "Burn", p: "/bɜːn/", k: "Health problem", t: "Куйиш", e: "Finger burn." },
+        { w: "Cut", p: "/kʌt/", k: "Health problem", t: "Кесилган жой", e: "Finger cut." },
+        { w: "Faint", p: "/feɪnt/", k: "Health verb", t: "Ҳушидан кетмоқ", e: "Faint from heat." }
       ],
+
       5: [
-        { id: "5_1", w: "Assignment", p: "/əˈsaɪn.mənt/", k: "Homework, Project, Task", t: "Топшириқ, уй вазифаси", e: "Submit your essay assignment by Friday." },
-        { id: "5_2", w: "Curriculum", p: "/kəˈrɪk.jə.ləm/", k: "Syllabus, School subjects", t: "Ўқув дастури", e: "The school introduced a modern STEM curriculum." },
-        { id: "5_3", w: "Degree", p: "/dɪˈɡriː/", k: "University diploma", t: "Олий маълумот дипломи / даража", e: "She earned a bachelor degree in science." },
-        { id: "5_4", w: "Exam", p: "/ɪɡˈzæm/", k: "Test, Evaluation", t: "Имтиҳон", e: "Students revised hard for final exams." },
-        { id: "5_5", w: "Grade", p: "/ɡreɪd/", k: "Mark, Score, Rating", t: "Баҳо, балл", e: "He received an 'A' grade in English." },
-        { id: "5_6", w: "Graduate", p: "/ˈɡrædʒ.u.ət/", k: "Finish university/school", t: "Битирувчи / Битирмоқ", e: "She will graduate from university in May." },
-        { id: "5_7", w: "Lecture", p: "/ˈlek.tʃər/", k: "University class, Talk", t: "Маъруза", e: "The professor delivered an engaging lecture." },
-        { id: "5_8", w: "Scholarship", p: "/ˈskɒl.ə.ʃɪp/", k: "Grant, Free tuition", t: "Грант, стипендия", e: "He won a full scholarship to study abroad." },
-        { id: "5_9", w: "Term", p: "/tɜːm/", k: "Semester, School period", t: "Чорак, семестр", e: "Autumn term starts in September." },
-        { id: "5_10", w: "Revise", p: "/rɪˈvaɪz/", k: "Study, Review notes", t: "Такрорламоқ", e: "Revise your vocabulary before the test." }
+        { w: "Cartoon", p: "/kɑːˈtuːn/", k: "TV programmes", t: "Мультфильм", e: "Funny cartoons." },
+        { w: "Chat show", p: "/ˈtʃæt ʃəʊ/", k: "TV programmes", t: "Ток-шоу", e: "Evening chat show." },
+        { w: "Documentary", p: "/ˌdɒk.jəˈmen.tri/", k: "TV programmes", t: "Ҳужжатли фильм", e: "History documentary." },
+        { w: "Game show", p: "/ˈɡeɪm ʃəʊ/", k: "TV programmes", t: "Телеўйин", e: "TV game show." },
+        { w: "News programme", p: "/njuːz/", k: "TV programmes", t: "Янгиликлар", e: "Live news programme." },
+        { w: "Reality show", p: "/riˈæl.ə.ti ʃəʊ/", k: "TV programmes", t: "Реалити-шоу", e: "Popular reality show." },
+        { w: "Sitcom", p: "/ˈsɪt.kɒm/", k: "TV programmes", t: "Ситком", e: "Funny sitcom series." },
+        { w: "Soap opera", p: "/ˈsəʊp ˌɒp.ər.ə/", k: "TV programmes", t: "Соун опера", e: "Daily soap opera." },
+        { w: "Sports programme", p: "/spɔːts/", k: "TV programmes", t: "Спорт кўрсатуви", e: "Football sports programme." },
+        { w: "Talent show", p: "/ˈtæl.ənt ʃəʊ/", k: "TV programmes", t: "Иқтидорлар шоуси", e: "Singing talent show." },
+        { w: "Weather forecast", p: "/ˈweð.ə ˌfɔː.kɑːst/", k: "TV programmes", t: "Об-ҳаво", e: "Weather forecast report." },
+        { w: "Commercial", p: "/kəˈmɜː.ʃəl/", k: "TV words", t: "Реклама", e: "TV commercial break." },
+        { w: "Broadcast", p: "/ˈbrɔːd.kɑːst/", k: "TV words", t: "Эфирга узатиш", e: "Live broadcast." },
+        { w: "Channel", p: "/ˈtʃæn.əl/", k: "TV words", t: "Канал", e: "Change TV channel." },
+        { w: "Episode", p: "/ˈep.ɪ.səʊd/", k: "TV words", t: "Серия", e: "New season episode." },
+        { w: "Series", p: "/ˈsɪə.riːz/", k: "TV words", t: "Сериал", e: "Drama series." },
+        { w: "Stream", p: "/striːm/", k: "Online video", t: "Онлайн кўрмоқ", e: "Stream videos." },
+        { w: "Subscriber", p: "/səbˈskraɪ.bər/", k: "Online video", t: "Обуначи", e: "Channel subscribers." },
+        { w: "Upload", p: "/ˌʌpˈləʊd/", k: "Online video", t: "Юкламоқ", e: "Upload video." },
+        { w: "Viewer", p: "/ˈvjuː.ər/", k: "Online video", t: "Томошабин", e: "TV viewers." },
+        { w: "Viral video", p: "/ˈvaɪ.rəl/", k: "Online video", t: "Вирал видео", e: "Went viral online." },
+        { w: "Boring", p: "/ˈbɔː.rɪŋ/", k: "Adjectives -ing", t: "Зерикарли", e: "Boring movie." },
+        { w: "Bored", p: "/bɔːd/", k: "Adjectives -ed", t: "Зериккан", e: "Feel bored." },
+        { w: "Exciting", p: "/ɪkˈsaɪ.tɪŋ/", k: "Adjectives -ing", t: "Ҳаяжонли", e: "Exciting match." },
+        { w: "Excited", p: "/ɪkˈsaɪ.tɪd/", k: "Adjectives -ed", t: "Ҳаяжонланган", e: "Excited fans." },
+        { w: "Interesting", p: "/ˈɪn.tre.stɪŋ/", k: "Adjectives -ing", t: "Қизиқарли", e: "Interesting book." },
+        { w: "Interested", p: "/ˈɪn.tre.stɪd/", k: "Adjectives -ed", t: "Қизиққан", e: "Interested student." },
+        { w: "Tiring", p: "/ˈtaɪə.rɪŋ/", k: "Adjectives -ing", t: "Толиқтирадиган", e: "Tiring journey." },
+        { w: "Tired", p: "/taɪəd/", k: "Adjectives -ed", t: "Чарчаган", e: "Tired workers." },
+        { w: "Confusing", p: "/kənˈfjuː.zɪŋ/", k: "Adjectives -ing", t: "Чалкаштирадиган", e: "Confusing plot." },
+        { w: "Confused", p: "/kənˈfjuːzd/", k: "Adjectives -ed", t: "Чалкашган", e: "Confused viewer." },
+        { w: "Fascinating", p: "/ˈfæs.ən.eɪ.tɪŋ/", k: "Adjectives", t: "Мафтункор", e: "Fascinating show." },
+        { w: "Addictive", p: "/əˈdɪk.tɪv/", k: "Adjectives", t: "Боғлаб қўядиган", e: "Addictive game." },
+        { w: "Entertaining", p: "/ˌen.təˈteɪ.nɪŋ/", k: "Adjectives", t: "Кўнгилочар", e: "Entertaining film." },
+        { w: "Informative", p: "/ɪnˈfɔː.mə.tɪv/", k: "Adjectives", t: "Маълумотли", e: "Informative guide." },
+        { w: "Presenter", p: "/prɪˈzen.tər/", k: "TV words", t: "Бошловчи", e: "TV presenter." },
+        { w: "Screen time", p: "/skriːn taɪm/", k: "Topic", t: "Экран вақти", e: "Limit screen time." },
+        { w: "Binge-watch", p: "/bɪndʒ wɒtʃ/", k: "Verb", t: "Кетма-кет кўрмоқ", e: "Binge-watch series." },
+        { w: "Remote control", p: "/rɪˈməʊt/", k: "Gadget", t: "Пульт", e: "TV remote." },
+        { w: "Disappointing", p: "/ˌdɪs.əˈpɔɪn.tɪŋ/", k: "Adjectives", t: "Ҳафсала пир қилувчи", e: "Disappointing end." },
+        { w: "Disappointed", p: "/ˌdɪs.əˈpɔɪn.tɪd/", k: "Adjectives", t: "Ҳафсаласи пир бўлган", e: "Disappointed fans." },
+        { w: "Frightening", p: "/ˈfraɪ.tən.ɪŋ/", k: "Adjectives", t: "Қўрқинчли", e: "Frightening scene." },
+        { w: "Frightened", p: "/ˈfraɪ.tənd/", k: "Adjectives", t: "Қўрққан", e: "Frightened children." },
+        { w: "Surprising", p: "/səˈpraɪ.zɪŋ/", k: "Adjectives", t: "Ҳайратланарли", e: "Surprising twist." },
+        { w: "Surprised", p: "/səˈpraɪzd/", k: "Adjectives", t: "Ҳайратда қолган", e: "Surprised reaction." }
       ],
+
       6: [
-        { id: "6_1", w: "Artificial Intelligence", p: "/ˌɑː.tɪˈfɪʃ.əl/", k: "AI, Smart computers", t: "Сунъий интеллект", e: "AI is revolutionizing software applications." },
-        { id: "6_2", w: "Browser", p: "/ˈbraʊ.zər/", k: "Chrome, Web viewer", t: "Браузер, интернет дастури", e: "Open your web browser to access websites." },
-        { id: "6_3", w: "Cybersecurity", p: "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/", k: "Safety, Antivirus, Protection", t: "Киберхавфсизлик", e: "Cybersecurity prevents dangerous malware attacks." },
-        { id: "6_4", w: "Device", p: "/dɪˈvaɪs/", k: "Gadget, Phone, Laptop", t: "Қурилма, гаджет", e: "Mobile devices need regular battery charging." },
-        { id: "6_5", w: "Download", p: "/ˌdaʊnˈləʊd/", k: "Save file from internet", t: "Юклаб олмоқ", e: "Download the study file to your phone." },
-        { id: "6_6", w: "Hardware", p: "/ˈhɑːd.weər/", k: "Physical machine parts", t: "Компьютер қурилмалари (аппарат)", e: "The computer hardware was upgraded yesterday." },
-        { id: "6_7", w: "Network", p: "/ˈnet.wɜːk/", k: "Connection, Wi-Fi, System", t: "Тармоқ", e: "Our office Wi-Fi network is fast." },
-        { id: "6_8", w: "Password", p: "/ˈpɑːs.wɜːd/", k: "Secret code, Security", t: "Пароль, махфий сўз", e: "Use strong passwords for your accounts." },
-        { id: "6_9", w: "Software", p: "/ˈsɒft.weər/", k: "Program, App, System", t: "Дастурий таъминот", e: "Install antivirus software on laptop." },
-        { id: "6_10", w: "Upload", p: "/ʌpˈləʊd/", k: "Send file to internet", t: "Интернетга юкламоқ", e: "Upload your photo to your profile." }
+        { w: "Cliff", p: "/klɪf/", k: "Geography", t: "Қоя", e: "Sea cliff." },
+        { w: "Coast", p: "/kəʊst/", k: "Geography", t: "Соҳил", e: "Ocean coast." },
+        { w: "Desert", p: "/ˈdez.ət/", k: "Geography", t: "Чўл", e: "Hot desert." },
+        { w: "Forest", p: "/ˈfɒr.ɪst/", k: "Geography", t: "Ўрмон", e: "Green forest." },
+        { w: "Glacier", p: "/ˈɡlæs.i.ər/", k: "Geography", t: "Музлик", e: "Melting glacier." },
+        { w: "Hill", p: "/hɪl/", k: "Geography", t: "Адир", e: "Green hill." },
+        { w: "Island", p: "/ˈaɪ.lənd/", k: "Geography", t: "Орол", e: "Tropical island." },
+        { w: "Lake", p: "/leɪk/", k: "Geography", t: "Кўл", e: "Blue lake." },
+        { w: "Mountain range", p: "/ˈmaʊn.tɪn/", k: "Geography", t: "Тоғ тизмаси", e: "Mountain range." },
+        { w: "Ocean", p: "/ˈəʊ.ʃən/", k: "Geography", t: "Океан", e: "Deep ocean." },
+        { w: "Rainforest", p: "/ˈreɪn.fɒr.ɪst/", k: "Geography", t: "Тропик ўрмон", e: "Amazon rainforest." },
+        { w: "Valley", p: "/ˈvæl.i/", k: "Geography", t: "Водий", e: "Green valley." },
+        { w: "Waterfall", p: "/ˈwɔː.tə.fɔːl/", k: "Geography", t: "Шаршара", e: "High waterfall." },
+        { w: "Climate change", p: "/ˈklaɪ.mət/", k: "Environment", t: "Иқлим ўзгариши", e: "Climate change impacts." },
+        { w: "Global warming", p: "/ˌɡləʊ.bəl ˈwɔː.mɪŋ/", k: "Environment", t: "Глобал исиш", e: "Global warming threat." },
+        { w: "Pollution", p: "/pəˈluː.ʃən/", k: "Environment", t: "Ифлосланиш", e: "Air pollution." },
+        { w: "Recycle", p: "/ˌriːˈsaɪ.kəl/", k: "Environment", t: "Қайта ишлаш", e: "Recycle plastics." },
+        { w: "Waste", p: "/weɪst/", k: "Environment", t: "Чиқинди", e: "Food waste." },
+        { w: "Deforestation", p: "/diːˌfɒr.ɪˈsteɪ.ʃən/", k: "Environment", t: "Ўрмонларни кесиш", e: "Stop deforestation." },
+        { w: "Drought", p: "/draʊt/", k: "Environment", t: "Қурғоқчилик", e: "Severe drought." },
+        { w: "Flood", p: "/flʌd/", k: "Environment", t: "Тошқин", e: "River flood." },
+        { w: "Renewable energy", p: "/rɪˈnjuː.ə.bəl/", k: "Environment", t: "Қайта тикланувчи энергия", e: "Renewable energy sources." },
+        { w: "Solar power", p: "/ˈsəʊ.lər/", k: "Environment", t: "Қуёш энергияси", e: "Solar power panels." },
+        { w: "Wind farm", p: "/wɪnd fɑːm/", k: "Environment", t: "Шамол станцияси", e: "Wind farm turbines." },
+        { w: "Get cold", p: "/ɡet kəʊld/", k: "Get uses", t: "Совумоқ", e: "Get cold outside." },
+        { w: "Get dark", p: "/ɡet dɑːk/", k: "Get uses", t: "Қоронғи тушмоқ", e: "Get dark early." },
+        { w: "Get a job", p: "/ɡet ə dʒɒb/", k: "Get uses", t: "Иш топмоқ", e: "Get a job." },
+        { w: "Get home", p: "/ɡet həʊm/", k: "Get uses", t: "Уйга келмоқ", e: "Get home safe." },
+        { w: "Ecosystem", p: "/ˈiː.kəʊˌsɪs.təm/", k: "Environment", t: "Экотизим", e: "Forest ecosystem." },
+        { w: "Habitat", p: "/ˈhæb.ɪ.tæt/", k: "Environment", t: "Яшаш муҳити", e: "Animal habitat." },
+        { w: "Species", p: "/ˈspiː.ʃiːz/", k: "Environment", t: "Турлар", e: "Endangered species." },
+        { w: "Carbon footprint", p: "/ˈkɑː.bən/", k: "Environment", t: "Углерод изи", e: "Lower carbon footprint." },
+        { w: "Atmosphere", p: "/ˈæt.məs.fɪər/", k: "Environment", t: "Атмосфера", e: "Earth atmosphere." },
+        { w: "Emissions", p: "/iˈmɪʃ.ənz/", k: "Environment", t: "Чиқинди газлар", e: "Carbon emissions." },
+        { w: "Fossil fuels", p: "/ˈfɒs.əl/", k: "Environment", t: "Қазилма ёнилғилар", e: "Burn fossil fuels." },
+        { w: "Preserve", p: "/prɪˈzɜːv/", k: "Environment", t: "Сақламоқ", e: "Preserve nature." },
+        { w: "Volcano", p: "/vɒlˈkeɪ.nəʊ/", k: "Geography", t: "Вулқон", e: "Active volcano." },
+        { w: "Swamp", p: "/swɒmp/", k: "Geography", t: "Ботқоқ", e: "Muddy swamp." },
+        { w: "Peak", p: "/piːk/", k: "Geography", t: "Чўққи", e: "Mountain peak." }
       ],
+
       7: [
-        { id: "7_1", w: "Athlete", p: "/ˈæθ.liːt/", k: "Sportsman, Runner", t: "Спортчи", e: "Olympic athletes train every morning." },
-        { id: "7_2", w: "Champion", p: "/ˈtʃæm.pi.ən/", k: "Winner, Gold medalist", t: "Чемпион, ғолиб", e: "Our team became country champions." },
-        { id: "7_3", w: "Fitness", p: "/ˈfɪt.nəs/", k: "Health, Exercise, Gym", t: "Фитнес, жисмоний соғломлик", e: "Regular exercise improves fitness." },
-        { id: "7_4", w: "Gymnastics", p: "/dʒɪmˈnæs.tɪks/", k: "Flexibility sport", t: "Гимнастика", e: "Gymnastics requires great flexibility." },
-        { id: "7_5", w: "Match", p: "/mætʃ/", k: "Game, Contest", t: "Ўйин, беллашув", e: "We watched an exciting football match." },
-        { id: "7_6", w: "Opponent", p: "/əˈpəʊ.nənt/", k: "Rival, Enemy in game", t: "Рақиб", e: "He defeated his opponent in chess." },
-        { id: "7_7", w: "Referee", p: "/ˌref.əˈriː/", k: "Umpire, Judge", t: "Ҳакам, рефери", e: "The referee blew the whistle for foul." },
-        { id: "7_8", w: "Tournament", p: "/ˈtʊə.nə.mənt/", k: "Championship, League", t: "Турнир, мусобақа", e: "Eight teams entered tennis tournament." },
-        { id: "7_9", w: "Workout", p: "/ˈwɜːk.aʊt/", k: "Training session", t: "Тренровка, машғулот", e: "A morning workout gives great energy." },
-        { id: "7_10", w: "Victory", p: "/ˈvɪk.tər.i/", k: "Win, Triumph", t: "Ғалаба", e: "They celebrated their grand victory." }
+        { w: "Architect", p: "/ˈɑː.kɪ.tekt/", k: "Jobs", t: "Архитектор", e: "Building architect." },
+        { w: "Chef", p: "/ʃef/", k: "Jobs", t: "Ошпаз", e: "Head chef." },
+        { w: "Dentist", p: "/ˈden.tɪst/", k: "Jobs", t: "Тиш шифокори", e: "Visit dentist." },
+        { w: "Engineer", p: "/ˌen.dʒɪˈnɪər/", k: "Jobs", t: "Инженер", e: "Software engineer." },
+        { w: "Flight attendant", p: "/flaɪt əˌten.dənt/", k: "Jobs", t: "Борткузатувчи", e: "Flight attendant." },
+        { w: "Hairdresser", p: "/ˈheəˌdres.ər/", k: "Jobs", t: "Сартарош", e: "Hairdresser salon." },
+        { w: "Journalist", p: "/ˈdʒɜː.nə.lɪst/", k: "Jobs", t: "Журналист", e: "News journalist." },
+        { w: "Lawyer", p: "/ˈlɔː.jər/", k: "Jobs", t: "Адвокат", e: "Defense lawyer." },
+        { w: "Mechanic", p: "/məˈkæn.ɪk/", k: "Jobs", t: "Механик", e: "Car mechanic." },
+        { w: "Nurse", p: "/nɜːs/", k: "Jobs", t: "Хамшира", e: "Hospital nurse." },
+        { w: "Plumber", p: "/ˈplʌm.ər/", k: "Jobs", t: "Сантехник", e: "Fix pipes plumber." },
+        { w: "Receptionist", p: "/rɪˈsep.ʃən.ɪst/", k: "Jobs", t: "Қабулхона ходими", e: "Hotel receptionist." },
+        { w: "Surgeon", p: "/ˈsɜː.dʒən/", k: "Jobs", t: "Жарроҳ", e: "Surgeon doctor." },
+        { w: "Vet", p: "/vet/", k: "Jobs", t: "Ветеринар", e: "Animal vet." },
+        { w: "Web developer", p: "/web dɪˌvel.ə.pər/", k: "Jobs", t: "Веб-дастурчи", e: "Web developer job." },
+        { w: "Apply for a job", p: "/əˈplaɪ/", k: "Work", t: "Ишга топширмоқ", e: "Apply for a job." },
+        { w: "Earn a salary", p: "/ɜːn ˈsæl.ər.i/", k: "Work", t: "Маош олмоқ", e: "Earn a salary." },
+        { w: "Employee", p: "/ɪmˈplɔɪ.iː/", k: "Work", t: "Ходим", e: "Company employee." },
+        { w: "Employer", p: "/ɪmˈplɔɪ.ər/", k: "Work", t: "Иш берувчи", e: "Good employer." },
+        { w: "Full-time job", p: "/fʊl taɪm/", k: "Work", t: "Тўлиқ кунлик иш", e: "Full-time job." },
+        { w: "Part-time job", p: "/pɑːt taɪm/", k: "Work", t: "Ярим кунлик иш", e: "Part-time job." },
+        { w: "Overtime", p: "/ˈəʊ.və.taɪm/", k: "Work", t: "Қўшимча соат", e: "Work overtime." },
+        { w: "Qualifications", p: "/ˌkwɒl.ɪ.fɪˈkeɪ.ʃənz/", k: "Work", t: "Малака", e: "High qualifications." },
+        { w: "Resign", p: "/rɪˈzaɪn/", k: "Work", t: "Ишдан бўшамоқ", e: "Resign from post." },
+        { w: "Retire", p: "/rɪˈtaɪər/", k: "Work", t: "Нафақага чиқмоқ", e: "Retire at 65." },
+        { w: "Ambitious", p: "/æmˈbɪʃ.əs/", k: "Qualities", t: "Интилувчан", e: "Ambitious person." },
+        { w: "Creative", p: "/kriˈeɪ.tɪv/", k: "Qualities", t: "Креатив", e: "Creative design." },
+        { w: "Punctual", p: "/ˈpʌŋk.tʃu.əl/", k: "Qualities", t: "Аниқ вақтда келувчи", e: "Punctual arrival." },
+        { w: "Hard-working", p: "/ˌhɑːdˈwɜː.kɪŋ/", k: "Compound adj", t: "Меҳнатсевар", e: "Hard-working staff." },
+        { w: "Well-paid", p: "/ˌwel ˈpeɪd/", k: "Compound adj", t: "Юқори маошли", e: "Well-paid career." },
+        { w: "Badly-paid", p: "/ˌbæd.li ˈpeɪd/", k: "Compound adj", t: "Кам маошли", e: "Badly-paid job." },
+        { w: "Well-known", p: "/ˌwel ˈnəʊn/", k: "Compound adj", t: "Машҳур", e: "Well-known actor." },
+        { w: "CV / Resume", p: "/ˌsiːˈviː/", k: "Work document", t: "Резюме", e: "Send CV." },
+        { w: "Interview", p: "/ˈɪn.tə.vjuː/", k: "Work", t: "Суҳбат", e: "Job interview." },
+        { w: "Promotion", p: "/prəˈməʊ.ʃən/", k: "Work", t: "Лавозим кўтарилиши", e: "Get promotion." },
+        { w: "Colleague", p: "/ˈkɒl.iːɡ/", k: "Work", t: "Ҳамкасб", e: "Office colleague." },
+        { w: "Career", p: "/kəˈrɪər/", k: "Work", t: "Карьера", e: "Build career." }
       ],
+
       8: [
-        { id: "8_1", w: "Audience", p: "/ˈɔː.di.əns/", k: "Viewers, Crowd, Spectators", t: "Томошабинлар", e: "The audience cheered at performance end." },
-        { id: "8_2", w: "Exhibition", p: "/ˌek.sɪˈbɪʃ.ən/", k: "Art show, Gallery", t: "Ko'rgazma", e: "We visited an art exhibition yesterday." },
-        { id: "8_3", w: "Gallery", p: "/ˈɡæl.ər.i/", k: "Art room, Museum", t: "Галерея", e: "Paintings were displayed in the gallery." },
-        { id: "8_4", w: "Masterpiece", p: "/ˈmɑː.stə.piːs/", k: "Great artwork", t: "Шоҳасар", e: "Mona Lisa is a world masterpiece." },
-        { id: "8_5", w: "Novel", p: "/ˈnɒv.əl/", k: "Story book, Fiction", t: "Роман, бадиий асар", e: "He wrote an exciting adventure novel." },
-        { id: "8_6", w: "Performance", p: "/pəˈfɔː.məns/", k: "Show, Play, Act", t: "Томоша, ижро", e: "The actor delivered a brilliant performance." },
-        { id: "8_7", w: "Sculpture", p: "/ˈskʌlp.tʃər/", k: "Statue, Carving", t: "Ҳайкал, ҳайкалтарошлик", e: "A marble sculpture stood in the park." },
-        { id: "8_8", w: "Stage", p: "/steɪdʒ/", k: "Theater platform", t: "Саҳна", e: "Dancers stepped onto the stage." },
-        { id: "8_9", w: "Ticket", p: "/ˈtɪk.ɪt/", k: "Pass, Entrance slip", t: "Чипта", e: "Buy cinema tickets in advance." },
-        { id: "8_10", w: "Review", p: "/rɪˈvjuː/", k: "Critique, Rating", t: "Тақриз, баҳо", e: "The movie got glowing reviews." }
+        { w: "Angry", p: "/ˈæŋ.ɡri/", k: "Feelings", t: "Жаҳли чиққан", e: "Feel angry." },
+        { w: "Anxious", p: "/ˈæŋk.ʃəs/", k: "Feelings", t: "Хавотирли", e: "Anxious feelings." },
+        { w: "Embarrassed", p: "/ɪmˈbær.əst/", k: "Feelings", t: "Хижолат", e: "Feel embarrassed." },
+        { w: "Excited", p: "/ɪkˈsaɪ.tɪd/", k: "Feelings", t: "Ҳаяжонланган", e: "Excited kids." },
+        { w: "Frightened", p: "/ˈfraɪ.tənd/", k: "Feelings", t: "Қўрққан", e: "Frightened cat." },
+        { w: "Jealous", p: "/ˈdʒel.əs/", k: "Feelings", t: "Рашкчи", e: "Jealous friend." },
+        { w: "Proud", p: "/praʊd/", k: "Feelings", t: "Фахрланган", e: "Proud parents." },
+        { w: "Stressed", p: "/strest/", k: "Feelings", t: "Стресс", e: "Stressed worker." },
+        { w: "Upset", p: "/ʌpˈset/", k: "Feelings", t: "Хафа", e: "Feel upset." },
+        { w: "Cheerful", p: "/ˈtʃɪə.fəl/", k: "Feelings", t: "Қувноқ", e: "Cheerful mood." },
+        { w: "Delighted", p: "/dɪˈlaɪ.tɪd/", k: "Feelings", t: "Мамнун", e: "Delighted smile." },
+        { w: "Lonely", p: "/ˈləʊn.li/", k: "Feelings", t: "Ёлғиз", e: "Lonely evening." },
+        { w: "Make friends", p: "/meɪk frendz/", k: "Friendship", t: "Дўстлашмоқ", e: "Make friends." },
+        { w: "Get on well", p: "/ɡet ɒn wel/", k: "Friendship", t: "Иноқ бўлмоқ", e: "Get on well." },
+        { w: "Fall out", p: "/fɔːl aʊt/", k: "Friendship", t: "Уришиб қолмоқ", e: "Fall out with friend." },
+        { w: "Make up", p: "/meɪk ʌp/", k: "Friendship", t: "Ярашмоқ", e: "Make up after fight." },
+        { w: "Trust", p: "/trʌst/", k: "Friendship", t: "Ишонч", e: "Mutual trust." },
+        { w: "Keep in touch", p: "/kiːp ɪn tʌtʃ/", k: "Friendship", t: "Алоқада бўлмоқ", e: "Keep in touch." },
+        { w: "Happiness", p: "/ˈhæp.i.nəs/", k: "Suffix -ness", t: "Бахт", e: "True happiness." },
+        { w: "Sadness", p: "/ˈsæd.nəs/", k: "Suffix -ness", t: "Қайғу", e: "Deep sadness." },
+        { w: "Kindness", p: "/ˈkaɪnd.nəs/", k: "Suffix -ness", t: "Меҳрибонлик", e: "Show kindness." },
+        { w: "Friendship", p: "/ˈfrend.ʃɪp/", k: "Suffix -ship", t: "Дўстлик", e: "Strong friendship." },
+        { w: "Relationship", p: "/rɪˈleɪ.ʃən.ʃɪp/", k: "Suffix -ship", t: "Муносабат", e: "Family relationship." },
+        { w: "Freedom", p: "/ˈfriː.dəm/", k: "Suffix -dom", t: "Эркинлик", e: "Personal freedom." },
+        { w: "Wisdom", p: "/ˈwɪz.dəm/", k: "Suffix -dom", t: "Доналик", e: "Ancient wisdom." },
+        { w: "Apologize", p: "/əˈpɒl.ə.dʒaɪz/", k: "Verb", t: "Кечирим сўрамоқ", e: "Apologize sincerely." },
+        { w: "Forgive", p: "/fəˈɡɪv/", k: "Verb", t: "Кечирмоқ", e: "Forgive mistakes." }
       ],
+
       9: [
-        { id: "9_1", w: "Biodiversity", p: "/ˌbaɪ.əʊ.daɪˈvɜː.sə.ti/", k: "Wildlife variety, Nature", t: "Биохилма-хиллик", e: "Rainforests have rich biodiversity." },
-        { id: "9_2", w: "Climate change", p: "/ˈklaɪ.mət/", k: "Global warming, Weather", t: "Иқлим ўзгариши", e: "Climate change causes melting ice caps." },
-        { id: "9_3", w: "Conservation", p: "/ˌkɒn.səˈveɪ.ʃən/", k: "Protection, Saving nature", t: "Табиатни муҳофаза қилиш", e: "Wildlife conservation protects tigers." },
-        { id: "9_4", w: "Ecosystem", p: "/ˈiː.kəʊˌsɪs.təm/", k: "Environment system", t: "Экотизим", e: "Coral reefs are delicate ecosystems." },
-        { id: "9_5", w: "Endangered", p: "/ɪnˈdeɪn.dʒəd/", k: "In danger, Rare species", t: "Йўқолиб бораётган", e: "Panda bears are endangered animals." },
-        { id: "9_6", w: "Habitat", p: "/ˈhæb.ɪ.tæt/", k: "Animal home, Nature zone", t: "Яшаш муҳити", e: "Deforestation destroys forest habitat." },
-        { id: "9_7", w: "Recycle", p: "/ˌriːˈsaɪ.kəl/", k: "Reuse plastic/paper", t: "Қайта ишлаш", e: "Recycle plastic bottles to save nature." },
-        { id: "9_8", w: "Solar power", p: "/ˈsəʊ.lər/", k: "Sun energy, Green electric", t: "Қуёш энергияси", e: "Solar power produces clean electricity." },
-        { id: "9_9", w: "Waste", p: "/weɪst/", k: "Trash, Garbage, Rubbish", t: "Чиқинди, исроф", e: "Reduce household plastic waste." },
-        { id: "9_10", w: "Pollute", p: "/pəˈluːt/", k: "Dirty, Contaminate", t: "Ифлослантирмоқ", e: "Factories shouldn't pollute rivers." }
+        { w: "Autobiography", p: "/ˌɔː.tə.baɪˈɒɡ.rə.fi/", k: "Reading", t: "Автобиография", e: "Read autobiography." },
+        { w: "Biography", p: "/baɪˈɒɡ.rə.fi/", k: "Reading", t: "Биография", e: "Historical biography." },
+        { w: "Comic book", p: "/ˈkɒm.ɪk/", k: "Reading", t: "Комикс", e: "Superhero comic book." },
+        { w: "Encyclopedia", p: "/ɪnˌsaɪ.kləˈpiː.di.ə/", k: "Reading", t: "Энциклопедия", e: "Online encyclopedia." },
+        { w: "Magazine", p: "/ˌmæɡ.əˈziːn/", k: "Reading", t: "Журнал", e: "Fashion magazine." },
+        { w: "Newspaper", p: "/ˈnjuːzˌpeɪ.pər/", k: "Reading", t: "Газета", e: "Morning newspaper." },
+        { w: "Novel", p: "/ˈnɒv.əl/", k: "Reading", t: "Роман", e: "Bestseller novel." },
+        { w: "Textbook", p: "/ˈtekst.bʊk/", k: "Reading", t: "Дарслик", e: "English textbook." },
+        { w: "Action and adventure", p: "/ˈæk.ʃən/", k: "Genres", t: "Саргузашт жанр", e: "Adventure book." },
+        { w: "Crime fiction", p: "/kraɪm/", k: "Genres", t: "Детектив", e: "Crime fiction story." },
+        { w: "Fantasy", p: "/ˈfæn.tə.si/", k: "Genres", t: "Фэнтези", e: "Fantasy world." },
+        { w: "Historical fiction", p: "/hɪˈstɒr.ɪ.kəl/", k: "Genres", t: "Тарихий бадиий", e: "Historical fiction." },
+        { w: "Horror", p: "/ˈhɒr.ər/", k: "Genres", t: "Қўрқинчли", e: "Horror story." },
+        { w: "Romance", p: "/rəʊˈmæns/", k: "Genres", t: "Романтик", e: "Romance novel." },
+        { w: "Science fiction", p: "/ˌsaɪ.faɪ/", k: "Genres", t: "Илмий-фантастика", e: "Sci-Fi film." },
+        { w: "Thriller", p: "/ˈθrɪl.ər/", k: "Genres", t: "Триллер", e: "Suspense thriller." },
+        { w: "Plot", p: "/plɒt/", k: "Review", t: "Сюжет", e: "Book plot." },
+        { w: "Character", p: "/ˈkær.ək.tər/", k: "Review", t: "Персонаж", e: "Main character." },
+        { w: "Bestseller", p: "/ˌbestˈsel.ər/", k: "Review", t: "Бестселлер", e: "New bestseller." },
+        { w: "Chapter", p: "/ˈtʃæp.tər/", k: "Book", t: "Боб", e: "Chapter one." },
+        { w: "Author", p: "/ˈɔː.θər/", k: "Book", t: "Муаллиф", e: "Famous author." },
+        { w: "Turn over", p: "/tɜːn ˈəʊ.vər/", k: "Phrasal", t: "Варақламоқ", e: "Turn over page." },
+        { w: "Look up", p: "/lʊk ʌp/", k: "Phrasal", t: "Луғатдан изламоқ", e: "Look up words." }
       ],
+
       10: [
-        { id: "10_1", w: "Bargain", p: "/ˈbɑː.ɡɪn/", k: "Good price, Deal", t: "Арзон/унумли харид", e: "Buying clothes on sale was a bargain." },
-        { id: "10_2", w: "Cashier", p: "/kæˈʃɪər/", k: "Money collector, Shop clerk", t: "Кассир", e: "Pay money to the cashier at checkout." },
-        { id: "10_3", w: "Discount", p: "/ˈdɪs.kaʊnt/", k: "Price reduction, Sale %", t: "Чегирма", e: "Students get a 10% discount." },
-        { id: "10_4", w: "Expense", p: "/ɪkˈspens/", k: "Cost, Money spent", t: "Харажат", e: "Keep track of daily personal expenses." },
-        { id: "10_5", w: "Receipt", p: "/rɪˈsiːt/", k: "Paper proof of purchase", t: "Чек, квитанция", e: "Keep the purchase receipt for warranty." },
-        { id: "10_6", w: "Refund", p: "/ˈriː.fʌnd/", k: "Money back", t: "Пулни қайтариб бериш", e: "You can request a full refund." },
-        { id: "10_7", w: "Savings", p: "/ˈseɪ.vɪŋz/", k: "Money saved, Bank balance", t: "Жамғарма, тежаб қўйилган пул", e: "She kept her savings in a bank." },
-        { id: "10_8", w: "Wallet", p: "/ˈwɒl.ɪt/", k: "Money holder, Pocketbook", t: "Ҳамён, кармон", e: "He lost his leather wallet." },
-        { id: "10_9", w: "Afford", p: "/əˈfɔːd/", k: "Have money for", t: "Қурби етмоқ", e: "I cannot afford a brand new car yet." },
-        { id: "10_10", w: "Purchase", p: "/ˈpɜː.tʃəs/", k: "Buy item", t: "Харид қилмоқ / Харид", e: "She made an online purchase yesterday." }
+        { w: "Keyboard", p: "/ˈkiː.bɔːd/", k: "Accessories", t: "Клавиатура", e: "Type on keyboard." },
+        { w: "Monitor", p: "/ˈmɒn.ɪ.tər/", k: "Accessories", t: "Монитор", e: "LED monitor screen." },
+        { w: "Mouse", p: "/maʊs/", k: "Accessories", t: "Сичқонча", e: "Click mouse." },
+        { w: "Printer", p: "/ˈprɪn.tər/", k: "Accessories", t: "Принтер", e: "Color printer." },
+        { w: "Webcam", p: "/ˈweb.kæm/", k: "Accessories", t: "Веб-камера", e: "HD webcam." },
+        { w: "USB flash drive", p: "/ˌjuː.esˈbiː/", k: "Accessories", t: "Флешка", e: "Save on USB drive." },
+        { w: "Laptop", p: "/ˈlæp.tɒp/", k: "Computers", t: "Ноутбук", e: "Portable laptop." },
+        { w: "Browse internet", p: "/braʊz/", k: "Internet", t: "Интернетда кўрмоқ", e: "Browse internet." },
+        { w: "Log in", p: "/lɒɡ ɪn/", k: "Internet", t: "Тизимга кирмоқ", e: "Log in account." },
+        { w: "Log out", p: "/lɒɡ aʊt/", k: "Internet", t: "Тизимдан чиқмоқ", e: "Log out safely." },
+        { w: "Download", p: "/ˌdaʊnˈləʊd/", k: "Internet", t: "Юклаб олмоқ", e: "Download file." },
+        { w: "Upload", p: "/ˌʌpˈləʊd/", k: "Internet", t: "Юкламоқ", e: "Upload document." },
+        { w: "Search engine", p: "/ˈsɜːtʃ/", k: "Internet", t: "Қидирув тизими", e: "Google search engine." },
+        { w: "Password", p: "/ˈpɑːs.wɜːd/", k: "Security", t: "Пароль", e: "Secure password." },
+        { w: "Attach a file", p: "/əˈtætʃ/", k: "Email", t: "Файл бириктирмоқ", e: "Attach a file." },
+        { w: "Send email", p: "/send/", k: "Email", t: "Хат юбормоқ", e: "Send email." },
+        { w: "Open document", p: "/ˈəʊ.pən/", k: "Document", t: "Ҳужжат очмоқ", e: "Open document." },
+        { w: "Save document", p: "/seɪv/", k: "Document", t: "Ҳужжат сақламоқ", e: "Save document." },
+        { w: "Antivirus software", p: "/ˌæn.tiˈvaɪ.rəs/", k: "Security", t: "Антивирус", e: "Install antivirus." }
       ]
     };
 
-    // App State Management
-    let currentUnit = "1";
-    let activeVocabList = [];
-    let currentCardIndex = 0;
-    let isFlipped = false;
-    let currentMode = "cards";
+    // App State
+    let currentUnit = 1;
+    let activeWords = [];
+    let currentIndex = 0;
     
-    // Learned Words State (Stored in localStorage or memory)
-    let learnedWordsSet = new Set(JSON.parse(localStorage.getItem('gtw_b1_learned') || '[]'));
-
-    // Quiz & Match State
+    // Status Storage: word -> 'learned' | 'repeat'
+    let statusMap = JSON.parse(localStorage.getItem('gw_status_map') || '{}');
     let quizScore = 0;
-    let quizQuestionNum = 0;
-    let matchTimer = 0;
-    let matchTimerInterval = null;
-    let selectedMatchCards = [];
-    let matchedPairsCount = 0;
 
-    // Initialization
-    window.addEventListener('DOMContentLoaded', () => {
-      loadUnitData();
-      setupKeyboardControls();
-    });
+    window.onload = () => {
+      changeUnit('1');
+    };
 
-    function loadUnitData() {
-      if (currentUnit === "all") {
-        activeVocabList = [];
-        Object.keys(vocabData).forEach(u => {
-          activeVocabList = activeVocabList.concat(vocabData[u]);
-        });
-      } else {
-        activeVocabList = [...(vocabData[currentUnit] || [])];
+    function getUnitWords(unit) {
+      if (unit === 'all') {
+        let all = [];
+        for (let u = 1; u <= 10; u++) {
+          if (vocabData[u]) all = all.concat(vocabData[u]);
+        }
+        return all;
       }
-
-      currentCardIndex = 0;
-      isFlipped = false;
-      updateProgressBar();
-      
-      if (currentMode === "cards") renderFlashcard();
-      else if (currentMode === "quiz") startQuizMode();
-      else if (currentMode === "match") startMatchGame();
-      else if (currentMode === "dict") renderDictionary();
+      return vocabData[unit] || [];
     }
 
-    function changeUnit(unitVal) {
-      currentUnit = unitVal;
-      loadUnitData();
+    function changeUnit(unit) {
+      currentUnit = unit;
+      activeWords = getUnitWords(unit);
+      currentIndex = 0;
+      renderCurrentCard();
+      updateProgressTracker();
+
+      if (!document.getElementById('mode-quiz').classList.contains('hidden')) generateQuizQuestion();
+      if (!document.getElementById('mode-match').classList.contains('hidden')) setupMatchGame();
+      if (!document.getElementById('mode-dict').classList.contains('hidden')) renderDictionary();
+    }
+
+    function updateProgressTracker() {
+      const allWords = getUnitWords('all');
+      let learnedCount = 0;
+      let repeatCount = 0;
+
+      allWords.forEach(item => {
+        const st = statusMap[item.w];
+        if (st === 'learned') learnedCount++;
+        if (st === 'repeat') repeatCount++;
+      });
+
+      document.getElementById('count-learned').textContent = learnedCount;
+      document.getElementById('count-repeat').textContent = repeatCount;
+
+      const pct = allWords.length > 0 ? Math.round((learnedCount / allWords.length) * 100) : 0;
+      document.getElementById('progress-bar').style.width = pct + '%';
     }
 
     function switchMode(mode) {
-      currentMode = mode;
-      
-      // Update UI Buttons
       ['cards', 'quiz', 'match', 'dict'].forEach(m => {
-        const btn = document.getElementById(`btn-${m}`);
-        const view = document.getElementById(`mode-${m}`);
-        
-        if (m === mode) {
-          btn.className = "flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl bg-indigo-600 text-white shadow-md transition-all duration-200 flex items-center justify-center gap-1.5";
-          view.classList.remove('hidden');
-        } else {
-          btn.className = "flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center justify-center gap-1.5";
-          view.classList.add('hidden');
-        }
+        document.getElementById(`mode-${m}`).classList.add('hidden');
+        document.getElementById(`btn-${m}`).className = "px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200";
       });
 
-      // Reset / Init Mode Views
-      if (mode === "cards") renderFlashcard();
-      else if (mode === "quiz") startQuizMode();
-      else if (mode === "match") startMatchGame();
-      else if (mode === "dict") renderDictionary();
+      document.getElementById(`mode-${mode}`).classList.remove('hidden');
+      document.getElementById(`btn-${mode}`).className = "px-4 py-2 rounded-lg bg-indigo-600 text-white transition-all duration-200";
+
+      if (mode === 'quiz') generateQuizQuestion();
+      if (mode === 'match') setupMatchGame();
+      if (mode === 'dict') renderDictionary();
     }
 
-    // --- 1. FLASHCARD LOGIC WITH STYLED FEEDBACK ---
-    function renderFlashcard() {
-      if (!activeVocabList || activeVocabList.length === 0) return;
+    // FLASHCARD CORE RENDER
+    function renderCurrentCard() {
+      if (activeWords.length === 0) return;
+      const item = activeWords[currentIndex];
 
-      const card = activeVocabList[currentCardIndex];
-      const isLearned = learnedWordsSet.has(card.id);
+      // Unflip card
+      document.getElementById('card-inner').classList.remove('rotate-y-180');
 
-      // Reset flip state visually without animation glitch
-      const inner = document.getElementById('card-inner');
-      isFlipped = false;
-      inner.classList.remove('rotate-y-180');
+      document.getElementById('card-word').textContent = item.w;
+      document.getElementById('card-phonetic').textContent = item.p;
+      document.getElementById('card-keywords').textContent = item.k;
+      document.getElementById('card-translation').textContent = item.t;
+      document.getElementById('card-example').textContent = `"${item.e}"`;
+      document.getElementById('card-unit-tag').textContent = currentUnit === 'all' ? 'All Units' : `Unit ${currentUnit}`;
+      document.getElementById('card-index').textContent = `${currentIndex + 1} / ${activeWords.length}`;
 
-      // Card Content
-      document.getElementById('card-unit-tag').innerText = `Unit ${card.id.split('_')[0]}`;
-      document.getElementById('card-word').innerText = card.w;
-      document.getElementById('card-phonetic').innerText = card.p;
-      document.getElementById('card-keywords').innerText = card.k;
-      document.getElementById('card-translation').innerText = card.t;
-      document.getElementById('card-example').innerText = `"${card.e}"`;
-      document.getElementById('card-index').innerText = `${currentCardIndex + 1} / ${activeVocabList.length}`;
-
-      // Card Status Visual Styling (Green if Learned, Default dark if not)
-      applyCardVisualState(isLearned);
-    }
-
-    function applyCardVisualState(isLearned) {
-      const front = document.getElementById('card-front');
-      const back = document.getElementById('card-back');
+      // Update Card Visual Border & Badge based on Status
+      const cardContainer = document.getElementById('card-inner');
       const badge = document.getElementById('card-status-badge');
 
-      if (isLearned) {
-        // GREEN MASTERED STYLE
-        front.className = "absolute inset-0 backface-hidden flex flex-col justify-between p-6 sm:p-8 bg-emerald-950/40 rounded-3xl border-2 border-emerald-500/80 shadow-[0_0_25px_rgba(16,185,129,0.25)] transition-colors duration-300";
-        back.className = "absolute inset-0 backface-hidden rotate-y-180 flex flex-col justify-between p-6 sm:p-8 bg-emerald-950/50 rounded-3xl border-2 border-emerald-500/80 shadow-[0_0_25px_rgba(16,185,129,0.25)] transition-colors duration-300";
-        badge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1";
-        badge.innerHTML = '<i class="fa-solid fa-check"></i> Yodlandi';
-        badge.classList.remove('hidden');
+      cardContainer.classList.remove('status-learned', 'status-repeat');
+
+      const st = statusMap[item.w];
+      if (st === 'learned') {
+        cardContainer.classList.add('status-learned');
+        badge.textContent = "Yodlangan ✓";
+        badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+      } else if (st === 'repeat') {
+        cardContainer.classList.add('status-repeat');
+        badge.textContent = "Takrorlash 🔄";
+        badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40";
       } else {
-        // STANDARD NEUTRAL STYLE
-        front.className = "absolute inset-0 backface-hidden flex flex-col justify-between p-6 sm:p-8 bg-slate-900/90 rounded-3xl border-2 border-slate-700/80 transition-colors duration-300";
-        back.className = "absolute inset-0 backface-hidden rotate-y-180 flex flex-col justify-between p-6 sm:p-8 bg-slate-900/95 rounded-3xl border-2 border-slate-700/80 transition-colors duration-300";
-        badge.classList.add('hidden');
+        badge.textContent = "O'rganilmagan";
+        badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-slate-700 text-slate-300";
       }
     }
 
     function flipCard() {
-      const inner = document.getElementById('card-inner');
-      isFlipped = !isFlipped;
-      if (isFlipped) {
-        inner.classList.add('rotate-y-180');
-      } else {
-        inner.classList.remove('rotate-y-180');
+      document.getElementById('card-inner').classList.toggle('rotate-y-180');
+    }
+
+    function nextCard() {
+      if (currentIndex < activeWords.length - 1) {
+        currentIndex++;
+        renderCurrentCard();
       }
     }
 
     function prevCard() {
-      if (currentCardIndex > 0) {
-        currentCardIndex--;
-      } else {
-        currentCardIndex = activeVocabList.length - 1;
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderCurrentCard();
       }
-      renderFlashcard();
     }
 
-    function nextCard() {
-      if (currentCardIndex < activeVocabList.length - 1) {
-        currentCardIndex++;
-      } else {
-        currentCardIndex = 0;
-      }
-      renderFlashcard();
+    // FUNCTIONALITY: Set status to Learned (Green) or Repeat (Red)
+    function setStatus(type) {
+      if (activeWords.length === 0) return;
+      const item = activeWords[currentIndex];
+
+      statusMap[item.w] = type; // 'learned' or 'repeat'
+      localStorage.setItem('gw_status_map', JSON.stringify(statusMap));
+
+      updateProgressTracker();
+      renderCurrentCard();
+
+      // Auto move to next card smoothly
+      setTimeout(() => {
+        nextCard();
+      }, 250);
     }
 
-    // Mark as Learned (Green) or Mark for Repeat (Rose feedback without aggressive jump)
-    function markLearned(status) {
-      const currentCard = activeVocabList[currentCardIndex];
-      const cardContainer = document.getElementById('card-inner');
+    function speakCurrentWord(event) {
+      event.stopPropagation();
+      const word = activeWords[currentIndex].w;
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    }
 
-      if (status === true) {
-        // User pressed "Yodladim"
-        learnedWordsSet.add(currentCard.id);
-        saveLearnedState();
-        updateProgressBar();
-        
-        // Immediate visual green feedback
-        applyCardVisualState(true);
-        cardContainer.classList.add('animate-pulse-green');
-        setTimeout(() => cardContainer.classList.remove('animate-pulse-green'), 500);
+    // QUIZ LOGIC
+    function generateQuizQuestion() {
+      if (activeWords.length < 4) return;
+      const current = activeWords[Math.floor(Math.random() * activeWords.length)];
+      document.getElementById('quiz-word').textContent = current.w;
 
-        // Smoothly move to next card after a tiny pleasant delay
-        setTimeout(() => {
-          nextCard();
-        }, 400);
-
-      } else {
-        // User pressed "Takrorlash" / "Yodlanmadi"
-        if (learnedWordsSet.has(currentCard.id)) {
-          learnedWordsSet.delete(currentCard.id);
-          saveLearnedState();
-          updateProgressBar();
+      let options = [current.t];
+      while (options.length < 4) {
+        const randItem = activeWords[Math.floor(Math.random() * activeWords.length)];
+        if (!options.includes(randItem.t)) {
+          options.push(randItem.t);
         }
-
-        // Apply Red Shake Feedback for 0.4s to acknowledge repetition without forced skip
-        applyCardVisualState(false);
-        const front = document.getElementById('card-front');
-        front.classList.add('border-rose-500/80', 'bg-rose-950/20', 'animate-shake');
-        
-        setTimeout(() => {
-          front.classList.remove('border-rose-500/80', 'bg-rose-950/20', 'animate-shake');
-        }, 450);
-      }
-    }
-
-    function saveLearnedState() {
-      localStorage.setItem('gtw_b1_learned', JSON.stringify(Array.from(learnedWordsSet)));
-    }
-
-    function updateProgressBar() {
-      const totalInUnit = activeVocabList.length;
-      let learnedInUnit = 0;
-
-      activeVocabList.forEach(item => {
-        if (learnedWordsSet.has(item.id)) learnedInUnit++;
-      });
-
-      document.getElementById('learned-count').innerText = learnedInUnit;
-      document.getElementById('total-count').innerText = totalInUnit;
-
-      const percentage = totalInUnit > 0 ? (learnedInUnit / totalInUnit) * 100 : 0;
-      document.getElementById('progress-bar').style.width = `${percentage}%`;
-    }
-
-    function resetUnitProgress() {
-      if (confirm("Ushbu unit/barcha so'zlar progressini nolga tushirishni xohlaysizmi?")) {
-        activeVocabList.forEach(item => learnedWordsSet.delete(item.id));
-        saveLearnedState();
-        updateProgressBar();
-        renderFlashcard();
-      }
-    }
-
-    // Audio TTS Speech Synthesis
-    function speakCurrentWord(e) {
-      if (e) e.stopPropagation();
-      const word = activeVocabList[currentCardIndex].w;
-      speakWord(word);
-    }
-
-    function speakWord(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.85;
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-
-    // --- 2. QUIZ MODE LOGIC ---
-    function startQuizMode() {
-      quizScore = 0;
-      quizQuestionNum = 0;
-      document.getElementById('quiz-score').innerText = `Ball: ${quizScore}`;
-      nextQuizQuestion();
-    }
-
-    function nextQuizQuestion() {
-      if (!activeVocabList || activeVocabList.length === 0) return;
-
-      quizQuestionNum++;
-      document.getElementById('quiz-question-num').innerText = `Savol: ${quizQuestionNum}`;
-
-      // Pick random correct question
-      const randomIndex = Math.floor(Math.random() * activeVocabList.length);
-      const currentQuestion = activeVocabList[randomIndex];
-
-      document.getElementById('quiz-word').innerText = currentQuestion.w;
-      document.getElementById('quiz-phonetic').innerText = currentQuestion.p;
-
-      // Prepare 4 options (1 correct, 3 wrong distractors)
-      let options = [currentQuestion.t];
-      let pool = activeVocabList.filter(item => item.id !== currentQuestion.id);
-
-      // Shuffle pool
-      pool.sort(() => Math.random() - 0.5);
-
-      for (let i = 0; i < Math.min(3, pool.length); i++) {
-        options.push(pool[i].t);
       }
 
       options.sort(() => Math.random() - 0.5);
 
-      // Render Options
       const optionsContainer = document.getElementById('quiz-options');
       optionsContainer.innerHTML = '';
 
       options.forEach(opt => {
         const btn = document.createElement('button');
-        btn.className = "w-full text-left p-4 rounded-2xl bg-slate-800 hover:bg-slate-700/80 border border-slate-700/80 text-slate-100 text-sm font-semibold transition active:scale-98 shadow-md flex items-center justify-between";
-        btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-slate-500"></i>`;
-        
-        btn.onclick = () => checkQuizAnswer(btn, opt, currentQuestion.t);
+        btn.className = "w-full py-3 px-4 bg-slate-700/60 hover:bg-slate-700 text-slate-200 border border-slate-600/60 rounded-xl text-sm font-semibold transition text-left flex justify-between items-center";
+        btn.textContent = opt;
+        btn.onclick = () => checkQuizAnswer(btn, opt === current.t);
         optionsContainer.appendChild(btn);
       });
-
-      document.getElementById('quiz-next-btn').classList.add('opacity-50', 'pointer-events-none');
     }
 
-    function checkQuizAnswer(selectedBtn, selectedOpt, correctOpt) {
-      const optionsContainer = document.getElementById('quiz-options');
-      const allBtns = optionsContainer.querySelectorAll('button');
-
-      allBtns.forEach(btn => btn.classList.add('pointer-events-none'));
-
-      if (selectedOpt === correctOpt) {
-        selectedBtn.className = "w-full text-left p-4 rounded-2xl bg-emerald-500/20 border-2 border-emerald-500 text-emerald-200 text-sm font-bold shadow-lg flex items-center justify-between";
-        selectedBtn.innerHTML = `<span>${selectedOpt}</span> <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>`;
+    function checkQuizAnswer(button, isCorrect) {
+      if (isCorrect) {
+        button.className = "w-full py-3 px-4 bg-emerald-600/30 text-emerald-200 border border-emerald-500 rounded-xl text-sm font-semibold text-left";
         quizScore += 10;
-        document.getElementById('quiz-score').innerText = `Ball: ${quizScore}`;
       } else {
-        selectedBtn.className = "w-full text-left p-4 rounded-2xl bg-rose-500/20 border-2 border-rose-500 text-rose-200 text-sm font-bold shadow-lg flex items-center justify-between";
-        selectedBtn.innerHTML = `<span>${selectedOpt}</span> <i class="fa-solid fa-circle-xmark text-rose-400 text-base"></i>`;
-
-        // Highlight correct option
-        allBtns.forEach(btn => {
-          if (btn.innerText.trim() === correctOpt) {
-            btn.className = "w-full text-left p-4 rounded-2xl bg-emerald-500/20 border-2 border-emerald-500 text-emerald-200 text-sm font-bold flex items-center justify-between";
-          }
-        });
+        button.className = "w-full py-3 px-4 bg-rose-600/30 text-rose-200 border border-rose-500 rounded-xl text-sm font-semibold text-left";
       }
-
-      document.getElementById('quiz-next-btn').classList.remove('opacity-50', 'pointer-events-none');
+      document.getElementById('quiz-score').textContent = `Score: ${quizScore}`;
     }
 
-    // --- 3. MATCH MODE LOGIC ---
-    function startMatchGame() {
-      if (!activeVocabList || activeVocabList.length < 4) return;
+    // MATCH GAME LOGIC
+    let selectedCards = [];
+    function setupMatchGame() {
+      const grid = document.getElementById('match-grid');
+      grid.innerHTML = '';
 
-      clearInterval(matchTimerInterval);
-      matchTimer = 0;
-      matchedPairsCount = 0;
-      selectedMatchCards = [];
-
-      document.getElementById('match-timer').innerText = "0s";
-      document.getElementById('match-pairs').innerText = `0 / 6`;
-
-      // Start timer
-      matchTimerInterval = setInterval(() => {
-        matchTimer++;
-        document.getElementById('match-timer').innerText = `${matchTimer}s`;
-      }, 1000);
-
-      // Select 6 random vocabulary entries
-      const shuffled = [...activeVocabList].sort(() => Math.random() - 0.5).slice(0, 6);
-      
+      const subset = [...activeWords].sort(() => Math.random() - 0.5).slice(0, 6);
       let cards = [];
-      shuffled.forEach(item => {
-        cards.push({ id: item.id, text: item.w, type: 'en' });
-        cards.push({ id: item.id, text: item.t, type: 'uz' });
+
+      subset.forEach(item => {
+        cards.push({ id: item.w, text: item.w, type: 'en' });
+        cards.push({ id: item.w, text: item.t, type: 'uz' });
       });
 
       cards.sort(() => Math.random() - 0.5);
 
-      const grid = document.getElementById('match-grid');
-      grid.innerHTML = '';
-
-      cards.forEach(card => {
-        const cardElem = document.createElement('button');
-        cardElem.className = "p-4 sm:p-5 rounded-2xl bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-100 text-xs sm:text-sm font-semibold transition active:scale-95 shadow-md flex items-center justify-center text-center min-h-[80px]";
-        cardElem.innerText = card.text;
-        cardElem.dataset.id = card.id;
-        cardElem.dataset.type = card.type;
-
-        cardElem.onclick = () => selectMatchCard(cardElem);
-        grid.appendChild(cardElem);
+      cards.forEach((c) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = "p-4 bg-slate-800 border border-slate-700 rounded-xl text-center text-sm font-medium cursor-pointer hover:border-indigo-500 transition shadow";
+        cardEl.textContent = c.text;
+        cardEl.dataset.id = c.id;
+        cardEl.onclick = () => handleMatchClick(cardEl);
+        grid.appendChild(cardEl);
       });
     }
 
-    function selectMatchCard(elem) {
-      if (elem.classList.contains('matched') || elem.classList.contains('selected')) return;
+    function handleMatchClick(cardEl) {
+      if (selectedCards.length === 2 || cardEl.classList.contains('bg-indigo-600')) return;
 
-      elem.classList.add('selected', 'border-indigo-500', 'bg-indigo-600/30', 'text-indigo-200');
-      selectedMatchCards.push(elem);
+      cardEl.classList.add('bg-indigo-600', 'text-white');
+      selectedCards.push(cardEl);
 
-      if (selectedMatchCards.length === 2) {
-        const [first, second] = selectedMatchCards;
-
-        if (first.dataset.id === second.dataset.id && first.dataset.type !== second.dataset.type) {
-          // MATCH SUCCESS
+      if (selectedCards.length === 2) {
+        const [c1, c2] = selectedCards;
+        if (c1.dataset.id === c2.dataset.id && c1 !== c2) {
           setTimeout(() => {
-            first.className = "p-4 sm:p-5 rounded-2xl bg-emerald-500/20 border-2 border-emerald-500 text-emerald-300 text-xs sm:text-sm font-bold opacity-60 pointer-events-none matched min-h-[80px] flex items-center justify-center text-center";
-            second.className = "p-4 sm:p-5 rounded-2xl bg-emerald-500/20 border-2 border-emerald-500 text-emerald-300 text-xs sm:text-sm font-bold opacity-60 pointer-events-none matched min-h-[80px] flex items-center justify-center text-center";
-            
-            matchedPairsCount++;
-            document.getElementById('match-pairs').innerText = `${matchedPairsCount} / 6`;
-
-            if (matchedPairsCount === 6) {
-              clearInterval(matchTimerInterval);
-              setTimeout(() => {
-                alert(`Barakalla! Barcha juftliklarni ${matchTimer} soniyada topdingiz! 🎉`);
-              }, 300);
-            }
-          }, 250);
+            c1.style.visibility = 'hidden';
+            c2.style.visibility = 'hidden';
+            selectedCards = [];
+          }, 400);
         } else {
-          // MATCH FAILED
           setTimeout(() => {
-            first.classList.remove('selected', 'border-indigo-500', 'bg-indigo-600/30', 'text-indigo-200');
-            second.classList.remove('selected', 'border-indigo-500', 'bg-indigo-600/30', 'text-indigo-200');
-            
-            first.classList.add('border-rose-500', 'bg-rose-500/20');
-            second.classList.add('border-rose-500', 'bg-rose-500/20');
-
-            setTimeout(() => {
-              first.classList.remove('border-rose-500', 'bg-rose-500/20');
-              second.classList.remove('border-rose-500', 'bg-rose-500/20');
-            }, 400);
-          }, 300);
+            c1.classList.remove('bg-indigo-600', 'text-white');
+            c2.classList.remove('bg-indigo-600', 'text-white');
+            selectedCards = [];
+          }, 800);
         }
-
-        selectedMatchCards = [];
       }
     }
 
-    // --- 4. DICTIONARY MODE LOGIC ---
+    // DICTIONARY LOGIC
     function renderDictionary() {
-      const searchTerm = document.getElementById('dict-search').value.toLowerCase().trim();
-      const listContainer = document.getElementById('dict-list');
-      listContainer.innerHTML = '';
+      const query = document.getElementById('dict-search').value.toLowerCase();
+      const list = document.getElementById('dict-list');
+      list.innerHTML = '';
 
-      const filtered = activeVocabList.filter(item => 
-        item.w.toLowerCase().includes(searchTerm) ||
-        item.t.toLowerCase().includes(searchTerm) ||
-        item.k.toLowerCase().includes(searchTerm)
+      const filtered = activeWords.filter(item => 
+        item.w.toLowerCase().includes(query) || 
+        item.t.toLowerCase().includes(query) ||
+        item.k.toLowerCase().includes(query)
       );
 
-      document.getElementById('dict-count').innerText = filtered.length;
-
-      if (filtered.length === 0) {
-        listContainer.innerHTML = `
-          <div class="text-center py-12 text-slate-500 text-sm">
-            <i class="fa-solid fa-magnifying-glass text-3xl mb-2 opacity-50"></i>
-            <p>Afsuski, hech narsa topilmadi.</p>
-          </div>
-        `;
-        return;
-      }
-
       filtered.forEach(item => {
-        const isLearned = learnedWordsSet.has(item.id);
-        const row = document.createElement('div');
-        row.className = "p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 hover:border-slate-600 transition flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3";
+        const st = statusMap[item.w];
+        let statusBadge = `<span class="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded">O'rganilmagan</span>`;
+        if (st === 'learned') statusBadge = `<span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded">Yodlandi ✓</span>`;
+        if (st === 'repeat') statusBadge = `<span class="text-xs bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-0.5 rounded">Takrorlash 🔄</span>`;
 
-        row.innerHTML = `
-          <div class="flex items-start gap-3">
-            <button onclick="speakWord('${item.w}')" class="mt-1 sm:mt-0 text-indigo-400 hover:text-indigo-300 p-2 rounded-xl bg-slate-700/50 shrink-0">
-              <i class="fa-solid fa-volume-high"></i>
-            </button>
-            <div>
-              <div class="flex items-center gap-2 flex-wrap">
-                <h4 class="text-base font-bold text-white">${item.w}</h4>
-                <span class="text-xs font-mono text-indigo-400">${item.p}</span>
-                <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full font-semibold">Unit ${item.id.split('_')[0]}</span>
-                ${isLearned ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">Yodlangan</span>' : ''}
-              </div>
-              <p class="text-sm font-semibold text-emerald-400 mt-0.5">${item.t}</p>
-              <p class="text-xs text-slate-400 italic mt-1">"${item.e}"</p>
+        const div = document.createElement('div');
+        div.className = "p-4 bg-slate-800/80 border border-slate-700/70 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-2 hover:border-indigo-500/50 transition";
+        div.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-bold text-white">${item.w}</span>
+              <span class="text-xs font-mono text-indigo-400">${item.p}</span>
+              ${statusBadge}
             </div>
+            <p class="text-xs text-slate-400 italic mt-1">"${item.e}"</p>
           </div>
-          <div class="text-xs text-slate-400 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-slate-700/60 shrink-0 self-end sm:self-center">
-            <i class="fa-solid fa-key text-amber-400 mr-1"></i> ${item.k}
+          <div class="text-sm font-semibold text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1 rounded-lg">
+            ${item.t}
           </div>
         `;
-
-        listContainer.appendChild(row);
-      });
-    }
-
-    // Keyboard Hotkeys
-    function setupKeyboardControls() {
-      document.addEventListener('keydown', (e) => {
-        if (currentMode !== 'cards') return;
-
-        // Space -> Flip
-        if (e.code === 'Space') {
-          e.preventDefault();
-          flipCard();
-        }
-        // Left Arrow -> Prev Card
-        else if (e.code === 'ArrowLeft') {
-          prevCard();
-        }
-        // Right Arrow -> Next Card
-        else if (e.code === 'ArrowRight') {
-          nextCard();
-        }
-        // Up Arrow -> Mark Learned
-        else if (e.code === 'ArrowUp') {
-          markLearned(true);
-        }
-        // Down Arrow -> Repeat
-        else if (e.code === 'ArrowDown') {
-          markLearned(false);
-        }
+        list.appendChild(div);
       });
     }
   </script>
