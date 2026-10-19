@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gateway to the World B1 - Vocabulary Master (Units 1-10)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .perspective { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-950/80 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-indigo-600 text-white p-3 rounded-xl shadow-lg shadow-indigo-500/30">
+          <i class="fa-solid me-0 fa-book-open text-2xl"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Gateway B1 Vocab Master</h1>
+          <p class="text-xs text-slate-400">1–10 Unitlar (450+ Lug'at, Key Words & Misollar)</p>
+        </div>
+      </div>
+
+      <!-- Mode Selector -->
+      <nav class="flex bg-slate-800/80 p-1 rounded-xl border border-slate-700/50 text-sm font-medium">
+        <button onclick="switchMode('cards')" id="btn-cards" class="px-4 py-2 rounded-lg bg-indigo-600 text-white transition-all duration-200">
+          <i class="fa-solid fa-clone mr-1.5"></i> Cards
+        </button>
+        <button onclick="switchMode('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200">
+          <i class="fa-solid fa-circle-question mr-1.5"></i> Quiz
+        </button>
+        <button onclick="switchMode('match')" id="btn-match" class="px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200">
+          <i class="fa-solid fa-puzzle-piece mr-1.5"></i> Match
+        </button>
+        <button onclick="switchMode('dict')" id="btn-dict" class="px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200">
+          <i class="fa-solid fa-list mr-1.5"></i> Dictionary
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Controls Bar -->
+  <div class="max-w-7xl mx-auto w-full px-4 py-4 flex flex-wrap justify-between items-center gap-4 border-b border-slate-800/60">
+    <div class="flex items-center gap-3">
+      <label class="text-sm font-semibold text-slate-300">Unit Tanlang:</label>
+      <select id="unit-select" onchange="changeUnit(this.value)" class="bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500">
+        <option value="1">Unit 1: Ages, Family & Personality</option>
+        <option value="2">Unit 2: Travel & Transport</option>
+        <option value="3">Unit 3: Cities, Houses & Living</option>
+        <option value="4">Unit 4: Food, Cooking & Health</option>
+        <option value="5">Unit 5: School, Education & Exams</option>
+        <option value="6">Unit 6: Technology & Digital World</option>
+        <option value="7">Unit 7: Sports, Fitness & Health</option>
+        <option value="8">Unit 8: Arts, Media & Entertainment</option>
+        <option value="9">Unit 9: Nature & Environment</option>
+        <option value="10">Unit 10: Shopping & Money</option>
+        <option value="all">Barcha Unitlar (All 1-10)</option>
+      </select>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="flex items-center gap-4 text-sm">
+      <div class="text-slate-400">Yodlandi: <span id="learned-count" class="text-indigo-400 font-bold">0</span> / <span id="total-count">0</span></div>
+      <div class="w-32 bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700">
+        <div id="progress-bar" class="bg-indigo-500 h-full w-0 transition-all duration-300"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="max-w-7xl mx-auto w-full px-4 py-6 flex-1 flex flex-col justify-center items-center">
+
+    <!-- 1. FLASHCARDS MODE -->
+    <div id="mode-cards" class="w-full max-w-xl flex flex-col items-center">
+      <div class="perspective w-full h-80 cursor-pointer" onclick="flipCard()">
+        <div id="card-inner" class="relative w-full h-full duration-500 transform-style-3d shadow-2xl rounded-2xl border border-slate-700/80 bg-slate-800/90 flex flex-col justify-between p-6 text-center">
+          
+          <!-- Card Front -->
+          <div class="absolute inset-0 backface-hidden flex flex-col justify-between p-6 bg-slate-800 rounded-2xl">
+            <div class="flex justify-between items-center text-xs text-slate-400">
+              <span id="card-unit-tag" class="bg-indigo-500/20 text-indigo-300 px-2.5 py-1 rounded-full font-medium">Unit 1</span>
+              <span>Boshqalar uchun bosing 🔄</span>
+            </div>
+            
+            <div class="my-auto">
+              <h2 id="card-word" class="text-3xl font-extrabold text-white mb-2">Word</h2>
+              <p id="card-phonetic" class="text-indigo-400 text-sm font-mono mb-3">/phonetic/</p>
+              <div class="inline-block bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-1.5 text-xs text-slate-300">
+                <i class="fa-solid fa-key text-amber-400 mr-1"></i> <span id="card-keywords">Key words</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center text-xs text-slate-400">
+              <button onclick="speakCurrentWord(event)" class="text-indigo-400 hover:text-indigo-300 p-2 rounded-full bg-slate-700/50">
+                <i class="fa-solid fa-volume-high text-lg"></i>
+              </button>
+              <span id="card-index">1 / 45</span>
+            </div>
+          </div>
+
+          <!-- Card Back -->
+          <div class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col justify-between p-6 bg-indigo-950/80 rounded-2xl border border-indigo-500/40">
+            <div class="text-xs text-indigo-300 font-semibold uppercase tracking-wider">O'zbekcha Ma'nosi</div>
+            
+            <div class="my-auto">
+              <h3 id="card-translation" class="text-2xl font-bold text-white mb-4">Таржима</h3>
+              <p id="card-example" class="text-slate-300 text-sm italic bg-slate-900/60 p-3 rounded-xl border border-indigo-500/20">"Example sentence goes here."</p>
+            </div>
+
+            <div class="text-xs text-slate-400">Chaqqon o'rganing!</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Card Action Controls -->
+      <div class="flex items-center justify-between w-full mt-6 gap-4">
+        <button onclick="prevCard()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-200 border border-slate-700 text-sm font-semibold transition">
+          <i class="fa-solid fa-chevron-left mr-1"></i> Oldingi
+        </button>
+        
+        <div class="flex gap-2">
+          <button onclick="markLearned(false)" class="px-4 py-2.5 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl text-sm font-semibold transition">
+            <i class="fa-solid fa-rotate-right mr-1"></i> Takrorlash
+          </button>
+          <button onclick="markLearned(true)" class="px-4 py-2.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded-xl text-sm font-semibold transition">
+            <i class="fa-solid fa-check mr-1"></i> Yodladim
+          </button>
+        </div>
+
+        <button onclick="nextCard()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-200 border border-slate-700 text-sm font-semibold transition">
+          Keyingi <i class="fa-solid fa-chevron-right ml-1"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. QUIZ MODE -->
+    <div id="mode-quiz" class="w-full max-w-2xl hidden">
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-xl">
+        <div class="flex justify-between items-center mb-6">
+          <span class="text-xs bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full font-semibold">Quiz Test</span>
+          <span id="quiz-score" class="text-sm font-bold text-amber-400">Score: 0</span>
+        </div>
+
+        <div class="text-center mb-8">
+          <p class="text-xs text-slate-400 mb-1">Quyidagi so'zning тўғри ўзбекча таржимасини топинг:</p>
+          <h2 id="quiz-word" class="text-3xl font-extrabold text-white">Word</h2>
+        </div>
+
+        <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+          <!-- Options injected via JavaScript -->
+        </div>
+
+        <button onclick="generateQuizQuestion()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-sm transition">
+          Keyingi Savol <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. MATCHING GAME MODE -->
+    <div id="mode-match" class="w-full max-w-3xl hidden">
+      <div class="text-center mb-4">
+        <p class="text-slate-400 text-sm">Inglizcha so'zlar va ularning o'zbekcha tarjimasini mos keltiring:</p>
+      </div>
+      <div id="match-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 w-full">
+        <!-- Cards generated dynamically -->
+      </div>
+    </div>
+
+    <!-- 4. DICTIONARY MODE -->
+    <div id="mode-dict" class="w-full max-w-4xl hidden">
+      <!-- Search Input -->
+      <div class="relative mb-6">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+        <input type="text" id="dict-search" oninput="renderDictionary()" placeholder="So'z yoki tarjima bo'yicha qidirish..." class="w-full pl-11 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+      </div>
+
+      <!-- Dictionary List -->
+      <div id="dict-list" class="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+        <!-- List items injected via JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Comprehensive Database: Gateway to the World B1 (Units 1 to 10)
+    // 45-50 words per Unit = 450+ total vocabulary entries
+    const vocabData = {
+      1: [
+        { w: "Adolescence", p: "/ˌæd.əˈles.əns/", k: "Life stage, Teen, Youth", t: "Ўсмирлик даври", e: "Adolescence is a time of major emotional changes." },
+        { w: "Adult", p: "/ˈæd.ʌlt/", k: "Grown-up, Age 18+, Mature", t: "Катта ёшли инсон", e: "You become an adult legally at eighteen." },
+        { w: "Baby", p: "/ˈbeɪ.bi/", k: "Infant, Newborn, Child", t: "Чақалоқ", e: "The baby fell asleep peacefully in her crib." },
+        { w: "Birth", p: "/bɜːθ/", k: "Beginning, Life, Birthday", t: "Туғилиш", e: "They celebrated the birth of their baby boy." },
+        { w: "Childhood", p: "/ˈtʃaɪld.hʊd/", k: "Youth memories, Early life", t: "Болалик даври", e: "He had a happy childhood in a small village." },
+        { w: "Death", p: "/deθ/", k: "End of life, Passing away", t: "Ўлим", e: "The grandfather's death saddened the family." },
+        { w: "Generation", p: "/ˌdʒen.əˈreɪ.ʃən/", k: "Age group, Era, Family tree", t: "Авлод", e: "Three generations gathered for the reunion." },
+        { w: "Middle-aged", p: "/ˌmɪd.əlˈeɪdʒd/", k: "Age 40-60, Adult", t: "Ўрта ёшли", e: "My father is a middle-aged university teacher." },
+        { w: "Senior citizen", p: "/ˌsiː.ni.ə ˈsɪt.ɪ.zən/", k: "Elderly, Pensioner, Age 65+", t: "Кекса ёшли фуқаро", e: "Senior citizens get discounts on buses." },
+        { w: "Teenager", p: "/ˈtiːnˌeɪ.dʒər/", k: "Adolescent, Age 13-19", t: "Ўсмир", e: "Teenagers enjoy spending time with friends." },
+        { w: "Toddler", p: "/ˈtɒd.lər/", k: "Young child, Ages 1-3", t: "Юришни энди бошлаган бола", e: "The toddler took his very first steps." },
+        { w: "Ancestor", p: "/ˈæn.ses.tər/", k: "History, Roots, Past family", t: "Аждод, бобокалон", e: "Our ancestors built this historical city." },
+        { w: "Descendant", p: "/dɪˈsen.dənt/", k: "Offspring, Family tree", t: "Авлод, чевара", e: "He claims to be a descendant of royals." },
+        { w: "Immediate family", p: "/ɪˈmiː.di.ət/", k: "Parents, Siblings", t: "Яқин оила аъзолари", e: "Only immediate family joined the party." },
+        { w: "Extended family", p: "/ɪkˈsten.dɪd/", k: "Uncles, Aunts, Relatives", t: "Кенгайтирилган оила", e: "We visit our extended family during holidays." },
+        { w: "Bossy", p: "/ˈbɒs.i/", k: "Personality, Orders people", t: "Ҳукмронликни ёқтирадиган", e: "Nobody likes bossy group leaders." },
+        { w: "Cheerful", p: "/ˈtʃɪə.fəl/", k: "Personality, Happy, Positive", t: "Шўх, қувноқ", e: "She always gives a cheerful smile." },
+        { w: "Easy-going", p: "/ˌiː.ziˈɡəʊ.ɪŋ/", k: "Personality, Calm, Relaxed", t: "Оғир-вазмин, муросачи", e: "Our English teacher is very easy-going." },
+        { w: "Hard-working", p: "/ˌhɑːdˈwɜː.kɪŋ/", k: "Personality, Diligent", t: "Меҳнатсевар, тиришқоқ", e: "Hard-working pupils get good grades." },
+        { w: "Impatient", p: "/ɪmˈpeɪ.ʃənt/", k: "Personality, Restless", t: "Сабрсиз", e: "Don't get impatient; the bus is coming." },
+        { w: "Reliable", p: "/rɪˈlaɪ.ə.bəl/", k: "Personality, Trustworthy", t: "Ишончли", e: "Dilshod is a reliable and honest friend." },
+        { w: "Selfish", p: "/ˈsel.fɪʃ/", k: "Personality, Self-centered", t: "Худбин", e: "It is selfish to take everything for yourself." },
+        { w: "Talkative", p: "/ˈtɔː.kə.tɪv/", k: "Personality, Chatty, Vocal", t: "Сергап, гапдон", e: "She is a talkative student in class." },
+        { w: "Tidy", p: "/ˈtaɪ.di/", k: "Neat, Organized, Clean", t: "Саранжом-саришта", e: "Keep your study desk clean and tidy." },
+        { w: "Curly", p: "/ˈkɜː.li/", k: "Appearance, Hair style", t: "Бўйра, жингвала соч", e: "She has long natural curly hair." },
+        { w: "Straight", p: "/streɪt/", k: "Appearance, Smooth hair", t: "Тўғри, силлиқ соч", e: "Her straight hair reaches her waist." },
+        { w: "Wavy", p: "/ˈweɪ.vi/", k: "Appearance, Waves", t: "Тўлқинли соч", e: "He sports stylish wavy dark hair." },
+        { w: "Generous", p: "/ˈdʒen.ər.əs/", k: "Gives freely, Kind", t: "Сховатли, қўли очиқ", e: "He is generous and helps poor people." },
+        { w: "Stubborn", p: "/ˈstʌb.ən/", k: "Refuses to change mind", t: "Қайсар, ўжар", e: "He is too stubborn to admit mistakes." },
+        { w: "Modest", p: "/ˈmɒd.ɪst/", k: "Humble, Not boastful", t: "Камтар, камсуқум", e: "Despite his success, he remains modest." },
+        { w: "Moody", p: "/ˈmuː.di/", k: "Unpredictable emotions", t: "Синжиқ, кайфияти тез ўзгарадиган", e: "Teenagers can sometimes be moody." },
+        { w: "Punctual", p: "/ˈpʌŋk.tʃu.əl/", k: "On time, Timely", t: "Ватқига риоя қилувчи", e: "Always be punctual for job interviews." },
+        { w: "Arrogant", p: "/ˈær.ə.ɡənt/", k: "Overproud, Haughty", t: "Кеккаайган, димоғдор", e: "No one likes arrogant and boastful people." },
+        { w: "Affectionate", p: "/əˈfek.ʃən.ət/", k: "Loving, Warm", t: "Меҳрибон, меҳр-муҳаббатли", e: "Dogs are very affectionate animals." },
+        { w: "Ambitious", p: "/æmˈbɪʃ.əs/", k: "Driven to succeed", t: "Олий мақсадли, интилувчан", e: "She is ambitious and wants to run a company." },
+        { w: "Competitive", p: "/kəmˈpet.ə.tɪv/", k: "Wants to win", t: "Мусобақани хуш кўрадиган", e: "He is competitive when playing video games." },
+        { w: "Insecure", p: "/ˌɪn.sɪˈkjʊər/", k: "Lacks confidence", t: "Ўзига ишончсиз", e: "Feeling insecure before exams is common." },
+        { w: "Jealous", p: "/ˈdʒel.əs/", k: "Envious, Covetous", t: "Рашкчи, ҳасадгўй", e: "Don't be jealous of other people's gains." },
+        { w: "Sensible", p: "/ˈsen.sə.bəl/", k: "Practical, Wise", t: "Оқилона, мулоҳазали", e: "Wearing a warm coat in winter is sensible." },
+        { w: "Sensitive", p: "/ˈsen.sɪ.tɪv/", k: "Easily hurt, Caring", t: "Таъсирчан, нозик", e: "She is sensitive to critical remarks." },
+        { w: "Sympathetic", p: "/ˌsɪm.pəˈθet.ɪk/", k: "Understanding, Caring", t: "Ҳамдард, тушунадиган", e: "The doctor was sympathetic to my pain." },
+        { w: "Shy", p: "/ʃaɪ/", k: "Timid, Reserved", t: "Тортинчоқ", e: "The shy boy hid behind his mother." },
+        { w: "Anxious", p: "/ˈæŋk.ʃəs/", k: "Worried, Nervous", t: "Хавотирли, безовта", e: "He felt anxious before his test result." },
+        { w: "Loyal", p: "/ˈlɔɪ.əl/", k: "Faithful, Devoted", t: "Садоқатли, вафодор", e: "A loyal friend stands by you always." },
+        { w: "Rebellious", p: "/rɪˈbel.i.əs/", k: "Disobedient", t: "Исиёнкор, бўйсунмайдиган", e: "Rebellious youths broke the curfew." }
+      ],
+      2: [
+        { w: "Accommodation", p: "/əˌkɒm.əˈdeɪ.ʃən/", k: "Hotel, Stay, Lodging", t: "Турар жой, меҳмонхона", e: "We booked hotel accommodation online." },
+        { w: "Adventure", p: "/ədˈven.tʃər/", k: "Excitement, Journey", t: "Саргузашт", e: "Hiking in mountains was an adventure." },
+        { w: "Backpacking", p: "/ˈbækˌpæk.ɪŋ/", k: "Budget travel, Rucksack", t: "Рюкзак билан саёҳат", e: "They went backpacking across Europe." },
+        { w: "Border", p: "/ˈbɔː.dər/", k: "Country edge, Passport", t: "Чегара", e: "Show your passport at the border check." },
+        { w: "Destination", p: "/ˌdes.tɪˈneɪ.ʃən/", k: "Arrival place, Target", t: "Борадиган манзил", e: "Khiva is a historic travel destination." },
+        { w: "Excursion", p: "/ɪkˈskɜː.ʃən/", k: "Trip, Tour, Outing", t: "Экскурсия, сайр", e: "We took a day excursion to the lake." },
+        { w: "Explorer", p: "/ɪkˈsplɔː.rər/", k: "Discoverer, Pioneer", t: "Тадқиқотчи, саёҳатчи", e: "Early explorers navigated ocean seas." },
+        { w: "Journey", p: "/ˈdʒɜː.ni/", k: "Long trip, Travel route", t: "Узоқ масофали сафар", e: "The train journey took five hours." },
+        { w: "Luggage", p: "/ˈlʌɡ.ɪdʒ/", k: "Baggage, Suitcases", t: "Багаж, юклар", e: "Keep an eye on your luggage." },
+        { w: "Passenger", p: "/ˈpæs.ən.dʒər/", k: "Traveler, Commuter", t: "Йўловчи", e: "Passengers boarded the airplane smoothly." },
+        { w: "Passport", p: "/ˈpɑːs.pɔːt/", k: "ID document, Travel", t: "Паспорт", e: "You need a passport to fly abroad." },
+        { w: "Platform", p: "/ˈplæt.fɔːm/", k: "Train station, Tracks", t: "Платформа", e: "The express train arrives at platform 2." },
+        { w: "Reservation", p: "/ˌrez.əˈveɪ.ʃən/", k: "Advance booking", t: "Бронь қилиш", e: "I have a dinner table reservation." },
+        { w: "Scenery", p: "/ˈsiː.nər.i/", k: "Landscape, Views", t: "Табиат манзараси", e: "Mountain scenery was truly stunning." },
+        { w: "Sightseeing", p: "/ˈsaɪtˌsiː.ɪŋ/", k: "Tourism, Landmarks", t: "Диққатга сазовор жойлар", e: "We spent Sunday sightseeing in Rome." },
+        { w: "Tour guide", p: "/ˈtʊə ɡaɪd/", k: "Leader, Expert", t: "Гид, йўлбошчи", e: "The tour guide explained local myths." },
+        { w: "Traffic jam", p: "/ˈtræf.ɪk dʒæm/", k: "Cars stopped, Congestion", t: "Транспорт тирбандлиги", e: "We were stuck in a heavy traffic jam." },
+        { w: "Voyage", p: "/ˈvɔɪ.ɪdʒ/", k: "Sea trip, Ship journey", t: "Денгиз саёҳати", e: "The ship completed its voyage across ocean." },
+        { w: "Board", p: "/bɔːd/", k: "Get on plane or ship", t: "Транспортга чиқмоқ", e: "Passengers began to board the plane." },
+        { w: "Book", p: "/bʊk/", k: "Reserve in advance", t: "Олдиндан банд қилмоқ", e: "Book your hotel tickets early." },
+        { w: "Break down", p: "/breɪk daʊn/", k: "Engine failure, Vehicle", t: "Бузилиб қолмоқ", e: "Our scooter broke down on the hill." },
+        { w: "Check in", p: "/tʃek ɪn/", k: "Airport or hotel entry", t: "Рўйхатдан ўтмоқ", e: "Check in two hours before flight." },
+        { w: "Check out", p: "/tʃek aʊt/", k: "Leave hotel, Pay bill", t: "Меҳмонхонадан чиқмоқ", e: "We checked out at eleven sharp." },
+        { w: "Delay", p: "/dɪˈleɪ/", k: "Postponed, Late", t: "Кечиктирмоқ / кечикиш", e: "Snowstorms caused a flight delay." },
+        { w: "Drop off", p: "/drɒp ɒf/", k: "Leave someone at spot", t: "Машинада тушириб қолдирмоқ", e: "Drop me off near the metro station." },
+        { w: "Get off", p: "/ɡet ɒf/", k: "Leave bus or train", t: "Транспортдан тушмоқ", e: "Get off at the final stop." },
+        { w: "Get on", p: "/ɡet ɒn/", k: "Enter bus or train", t: "Транспортга чиқмоқ", e: "Get on the bus before it moves." },
+        { w: "Pick up", p: "/pɪk ʌp/", k: "Collect passenger", t: "Олиб кетмоқ", e: "I will pick you up at five." },
+        { w: "Set off", p: "/set ɒf/", k: "Start journey", t: "Йўлга чиқмоқ", e: "We set off early in morning." },
+        { w: "Take off", p: "/teɪk ɒf/", k: "Plane flight start", t: "Парвоз қилмоқ (самолёт)", e: "The plane took off right on time." },
+        { w: "Customs", p: "/ˈkʌs.təmz/", k: "Airport luggage check", t: "Божхона", e: "Pass through customs after landing." },
+        { w: "Departure", p: "/dɪˈpɑː.tʃər/", k: "Leaving, Flight exit", t: "Жўнаб кетиш", e: "Check flight departure board." },
+        { w: "Arrival", p: "/əˈraɪ.vəl/", k: "Reaching destination", t: "Етиб келиш", e: "Their arrival was delayed by fog." },
+        { w: "Fare", p: "/feər/", k: "Ticket price", t: "Йўл ҳақи", e: "Bus fares increased this year." },
+        { w: "Commute", p: "/kəˈmjuːt/", k: "Daily transit to work", t: "Қатнаб ишлаш/ўқиш", e: "He commutes by subway daily." },
+        { w: "Cruise", p: "/kruːz/", k: "Holiday on ship", t: "Круиз, кемада ҳордиқ", e: "They booked a Mediterranean cruise." },
+        { w: "Hitchhike", p: "/ˈhɪtʃ.haɪk/", k: "Free ride, Thumb out", t: "Йўлдан бепул машина ушлаб саёҳат қилиш", e: "Students hitchhiked across desert." },
+        { w: "Route", p: "/ruːt/", k: "Path, Direction", t: "Маршрут, йўналиш", e: "Select the fastest GPS route." },
+        { w: "Schedule", p: "/ˈʃed.juːl/", k: "Timetable, Plan", t: "Режа, қатнов жадвали", e: "Trains run on a tight schedule." },
+        { w: "Terminal", p: "/ˈtɜː.mɪ.nəl/", k: "Airport building", t: "Терминал", e: "Flight departs from Terminal 3." },
+        { w: "Vehicle", p: "/ˈvɪə.kəl/", k: "Car, Bus, Transport", t: "Транспорт воситаси", e: "Electric vehicles reduce pollution." },
+        { w: "Delay", p: "/dɪˈleɪ/", k: "Postpone, Wait time", t: "Кечикиш", e: "Heavy rain caused a train delay." },
+        { w: "In advance", p: "/ɪn ədˈvɑːns/", k: "Ahead of time", t: "Олдиндан", e: "Pay for tickets in advance." },
+        { w: "Lost property", p: "/lɒst ˈprɒp.ə.ti/", k: "Unclaimed items", t: "Yo'qolgan buyumlar bo'limi", e: "Check the lost property office." },
+        { w: "Single ticket", p: "/ˈsɪŋ.ɡəl/", k: "One way ticket", t: "Бир томонлама чипта", e: "I need a single ticket to London." }
+      ],
+      3: [
+        { w: "Suburbs", p: "/ˈsʌb.ɜːbz/", k: "Outskirts, Quiet zone", t: "Шаҳар атрофи", e: "Families prefer living in suburbs." },
+        { w: "Downtown", p: "/ˌdaʊnˈtaʊn/", k: "City center, Shops", t: "Шаҳар маркази", e: "We took a bus to downtown." },
+        { w: "Crowded", p: "/ˈkraʊ.dɪd/", k: "Full of people, Packed", t: "Одам билан гавжум", e: "Subway cars are crowded at 8 AM." },
+        { w: "Pollution", p: "/pəˈluː.ʃən/", k: "Smog, Waste air", t: "Ифлосланиш", e: "Cars create urban air pollution." },
+        { w: "Pavement", p: "/ˈpeɪv.mənt/", k: "Sidewalk, Walkway", t: "Пиёдалар йўлаги", e: "Walk safely on the concrete pavement." },
+        { w: "Basement", p: "/ˈbeɪs.mənt/", k: "Underground floor", t: "Ертўла, подвал", e: "Store boxes in the basement." },
+        { w: "Balcony", p: "/ˈbæl.kə.ni/", k: "Terrace, Outside view", t: "Балкон", e: "Enjoy coffee on the balcony." },
+        { w: "Ceiling", p: "/ˈsiː.lɪŋ/", k: "Interior top roof", t: "Шифт", e: "Paint the ceiling light white." },
+        { w: "Detached house", p: "/dɪˈtætʃt/", k: "Single home, Private yard", t: "Алоҳида ҳовли уй", e: "They bought a detached house." },
+        { w: "Terraced house", p: "/ˈter.əst/", k: "Row houses, Joined", t: "Қатор қурилган уй", e: "Terraced houses align British streets." },
+        { w: "Skyscraper", p: "/ˈskaɪˌskreɪ.pər/", k: "High-rise tower", t: "Осмонўпар бино", e: "Tashkent City features skyscrapers." },
+        { w: "Neighbourhood", p: "/ˈneɪ.bə.hʊd/", k: "Local area, Mahalla", t: "Маҳалла, қўшничилик", e: "Our neighbourhood is safe." },
+        { w: "Facilities", p: "/fəˈsɪl.ə.tiz/", k: "Amenities, Gym, Pool", t: "Қулайликлар", e: "The residential complex has facilities." },
+        { w: "Inhabitants", p: "/ɪnˈhæb.ɪ.tənts/", k: "Residents, Population", t: "Аҳоли", e: "Island inhabitants were welcoming." },
+        { w: "Public transport", p: "/ˈpʌb.lɪk/", k: "Buses, Subways, Trams", t: "Жамоат транспорти", e: "Use public transport to avoid jams." },
+        { w: "Resident", p: "/ˈrez.ɪ.dənt/", k: "Inhabitant, Citizen", t: "Доимий яшовчи", e: "Local residents protested the noise." },
+        { w: "Traffic", p: "/ˈtræf.ɪk/", k: "Vehicles on road", t: "Транспорт қатнови", e: "Morning road traffic was heavy." },
+        { w: "Chimney", p: "/ˈtʃɪm.ni/", k: "Roof flue, Smoke pipe", t: "Мўри", e: "Smoke puffed from the chimney." },
+        { w: "Fence", p: "/fens/", k: "Yard wall, Barrier", t: "Панжара, тўсиқ", e: "A wooden fence surrounds the yard." },
+        { w: "Floor", p: "/flɔːr/", k: "Level, Ground, Storey", t: "Қават / Пол", e: "Our flat is on the 5th floor." },
+        { w: "Gate", p: "/ɡeɪt/", k: "Yard entrance door", t: "Дарвоза", e: "Close the iron gate behind you." },
+        { w: "Roof", p: "/ruːf/", k: "House top cover", t: "Том", e: "Repairs fixed the leaking roof." },
+        { w: "Semi-detached house", p: "/ˌsem.i.dɪˈtætʃt/", k: "Shared center wall", t: "Бир девори туташ уй", e: "They reside in a semi-detached house." },
+        { w: "Wardrobe", p: "/ˈwɔː.drəʊb/", k: "Clothes closet", t: "Кийим шкафи", e: "Hang jackets inside the wardrobe." },
+        { w: "Cottage", p: "/ˈkɒt.ɪdʒ/", k: "Country home, Small", t: "Қишлоқ уйи, дача", e: "They spent weekends at a cottage." },
+        { w: "Cosy", p: "/ˈkəʊ.zi/", k: "Warm, Comfortable", t: "Шинанам", e: "The living room feels warm and cosy." },
+        { w: "Spacious", p: "/ˈspeɪ.ʃəs/", k: "Large room, Roomy", t: "Кенг ва шинам", e: "The master kitchen is very spacious." },
+        { w: "Bustling", p: "/ˈbʌs.lɪŋ/", k: "Lively, Busy activity", t: "Шовқин-сўронли, гавжум", e: "Markets are bustling with traders." },
+        { w: "Historic", p: "/hɪˈstɒr.ɪk/", k: "Old, Ancient, Famous", t: "Тарихий", e: "Samarkand has iconic historic sights." },
+        { w: "Lively", p: "/ˈlaɪv.li/", k: "Energetic, Vibrant", t: "Жандон, шўх", e: "The city center has a lively nightlife." },
+        { w: "Quiet", p: "/ˈkwaɪ.ət/", k: "Silent, Peaceful", t: "Тинч, сокин", e: "I love reading in quiet places." },
+        { w: "Safe", p: "/seɪf/", k: "Secure, Protected", t: "Хавфсиз", e: "Keep your key in a safe spot." },
+        { w: "Noisy", p: "/ˈnɔɪ.zi/", k: "Loud, Loud sounds", t: "Шовқинли", e: "Living near highway gets noisy." },
+        { w: "Picturesque", p: "/ˌpɪk.tʃərˈesk/", k: "Pretty scene, Scenic", t: "Манзарали, гўзал", e: "The mountain village is picturesque." },
+        { w: "Central heating", p: "/ˈsen.trəl/", k: "Heater system", t: "Марказий иситиш тизими", e: "Central heating keeps rooms warm." },
+        { w: "Air conditioning", p: "/ˈeə kənˌdɪʃ.ən.ɪŋ/", k: "Cooling system", t: "Кондиционер тизими", e: "Turn on air conditioning in summer." },
+        { w: "Attic", p: "/ˈæt.ɪk/", k: "Roof room, Top store", t: "Мансарда, чердак", e: "Old books were stored in the attic." },
+        { w: "Garage", p: "/ˈɡær.ɑːʒ/", k: "Car store building", t: "Гараж", e: "Park your scooter inside garage." },
+        { w: "Patio", p: "/ˈpæt.i.əʊ/", k: "Paved garden space", t: "Уй олдидаги очиқ шийпон", e: "We ate dinner on the outdoor patio." },
+        { w: "Porch", p: "/pɔːtʃ/", k: "Covered house entrance", t: "Уй пешайвони, веранда", e: "Leave mud boots on the front porch." },
+        { w: "Rent", p: "/rent/", k: "Monthly home payment", t: "Ижара ҳақи", e: "Pay monthly rent on time." },
+        { w: "Tenant", p: "/ˈten.ənt/", k: "Person renting house", t: "Ижарачи", e: "Tenants signed a one-year contract." },
+        { w: "Landlord", p: "/ˈlænd.lɔːd/", k: "Property owner", t: "Уй эгаси", e: "The landlord repaired broken doors." },
+        { w: "Urban", p: "/ˈɜː.bən/", k: "City related", t: "Шаҳарга оид", e: "Urban development is booming." },
+        { w: "Rural", p: "/ˈrʊə.rəl/", k: "Country, Village related", t: "Қишлоққа оид", e: "Fresh air is common in rural areas." }
+      ],
+      4: [
+        { w: "Baked", p: "/beɪkt/", k: "Oven cooked, Bread, Cake", t: "Печда пиширилган", e: "Baked potatoes are tasty and light." },
+        { w: "Boiled", p: "/bɔɪld/", k: "Cooked in hot water", t: "Қайнатилган", e: "Eat boiled eggs for protein." },
+        { w: "Canned", p: "/kænd/", k: "Tinned food", t: "Консерва қилинган", e: "Buy canned beans for quick soup." },
+        { w: "Dairy products", p: "/ˈdeə.ri/", k: "Milk, Cheese, Yogurt", t: "Сут маҳсулотлари", e: "Milk and cheese are dairy products." },
+        { w: "Fast food", p: "/ˌfɑːst ˈfuːd/", k: "Quick burger, Fries", t: "Тезкор таом", e: "Avoid eating fast food every day." },
+        { w: "Fresh", p: "/freʃ/", k: "Natural, Crisp, Raw", t: "Янги, табиий", e: "Fresh fruits contain many vitamins." },
+        { w: "Frozen", p: "/ˈfrəʊ.zən/", k: "Iced in freezer", t: "Музлатилган", e: "Keep frozen peas in freezer." },
+        { w: "Grilled", p: "/ɡrɪld/", k: "Cooked on grill, BBQ", t: "Грильда қовурилган", e: "Grilled chicken tastes smoky and good." },
+        { w: "Ingredients", p: "/ɪnˈɡriː.di.ənts/", k: "Recipe parts", t: "Масаллиқлар", e: "Check cake ingredients first." },
+        { w: "Junk food", p: "/ˈdʒʌŋk ˌfuːd/", k: "Unhealthy snacks, Chips", t: "Зарарли таомлар", e: "Junk food ruins healthy diets." },
+        { w: "Nutritious", p: "/njuːˈtrɪʃ.əs/", k: "Healthy, Vitamin rich", t: "Тўйимли ва фойдали", e: "Nuts are a nutritious snack." },
+        { w: "Organic", p: "/ɔːˈɡæn.ɪk/", k: "Chemical-free, Natural", t: "Органик, кимёсиз", e: "Organic vegetables cost slightly more." },
+        { w: "Raw", p: "/rɔː/", k: "Uncooked, Fresh state", t: "Хом, пишмаган", e: "Carrots can be eaten raw." },
+        { w: "Spicy", p: "/ˈspaɪ.si/", k: "Hot, Chili, Spiced", t: "Аччиқ ва зираворли", e: "Curry is famous for spicy taste." },
+        { w: "Stale", p: "/steɪl/", k: "Not fresh, Hard bread", t: "Баёт, эскирган", e: "This stale bread is hard to chew." },
+        { w: "Sweet", p: "/swiːt/", k: "Sugar taste, Honey", t: "Ширин", e: "Watermelons are sweet in summer." },
+        { w: "Vegetarian", p: "/ˌvedʒ.ɪˈteə.ri.ən/", k: "No meat diet", t: "Вегетариан", e: "She cooks vegetarian pasta." },
+        { w: "Add", p: "/æd/", k: "Mix in, Put together", t: "Қўшмоқ", e: "Add a pinch of salt to taste." },
+        { w: "Bake", p: "/beɪk/", k: "Oven cook, Bread", t: "Печда пиширмоқ", e: "Mother bakes cookies on Sunday." },
+        { w: "Boil", p: "/bɔɪl/", k: "Heat water to bubbles", t: "Қайнатмоқ", e: "Boil water for green tea." },
+        { w: "Chop", p: "/tʃɒp/", k: "Cut into pieces, Knife", t: "Тўғрамоқ, майдаламоқ", e: "Chop onions with sharp knife." },
+        { w: "Fry", p: "/fraɪ/", k: "Pan cook with oil", t: "Ёғда қовурмоқ", e: "Fry potatoes over medium heat." },
+        { w: "Mix", p: "/mɪks/", k: "Combine ingredients", t: "Аралаштирмоқ", e: "Mix flour and sugar in bowl." },
+        { w: "Peel", p: "/piːl/", k: "Remove skin of fruit", t: "Пўстини ачмоқ", e: "Peel apples before slicing." },
+        { w: "Roast", p: "/rəʊst/", k: "Oven cook meat", t: "Димоғда пиширмоқ", e: "They roast turkey for dinner." },
+        { w: "Slice", p: "/slaɪs/", k: "Cut thin slices", t: "Паррак кесмоқ", e: "Slice tomatoes for sandwich." },
+        { w: "Taste", p: "/teɪst/", k: "Sample flavor, Palate", t: "Татиб кўрмоқ / Таъм", e: "Taste soup to check seasoning." },
+        { w: "Salty", p: "/ˈsɒl.ti/", k: "High salt content", t: "Шўр", e: "Potato chips are salty." },
+        { w: "Sour", p: "/saʊər/", k: "Acidic, Lemon taste", t: "Нордон", e: "Lemons have a sour flavor." },
+        { w: "Bitter", p: "/ˈbɪt.ər/", k: "Dark coffee, Unsweetened", t: "Аччиқ (кофе каби)", e: "Dark chocolate has a bitter taste." },
+        { w: "Delicious", p: "/dɪˈlɪʃ.əs/", k: "Tasty, Great flavor", t: "Жуда мазали", e: "This hot plov is delicious." },
+        { w: "Disgusting", p: "/dɪsˈɡʌs.tɪŋ/", k: "Terrible taste, Bad", t: "Жуда ёмон, жирканч", e: "The rotten milk smelled disgusting." },
+        { w: "Recipe", p: "/ˈres.ɪ.pi/", k: "Cooking instructions", t: "Таом рецепти", e: "Follow the pie recipe carefully." },
+        { w: "Dish", p: "/dɪʃ/", k: "Prepared food plate", t: "Таом, овқат тури", e: "Plov is a traditional national dish." },
+        { w: "Meal", p: "/miːl/", k: "Breakfast, Lunch, Dinner", t: "Овқатланиш вақти", e: "Eat three balanced meals daily." },
+        { w: "Snack", p: "/snæk/", k: "Light quick bite", t: "Енгил тамадди", e: "Grab an apple for a snack." },
+        { w: "Diet", p: "/ˈdaɪ.ət/", k: "Nutrition plan, Eating", t: "Парҳез, рацион", e: "A balanced diet improves energy." },
+        { w: "Calorie", p: "/ˈkæl.ər.i/", k: "Energy unit in food", t: "Калория", e: "Track daily calorie intake." },
+        { w: "Protein", p: "/ˈprəʊ.tiːn/", k: "Meat, Eggs nutrient", t: "Оқсил", e: "Eggs are packed with protein." },
+        { w: "Carbohydrate", p: "/ˌkɑː.bəʊˈhaɪ.dreɪt/", k: "Bread, Pasta, Rice", t: "Углевод", e: "Pasta provides carbohydrate energy." },
+        { w: "Fattening", p: "/ˈfæt.ən.ɪŋ/", k: "High fat, Makes weight", t: "Семиртирадиган", e: "Cream cakes can be fattening." },
+        { w: "Thirst", p: "/θɜːst/", k: "Need for water", t: "Учқоқлик, ташналик", e: "Cold water quenches summer thirst." },
+        { w: "Hunger", p: "/ˈhʌŋ.ɡər/", k: "Need for food", t: "Очлик", e: "Satisfy hunger with fresh soup." },
+        { w: "Chef", p: "/ʃef/", k: "Professional cook", t: "Ошпаз", e: "The hotel chef prepared steak." },
+        { w: "Cutlery", p: "/ˈkʌt.lər.i/", k: "Spoon, Fork, Knife", t: "Ошхона аанжомлари", e: "Set cutlery on table." }
+      ],
+      5: [
+        { w: "Art", p: "/ɑːt/", k: "Drawing, Painting, Design", t: "Тасвирий санъат", e: "Pupils painted landscapes in art class." },
+        { w: "Biology", p: "/baɪˈɒl.ə.dʒi/", k: "Science, Plants, Animals", t: "Биология", e: "Biology teaches living cell structures." },
+        { w: "Chemistry", p: "/ˈkem.ɪ.stri/", k: "Science, Lab, Molecules", t: "Кимё", e: "Wear safety gloves in chemistry lab." },
+        { w: "Design and Technology", p: "/dɪˈzaɪn/", k: "Crafts, Building", t: "Технология ва лойиҳалаш", e: "We built wood models in DT." },
+        { w: "Drama", p: "/ˈdrɑː.mə/", k: "Acting, Theater, Stage", t: "Драма, театр санъати", e: "She loves performing in drama." },
+        { w: "Geography", p: "/dʒiˈɒɡ.rə.fi/", k: "Maps, Countries, Earth", t: "География", e: "Geography maps world rivers." },
+        { w: "History", p: "/ˈhɪs.tər.i/", k: "Past events, Historical", t: "Тарих", e: "History covers ancient empires." },
+        { w: "ICT", p: "/ˌaɪ.siːˈtiː/", k: "Computers, Coding, IT", t: "Информатика ва АКТ", e: "ICT lessons teach coding logic." },
+        { w: "Literature", p: "/ˈlɪt.rə.tʃər/", k: "Books, Poems, Novel", t: "Адабиёт", e: "Analyze classic literature novels." },
+        { w: "Maths", p: "/mæθs/", k: "Numbers, Algebra", t: "Математика", e: "Maths practice sharpens logic." },
+        { w: "Physical Education (PE)", p: "/ˌpɪz.ɪ.kəl/", k: "Sports, Running, Gym", t: "Жисмоний тарбия", e: "Play basketball during PE." },
+        { w: "Physics", p: "/ˈfɪz.ɪks/", k: "Science, Gravity, Energy", t: "Физика", e: "Physics explains laws of motion." },
+        { w: "Religious Education", p: "/rɪˈlɪdʒ.əs/", k: "Ethics, Faiths", t: "Диншунослик", e: "RE explores global traditions." },
+        { w: "Board", p: "/bɔːd/", k: "Blackboard, Whiteboard", t: "Синф доскаси", e: "Teacher writes on white board." },
+        { w: "Pupil", p: "/ˈpjuː.pəl/", k: "Young school student", t: "Ўқувчи", e: "Primary pupils sat in desks." },
+        { w: "Term", p: "/tɜːm/", k: "School period, Quarter", t: "Ўқув чораги / Семестр", e: "Exams start at term end." },
+        { w: "Timetable", p: "/ˈtaɪmˌteɪ.bəl/", k: "Lesson schedule", t: "Дарс жадвали", e: "Check timetable for room 4." },
+        { w: "Attend", p: "/əˈtend/", k: "Be present in class", t: "Қатнашмоқ", e: "Attend every morning lecture." },
+        { w: "Cheat", p: "/tʃiːt/", k: "Copy answers, Dishonest", t: "Кўчирмоқ, алдамоқ", e: "Cheating yields immediate zero." },
+        { w: "Course", p: "/kɔːs/", k: "Study program, Class", t: "Ўқув курси", e: "Enrolled in a web course." },
+        { w: "Degree", p: "/dɪˈɡriː/", k: "Bachelor qualification", t: "Олий таълим дипломи", e: "Earned a degree in IT." },
+        { w: "Fail", p: "/feɪl/", k: "Bad mark, Not pass", t: "Йиқилмоқ (имтиҳондан)", e: "Revise to avoid failing test." },
+        { w: "Grade / Mark", p: "/ɡreɪd/", k: "Score result", t: "Баҳо", e: "Achieved top marks in English." },
+        { w: "Graduate", p: "/ˈɡrædʒ.u.eɪt/", k: "Finish university", t: "Ўқишни тамомламоқ", e: "Graduated with honors in 2024." },
+        { w: "Pass", p: "/pɑːs/", k: "Success mark, Succeeded", t: "Муваффақиятли ўтмоқ", e: "Passed IELTS with 7.0 score." },
+        { w: "Revise", p: "/rɪˈvaɪz/", k: "Study exam notes", t: "Такрорламоқ", e: "Revise chapters before test." },
+        { w: "Undergraduate", p: "/ˌʌn.dəˈɡræd.ʒu.ət/", k: "Uni student", t: "Бакалавриат талабаси", e: "Undergraduates attend seminars." },
+        { w: "Curriculum", p: "/kəˈrɪk.jə.ləm/", k: "Syllabus, Plan", t: "Ўқув дастури", e: "Coding was added to curriculum." },
+        { w: "Assignment", p: "/əˈsaɪn.mənt/", k: "Homework, Task", t: "Уй вазифаси, топшириқ", e: "Hand in essay assignment." },
+        { w: "Scholarship", p: "/ˈskɒl.ə.ʃɪp/", k: "Free study grant", t: "Грант, стипендия", e: "Won full scholarship abroad." },
+        { w: "Campus", p: "/ˈkæm.pəs/", k: "University grounds", t: "Университет кампуси", e: "Students met at uni campus." },
+        { w: "Lecture", p: "/ˈlek.tʃər/", k: "Large class talk", t: "Маъруза", e: "Professor delivered math lecture." },
+        { w: "Tutor", p: "/ˈtjuː.tər/", k: "Private teacher", t: "Репетитор, мураббий", e: "Hired an English tutor." },
+        { w: "Headteacher", p: "/ˌhedˈtiː.tʃər/", k: "Principal, Director", t: "Мактаб директори", e: "Headteacher spoke in hall." },
+        { w: "Detention", p: "/dɪˈten.ʃən/", k: "Punishment stay", t: "Дарсдан кейин олиб қолиш", e: "Bad behavior caused detention." },
+        { w: "Uniform", p: "/ˈjuː.nɪ.fɔːm/", k: "School dress code", t: "Форма, мактаб либоси", e: "Students wear black uniform." },
+        { w: "Experiment", p: "/ɪkˈsper.ɪ.mənt/", k: "Scientific test", t: "Тажриба, эксперимент", e: "Conduct chemistry experiment." },
+        { w: "Library", p: "/ˈlaɪ.brər.i/", k: "Book room, Quiet", t: "Кутубхона", e: "Borrow books from library." },
+        { w: "Laboratory", p: "/ləˈbɒr.ə.tər.i/", k: "Science room", t: "Лаборатория", e: "Physics laboratory is equipped." },
+        { w: "Deadline", p: "/ˈded.laɪn/", k: "Due time limit", t: "Охирги муддат", e: "Submit paper before deadline." },
+        { w: "Presentation", p: "/ˌprez.ənˈteɪ.ʃən/", k: "Slide show talk", t: "Презентация, тақдимот", e: "Give slide presentation today." },
+        { w: "Research", p: "/rɪˈsɜːtʃ/", k: "Scientific study", t: "Тадқиқот", e: "Research online articles." },
+        { w: "Excellence", p: "/ˈek.səl.əns/", k: "High standard", t: "Аъло даража", e: "Strive for academic excellence." },
+        { w: "Absence", p: "/ˈæb.səns/", k: "Not present, Away", t: "Қатнашмаслик, йўқлик", e: "Explain your class absence." },
+        { w: "Strict", p: "/strɪkt/", k: "Rigid rules, Firm", t: "Қаттиққўл, талабчан", e: "Strict rules prevent cheating." }
+      ],
+      6: [
+        { w: "App (Application)", p: "/æp/", k: "Mobile software, Download", t: "Илова, программа", e: "Download this language app." },
+        { w: "Browser", p: "/ˈbraʊ.zər/", k: "Web surf, Chrome", t: "Веб-браузер", e: "Open browser and type URL." },
+        { w: "Charge", p: "/tʃɑːdʒ/", k: "Battery power, Electricity", t: "Зарядламоқ", e: "Charge scooter battery overnight." },
+        { w: "Device", p: "/dɪˈvaɪs/", k: "Gadget, Tech unit", t: "Қурилма, гаджет", e: "Smartphones are personal devices." },
+        { w: "Download", p: "/ˌdaʊnˈləʊd/", k: "Save file from net", t: "Юклаб олмоқ", e: "Download PDF file directly." },
+        { w: "Hardware", p: "/ˈhɑːd.weər/", k: "Physical PC parts", t: "Компьютер жиҳозлари", e: "Hardware includes screen and CPU." },
+        { w: "Software", p: "/ˈsɒft.weər/", k: "Code programs, Apps", t: "Дастурий таъминот", e: "Update antivirus software." },
+        { w: "Keyboard", p: "/ˈkiː.bɔːd/", k: "Typing keys", t: "Клавиатура", e: "Practice typing on keyboard." },
+        { w: "Password", p: "/ˈpɑːs.wɜːd/", k: "Secret code, Login", t: "Пароль, махфий код", e: "Set complex secure password." },
+        { w: "Screen", p: "/skriːn/", k: "Display monitor", t: "Экран, дисплей", e: "Wipe glass screen clean." },
+        { w: "Upload", p: "/ˌʌpˈləʊd/", k: "Send file to net", t: "Интернетга жойламоқ", e: "Upload photo to cloud." },
+        { w: "Wireless", p: "/ˈwaɪə.ləs/", k: "Wi-Fi, Bluetooth", t: "Симсиз алоқа", e: "Wireless mouse connects fast." },
+        { w: "Algorithm", p: "/ˈæl.ɡə.rɪ.ðəm/", k: "Code rules, Logic", t: "Алгоритм", e: "Algorithms order search items." },
+        { w: "Database", p: "/ˈdeɪ.tə.beɪs/", k: "Data storage server", t: "Маълумотлар базаси", e: "SQL database stores profiles." },
+        { w: "Developer", p: "/dɪˈvel.ə.pər/", k: "Coder, Programmer", t: "Дастурчи, разработчик", e: "React developers write web apps." },
+        { w: "Engineer", p: "/ˌen.dʒɪˈnɪər/", k: "Tech builder", t: "Инженер, муҳандис", e: "Software engineer designs code." },
+        { w: "Invention", p: "/ɪnˈven.ʃən/", k: "New tech creation", t: "Ихтиро", e: "Internet is a major invention." },
+        { w: "Robotics", p: "/rəʊˈbɒt.ɪks/", k: "Robots, AI, Automation", t: "Робототехника", e: "Robotics automates factories." },
+        { w: "Click", p: "/klɪk/", k: "Mouse press, Select", t: "Босмоқ (сичқончада)", e: "Click link to view page." },
+        { w: "Connect", p: "/kəˈnekt/", k: "Join Wi-Fi network", t: "Уланмоқ", e: "Connect scooter to app." },
+        { w: "Delete", p: "/dɪˈliːt/", k: "Erase file, Remove", t: "Ўчириб ташламоқ", e: "Delete old spam emails." },
+        { w: "Install", p: "/ɪnˈstɔːl/", k: "Set up app", t: "Ўрнатув", e: "Install OS system updates." },
+        { w: "Press", p: "/pres/", k: "Button push, Key", t: "Босмоқ (кнопкани)", e: "Press green start button." },
+        { w: "Log in", p: "/lɒɡ ɪn/", k: "Sign in account", t: "Тизимга кирмоқ", e: "Log in with password." },
+        { w: "Log out", p: "/lɒɡ aʊt/", k: "Sign out session", t: "Тизимдан чиқмоқ", e: "Log out from public PC." },
+        { w: "Search engine", p: "/ˈsɜːtʃ/", k: "Google query system", t: "Қидирув тизими", e: "Search engines locate web info." },
+        { w: "Social network", p: "/ˈsəʊ.ʃəl/", k: "Telegram, Web chat", t: "Ижтимоий тармоқ", e: "Social networks connect friends." },
+        { w: "Virtual reality", p: "/ˈvɜː.tʃu.əl/", k: "VR, 3D headset", t: "Виртуал борлиқ", e: "VR headsets play 3D games." },
+        { w: "Bug", p: "/bʌɡ/", k: "Code error, Glitch", t: "Хатолик, коддаги баг", e: "Fix software bug in code." },
+        { w: "Update", p: "/ʌpˈdeɪt/", k: "New version refresh", t: "Янгиланиш, апдейт", e: "Download phone system update." },
+        { w: "Cloud storage", p: "/klaʊd/", k: "Online server space", t: "Булутли хотира", e: "Backup photos in cloud storage." },
+        { w: "Cybersecurity", p: "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/", k: "Net protection", t: "Киберхавфсизлик", e: "Cybersecurity prevents hacks." },
+        { w: "Data", p: "/ˈdeɪ.tə/", k: "Info records, Bytes", t: "Маълумотлар", e: "Protect personal data online." },
+        { w: "Encryption", p: "/ɪnˈkrɪp.ʃən/", k: "Coded privacy text", t: "Шифрлаш", e: "Chat messaging uses encryption." },
+        { w: "Network", p: "/ˈnet.wɜːk/", k: "Connected devices", t: "Тармоқ", e: "Local network links office PCs." },
+        { w: "Server", p: "/ˈsɜː.vər/", k: "Host computer", t: "Сервер", e: "Web server hosts website." },
+        { w: "User interface", p: "/ˈjuː.zər/", k: "UI, Layout, Design", t: "Фойдаланувчи интерфейси", e: "Clean UI improves app use." },
+        { w: "Notification", p: "/ˌnəʊ.tɪ.fɪˈkeɪ.ʃən/", k: "Alert message, Pop-up", t: "Билдиришнома", e: "Check phone push notifications." },
+        { w: "Stream", p: "/striːm/", k: "Live video play", t: "Тўғридан-тўғри узатув", e: "Stream online gaming matches." },
+        { w: "AI (Artificial Intelligence)", p: "/ˌɑː.tɪˈfɪʃ.əl/", k: "Machine learning", t: "Сунъий интеллект", e: "AI generates smart answers." },
+        { w: "Code", p: "/kəʊd/", k: "Program syntax", t: "Программа коди", e: "Write clean JavaScript code." },
+        { w: "Reboot / Restart", p: "/ˌriːˈbuːt/", k: "Reset system", t: "Қайта ёқмоқ", e: "Reboot computer to apply update." },
+        { w: "Touchscreen", p: "/ˈtʌtʃ.skriːn/", k: "Finger glass panel", t: "Тачскрин экран", e: "Smartphones feature touchscreens." },
+        { w: "USB drive", p: "/ˌjuː.esˈbiː/", k: "Flash memory stick", t: "Флешка, USB хотира", e: "Copy files onto USB drive." },
+        { w: "Headphones", p: "/ˈhed.fəʊnz/", k: "Ear audio speakers", t: "Қулоқчинлар", e: "Listen music through headphones." }
+      ],
+      7: [
+        { w: "Athlete", p: "/ˈæθ.liːt/", k: "Sportsman, Runner", t: "Спортчи", e: "Athletes train daily for medals." },
+        { w: "Champion", p: "/ˈtʃæm.pi.ən/", k: "Gold winner, First", t: "Чемпион, ғолиб", e: "He became a world champion." },
+        { w: "Court", p: "/kɔːt/", k: "Tennis, Basketball ground", t: "Спорт майдончаси, корт", e: "Reserve tennis court for 5 PM." },
+        { w: "Gym", p: "/dʒɪm/", k: "Workout center, Fitness", t: "Спорт зали", e: "Gym exercises build stamina." },
+        { w: "Match", p: "/mætʃ/", k: "Game contest, Game", t: "Матч, беллашув", e: "Watch football match live." },
+        { w: "Medal", p: "/ˈmed.əl/", k: "Gold, Silver award", t: "Медаль", e: "Won gold medal in race." },
+        { w: "Opponent", p: "/əˈpəʊ.nənt/", k: "Rival, Competitor", t: "Рақиб", e: "Respect your match opponent." },
+        { w: "Pitch", p: "/pɪtʃ/", k: "Soccer field, Grass", t: "Футбол майдони", e: "Players ran onto green pitch." },
+        { w: "Referee", p: "/ˌref.əˈriː/", k: "Whistle judge, Official", t: "Ҳакам, арбитр", e: "Referee blew starting whistle." },
+        { w: "Score", p: "/skɔːr/", k: "Points result, Goals", t: "Ҳисоб, очко", e: "Current match score is 2-1." },
+        { w: "Stadium", p: "/ˈsteɪ.di.əm/", k: "Sports arena, Fans", t: "Стадион", e: "Stadium was packed with fans." },
+        { w: "Tournament", p: "/ˈtʊə.nə.mənt/", k: "Cup series, Contest", t: "Турнир, мусобақа", e: "Sixteen teams entered tournament." },
+        { w: "Workout", p: "/ˈwɜːk.aʊt/", k: "Fitness session", t: "Машғулот, тренировка", e: "Morning workout gives energy." },
+        { w: "Beat", p: "/biːt/", k: "Defeat rival team", t: "Енгмоқ, ғолиб келмоқ", e: "We beat rival team 3-0." },
+        { w: "Catch", p: "/kætʃ/", k: "Grab flying ball", t: "Ушлаб олмоқ", e: "Catch ball before ground touch." },
+        { w: "Injury", p: "/ˈɪn.dʒər.i/", k: "Hurt, Wound, Pain", t: "Жароҳат", e: "He suffered a knee injury." },
+        { w: "Recovery", p: "/rɪˈkʌv.ər.i/", k: "Healing rest period", t: "Соғайиш, тикланиш", e: "Full recovery takes two weeks." },
+        { w: "Stamina", p: "/ˈstæm.ɪ.nə/", k: "Endurance, Energy reserve", t: "Чидамлилик", e: "Running builds cardio stamina." },
+        { w: "Warm up", p: "/wɔːm ʌp/", k: "Stretch muscles pre-game", t: "Бадантарбия қилмоқ", e: "Warm up before heavy gym lift." },
+        { w: "Dehydration", p: "/ˌdiː.haɪˈdreɪ.ʃən/", k: "Lack of body water", t: "Сувсизланиш", e: "Drink water to avoid dehydration." },
+        { w: "Painkiller", p: "/ˈpeɪnˌkɪl.ər/", k: "Relief pill, Medicine", t: "Оғриқ қолдирувчи", e: "Take painkiller pill for head pain." },
+        { w: "Pulse", p: "/pʌls/", k: "Heart rate beat", t: "Пульс", e: "Nurse checked pulse rate." },
+        { w: "Sore throat", p: "/sɔːr θrəʊt/", k: "Cold throat pain", t: "Томоқ оғриғи", e: "Honey tea relieves sore throat." },
+        { w: "Vaccine", p: "/ˈvæk.siːn/", k: "Immunization shot", t: "Вакцина, эмлаш", e: "Vaccines protect health." },
+        { w: "Victorious", p: "/vɪkˈtɔː.ri.əs/", k: "Winning, Triumphant", t: "Ғолиб бўлган", e: "Victorious team cheered loudly." },
+        { w: "Captain", p: "/ˈkæp.tɪn/", k: "Team leader", t: "Жамоа сардори", e: "Captain led players to field." },
+        { w: "Coach", p: "/kəʊtʃ/", k: "Trainer, Strategy guide", t: "Тренер, мураббий", e: "Coach planned team tactics." },
+        { w: "Draw", p: "/drɔː/", k: "Tie score, 1-1 equal", t: "Дурранг", e: "Match ended in a 1-1 draw." },
+        { w: "Spectator", p: "/spekˈteɪ.tər/", k: "Game viewer, Fan", t: "Томошабин", e: "Spectators cheered for runner." },
+        { w: "Trophy", p: "/ˈtrəʊ.fi/", k: "Cup award, Gold prize", t: "Кубок, соврин", e: "Winners held gold trophy high." },
+        { w: "Fever", p: "/ˈfiː.vər/", k: "High body temperature", t: "Иситма, баланд ҳарорат", e: "Stay in bed if you have fever." },
+        { w: "Cough", p: "/kɒf/", k: "Throat throat clear", t: "Йўтал", e: "Cover mouth when you cough." },
+        { w: "Bandage", p: "/ˈbæn.dɪdʒ/", k: "Wound wrap cloth", t: "Бинт, боғлам", e: "Wrap bandage around ankle." },
+        { w: "Dizzy", p: "/ˈdɪz.i/", k: "Spinning head feeling", t: "Бош айланиши", e: "Sit down if you feel dizzy." },
+        { w: "Fitness", p: "/ˈfɪt.nəs/", k: "Health condition, Gym", t: "Жисмоний соғломлик", e: "Daily runs improve fitness." },
+        { w: "Locker room", p: "/ˈlɒk.ər/", k: "Change room, Gym", t: "Кийиниш хонаси", e: "Change clothes in locker room." },
+        { w: "Marathon", p: "/ˈmær.ə.θən/", k: "42km long run", t: "Марафон", e: "Ran full marathon in 4 hours." },
+        { w: "Perspire / Sweat", p: "/pəˈspaɪər/", k: "Cooling body liquid", t: "Терламоқ", e: "Sweat pours during hard run." },
+        { w: "Prescription", p: "/prɪˈskrɪp.ʃən/", k: "Doctor drug paper", t: "Рецепт (дори учун)", e: "Doctor wrote drug prescription." },
+        { w: "Sneakers / Trainers", p: "/ˈsniː.kəz/", k: "Sports shoes", t: "Кроссовка", e: "Wear comfortable running sneakers." },
+        { w: "Track", p: "/træk/", k: "Running oval path", t: "Югуриш йўлаги", e: "Run laps on stadium track." },
+        { w: "Whistle", p: "/ˈwɪs.əl/", k: "Refining referee sound", t: "Ишфир, хуштак", e: "Referee blew metallic whistle." },
+        { w: "Allergy", p: "/ˈæl.ə.dʒi/", k: "Sneezing reaction", t: "Аллергия", e: "Pollen triggers spring allergy." },
+        { w: "Bleed", p: "/bliːd/", k: "Red blood liquid", t: "Қон ақиши", e: "Clean cut if it bleeds." },
+        { w: "Cure", p: "/kjʊər/", k: "Remedy, Healing", t: "Даво, тузатиш", e: "Scientists seek disease cures." }
+      ],
+      8: [
+        { w: "Actor / Actress", p: "/ˈæk.tər/", k: "Performer, Movie star", t: "Актёр / Актриса", e: "Lead actor played brilliant role." },
+        { w: "Audience", p: "/ˈɔː.di.əns/", k: "Show viewers, Crowd", t: "Томошабинлар", e: "Audience applauded loudly." },
+        { w: "Band", p: "/bænd/", k: "Music group, Rock", t: "Мусиқий гуруҳ", e: "Rock band performed live." },
+        { w: "Concert", p: "/ˈkɒn.sət/", k: "Live music show", t: "Концерт", e: "Bought concert tickets online." },
+        { w: "Exhibition", p: "/ˌek.sɪˈbɪʃ.ən/", k: "Art show gallery", t: "Кўргазма", e: "Visited photo art exhibition." },
+        { w: "Festival", p: "/ˈfes.tɪ.vəl/", k: "Cultural event", t: "Фестиваль", e: "Film festival runs all week." },
+        { w: "Gallery", p: "/ˈɡæl.ər.i/", k: "Art hall, Paintings", t: "Арт-галерея", e: "Oil paintings fill gallery." },
+        { w: "Musician", p: "/mjuːˈzɪʃ.ən/", k: "Instrument player", t: "Мусиқачи", e: "Violin musician played sweet tune." },
+        { w: "Novel", p: "/ˈnɒv.əl/", k: "Fiction book story", t: "Роман (китоб)", e: "Read adventure novel in bed." },
+        { w: "Painter", p: "/ˈpeɪn.tər/", k: "Canvas artist", t: "Рассом", e: "Painter mixed oils on palette." },
+        { w: "Performance", p: "/pəˈfɔː.məns/", k: "Stage show, Act", t: "Ижро, саҳна кўриниши", e: "Dance performance was epic." },
+        { w: "Poem", p: "/ˈpəʊ.ɪm/", k: "Rhyme verse poetry", t: "Шеър", e: "Recited classical poem in class." },
+        { w: "Sculpture", p: "/ˈskʌlp.tʃər/", k: "Statue, Carved marble", t: "Ҳайкал, ҳайкалтарошлик", e: "Marble sculpture stood in hall." },
+        { w: "Stage", p: "/steɪdʒ/", k: "Theater platform", t: "Саҳна", e: "Actors walked onto bright stage." },
+        { w: "Broadcast", p: "/ˈbrɔːd.kɑːst/", k: "Air TV/Radio show", t: "Эфирга узатмоқ", e: "Broadcast match live worldwide." },
+        { w: "Channel", p: "/ˈtʃæn.əl/", k: "TV station", t: "ТВ канали", e: "Switch to news channel." },
+        { w: "Director", p: "/daɪˈrek.tər/", k: "Film scene leader", t: "Режиссёр", e: "Director shouted 'Action!'." },
+        { w: "Documentary", p: "/ˌdɒk.jəˈmen.tri/", k: "Fact-based film", t: "Ҳужжатли фильм", e: "Watched ocean nature documentary." },
+        { w: "Episode", p: "/ˈep.ɪ.səʊd/", k: "TV series part", t: "Қисм, серия", e: "Watch next season episode." },
+        { w: "Interview", p: "/ˈɪn.tə.vjuː/", k: "Q&A session", t: "Интервью, суҳбат", e: "Singer gave live interview." },
+        { w: "Journalist", p: "/ˈdʒɜː.nə.lɪst/", k: "News reporter", t: "Журналист", e: "Journalist wrote breaking story." },
+        { w: "Producer", p: "/prəˈdʒuː.sər/", k: "Show organizer", t: "Продюсер", e: "Music producer arranged tracks." },
+        { w: "Review", p: "/rɪˈvjuː/", k: "Critique opinion", t: "Тақриз, шарҳ", e: "Read movie reviews before going." },
+        { w: "Subtitle", p: "/ˈsʌbˌtaɪ.təl/", k: "Screen translation text", t: "Субтитрлар", e: "Watch movies with English subtitles." },
+        { w: "Masterpiece", p: "/ˈmɑː.stə.piːs/", k: "Great artwork", t: "Шоҳасар", e: "Mona Lisa is a masterpiece." },
+        { w: "Cast", p: "/kɑːst/", k: "Movie actor group", t: "Актёрлар таркиби", e: "Film cast assembled on stage." },
+        { w: "Character", p: "/ˈkær.ək.tər/", k: "Role in story", t: "Қаҳрамон, персонаж", e: "Main character escapes danger." },
+        { w: "Climax", p: "/ˈklaɪ.mæks/", k: "Story peak moment", t: "Кульминация, энг юқори нуқта", e: "Movie climax was intense." },
+        { w: "Plot", p: "/plɒt/", k: "Storyline events", t: "Сюжет йўналиши", e: "Thriller plot had twists." },
+        { w: "Scene", p: "/siːn/", k: "Movie segment", t: "Саҳна, эпизод", e: "Action scene was shot in desert." },
+        { w: "Soundtrack", p: "/ˈsaʊnd.træk/", k: "Film background music", t: "Саундтрек, фильм мусиқаси", e: "Orchestra recorded soundtrack." },
+        { w: "Ticket office / Box office", p: "/bɒks/", k: "Ticket booth", t: "Касса, чиптахона", e: "Buy tickets at box office." },
+        { w: "Applause", p: "/əˈplɔːz/", k: "Hand clapping", t: "Оқишлар, қарсаклар", e: "Loud applause filled room." },
+        { w: "Autograph", p: "/ˈɔː.tə.ɡrɑːf/", k: "Celebrity signature", t: "Автограф, дастхат", e: "Singer signed fans' autographs." },
+        { w: "Celebrity", p: "/səˈleb.rə.ti/", k: "Famous star person", t: "Машҳур шахс, юлдуз", e: "Photographers followed celebrity." },
+        { w: "Cinema", p: "/ˈsɪn.ə.mɑː/", k: "Movie theater", t: "Кинотеатр", e: "Watch 3D film at cinema." },
+        { w: "Curtain", p: "/ˈkɜː.tən/", k: "Stage cloth drop", t: "Парда", e: "Red stage curtain rose." },
+        { w: "Lyrics", p: "/ˈlɪr.ɪks/", k: "Song text words", t: "Қўшиқ матни", e: "Memorize song lyrics easily." },
+        { w: "Orchestra", p: "/ˈɔː.kɪ.strə/", k: "Symphony music group", t: "Оркестр", e: "Symphony orchestra played Mozart." },
+        { w: "Publish", p: "/ˈpʌb.lɪʃ/", k: "Print book release", t: "Нашр этмоқ", e: "Publish book next autumn." },
+        { w: "Studio", p: "/ˈstjuː.di.əʊ/", k: "Recording room", t: "Студия", e: "Record vocals inside studio." },
+        { w: "Blockbuster", p: "/ˈblɒkˌbʌs.tər/", k: "Huge hit film", t: "Хит фильм, блокбастер", e: "Summer superhero blockbuster." },
+        { w: "Exhaustive", p: "/ɪɡˈzɔː.stɪv/", k: "Thorough, Complete", t: "Батафсил, тўлиқ", e: "Review offered exhaustive details." },
+        { w: "Genre", p: "/ʒɑːn.rə/", k: "Style category", t: "Жанр", e: "Sci-fi is my favorite film genre." },
+        { w: "Rehearse", p: "/rɪˈhɜːs/", k: "Practice show before act", t: "Репетиция қилмоқ", e: "Actors rehearse scene twice." }
+      ],
+      9: [
+        { w: "Atmosphere", p: "/ˈæt.məs.fɪər/", k: "Air layer around Earth", t: "Атмосфера", e: "Emissions pollute Earth's atmosphere." },
+        { w: "Climate change", p: "/ˈklaɪ.mət/", k: "Global temperature shifts", t: "Иқлим ўзгариши", e: "Climate change alters weather." },
+        { w: "Conservation", p: "/ˌkɒn.səˈveɪ.ʃən/", k: "Nature protection", t: "Табиатни муҳофаза қилиш", e: "Wildlife conservation parks save species." },
+        { w: "Disaster", p: "/dɪˈzɑː.stər/", k: "Catastrophe, Destruction", t: "Офат, фалокат", e: "Earthquake was a severe disaster." },
+        { w: "Drought", p: "/draʊt/", k: "No rain, Dry period", t: "Қурғоқчилик", e: "Drought dried crop fields." },
+        { w: "Earthquake", p: "/ˈɜːθ.kweɪk/", k: "Ground shake tremor", t: "Зилзила", e: "Earthquake shook building walls." },
+        { w: "Ecosystem", p: "/ˈiː.kəʊˌsɪs.təm/", k: "Nature system, Bio", t: "Экотизим", e: "Forests maintain global ecosystem." },
+        { w: "Emission", p: "/iˈmɪʃ.ən/", k: "Exhaust gas release", t: "Чиқинди газлар узатилиши", e: "Reduce car carbon emissions." },
+        { w: "Environment", p: "/ɪnˈvaɪ.rən.mənt/", k: "Nature surroundings", t: "Атроф-муҳит", e: "Keep environment clean of trash." },
+        { w: "Flood", p: "/flʌd/", k: "Overflowing water", t: "Сув тошқини", e: "Rains caused river flood." },
+        { w: "Global warming", p: "/ˌɡləʊ.bəl ˈwɔː.mɪŋ/", k: "Heat rise, Ice melt", t: "Глобал исиш", e: "Global warming melts glaciers." },
+        { w: "Habitat", p: "/ˈhæb.ɪ.tæt/", k: "Animal natural home", t: "Яшаш муҳити", e: "Deforestation destroys tiger habitat." },
+        { w: "Pollute", p: "/pəˈluːt/", k: "Contaminate air/water", t: "Ифлослантирмоқ", e: "Plastic waste pollutes oceans." },
+        { w: "Recycle", p: "/ˌriːˈsaɪ.kəl/", k: "Reuse plastic/paper", t: "Қайта ишлаш", e: "Recycle empty glass bottles." },
+        { w: "Renewable energy", p: "/rɪˈnjuː.ə.bəl/", k: "Solar, Wind power", t: "Қайта тикланадиган энергия", e: "Solar panels create renewable energy." },
+        { w: "Species", p: "/ˈspiː.ʃiːz/", k: "Animal/plant type", t: "Турлар (ҳайвон/ўсимлик)", e: "Rare bird species nest here." },
+        { w: "Volcano", p: "/vɒlˈkeɪ.nəʊ/", k: "Lava eruption mountain", t: "Вулқон", e: "Volcano erupted hot ash." },
+        { w: "Waste", p: "/weɪst/", k: "Trash, Garbage", t: "Чиқинди", e: "Dispose toxic waste properly." },
+        { w: "Wildfire", p: "/ˈwaɪld.faɪər/", k: "Forest fire blaze", t: "Ўрмон ёнғини", e: "Wildfires burned dry timber." },
+        { w: "Wildlife", p: "/ˈwaɪld.laɪf/", k: "Animals in wild nature", t: "Ёввойи табиат", e: "Protect mountain wildlife animals." },
+        { w: "Protect", p: "/prəˈtekt/", k: "Guard, Keep safe", t: "Ҳимоя қилмоқ", e: "Protect nature reserves." },
+        { w: "Extinct", p: "/ɪkˈstɪŋkt/", k: "Died out completely", t: "Қирилиб кетган", e: "Dinosaurs became extinct." },
+        { w: "Deforestation", p: "/diːˌfɒr.ɪˈsteɪ.ʃən/", k: "Tree cutting down", t: "Ўрмонсизланиш", e: "Deforestation threatens jungle birds." },
+        { w: "Solar power", p: "/ˈsəʊ.lər/", k: "Sun energy rays", t: "Қуёш энергияси", e: "Solar power generates green energy." },
+        { w: "Clean up", p: "/kliːn ʌp/", k: "Pick litter up", t: "Тозаламоқ", e: "Volunteers clean up park litter." },
+        { w: "Biodiversity", p: "/ˌbaɪ.əʊ.daɪˈvɜː.sə.ti/", k: "Species variety", t: "Биохилма-хиллик", e: "Rainforests boast high biodiversity." },
+        { w: "Carbon footprint", p: "/ˈkɑː.bən/", k: "CO2 usage impact", t: "Углерод изи", e: "Walking reduces carbon footprint." },
+        { w: "Compost", p: "/ˈkɒm.pɒst/", k: "Organic soil rot", t: "Компост, органик ўғит", e: "Turn vegetable peels into compost." },
+        { w: "Fossil fuels", p: "/ˈfɒs.əl/", k: "Coal, Oil, Gas", t: "Қазилма ёнилғилар", e: "Fossil fuels release greenhouse gases." },
+        { w: "Glacier", p: "/ˈɡlæs.i.ər/", k: "Moving ice mass", t: "Музлик", e: "Glaciers melt as global heat rises." },
+        { w: "Landfill", p: "/ˈlænd.fɪl/", k: "Trash dump site", t: "Чиқиндихона, свалка", e: "Trash piles build up in landfill." },
+        { w: "Ozone layer", p: "/ˈəʊ.zəʊn/", k: "UV shield atmosphere", t: "Озон қатлами", e: "Ozone layer shields Earth rays." },
+        { w: "Preserve", p: "/prɪˈzɜːv/", k: "Save untouched", t: "Сақлаб қолмоқ", e: "Preserve natural forest areas." },
+        { w: "Pesticide", p: "/ˈpes.tɪ.saɪd/", k: "Bug chemical spray", t: "Пестицид, зараркунандага қарши кимёвий модда", e: "Farmers spray non-toxic pesticide." },
+        { w: "Recycling bin", p: "/ˌriːˈsaɪ.klɪŋ/", k: "Sorted trash box", t: "Қайта ишлаш қутиси", e: "Throw paper in blue recycling bin." },
+        { w: "Resource", p: "/rɪˈzɔːs/", k: "Natural supply, Water", t: "Ресурс, бойлик", e: "Water is a vital natural resource." },
+        { w: "Sustainable", p: "/səˈsteɪ.nə.bəl/", k: "Eco balanced plan", t: "Барқарор, экологик хавфсиз", e: "Promote sustainable agriculture." },
+        { w: "Tsunami", p: "/tsuːˈnɑː.mi/", k: "Giant ocean wave", t: "Цунами", e: "Ocean earthquake caused tsunami wave." },
+        { w: "Erosion", p: "/ɪˈrəʊ.ʒən/", k: "Soil wearing down", t: "Эрозия, емирилиш", e: "Wind erosion damages rock slopes." },
+        { w: "Hazardous", p: "/ˈhæz.ə.dəs/", k: "Dangerous, Toxic", t: "Хавфли, заҳарли", e: "Dispose hazardous chemical drums." },
+        { w: "Hurricane", p: "/ˈhʌr.ɪ.kən/", k: "Severe wind storm", t: "Тўфон, ураган", e: "Hurricane destroyed coastal roofs." },
+        { w: "Melting", p: "/ˈmel.tɪŋ/", k: "Ice turning water", t: "Эриш", e: "Melting ice caps raise sea levels." },
+        { w: "Oxygen", p: "/ˈɒk.sɪ.dʒən/", k: "Breath gas air", t: "Кислород", e: "Trees produce vital oxygen." },
+        { w: "Purify", p: "/ˈpjʊə.rɪ.faɪ/", k: "Filter clean water", t: "Тозаламоқ, фильтрламоқ", e: "Boiling purifies fresh water." },
+        { w: "Toxic", p: "/ˈtɒk.sɪk/", k: "Poisonous chemicals", t: "Заҳарли", e: "Exhaust fumes contain toxic gases." }
+      ],
+      10: [
+        { w: "Afford", p: "/əˈfɔːd/", k: "Have money for item", t: "Қурби етмоқ (молиявий)", e: "I can't afford expensive cars." },
+        { w: "Bargain", p: "/ˈbɑː.ɡɪn/", k: "Good price deal", t: "Арзон харид", e: "Bought jacket at bargain price." },
+        { w: "Bill", p: "/bɪl/", k: "Restaurant paper check", t: "Ҳисоб-китоб қоғози", e: "Ask waiter for dinner bill." },
+        { w: "Borrow", p: "/ˈbɒr.əʊ/", k: "Take temporary money", t: "Қарзга олмоқ", e: "Borrow cash until tomorrow." },
+        { w: "Budget", p: "/ˈbʌdʒ.ɪt/", k: "Spending cash plan", t: "Бюджет", e: "Stick to monthly study budget." },
+        { w: "Cash", p: "/kæʃ/", k: "Paper notes, Coins", t: "Нақд пул", e: "Pay in cash or credit card?" },
+        { w: "Cashier", p: "/kæˈʃɪər/", k: "Checkout desk worker", t: "Кассир", e: "Hand items to market cashier." },
+        { w: "Change", p: "/tʃeɪndʒ/", k: "Returned extra cash", t: "Қайтим (пул)", e: "Here is your receipt and change." },
+        { w: "Cheap", p: "/tʃiːp/", k: "Low price cost", t: "Арзон", e: "Local fruits are very cheap." },
+        { w: "Checkout", p: "/ˈtʃek.aʊt/", k: "Till pay area", t: "Касса растаси", e: "Queue formed at checkout." },
+        { w: "Cost", p: "/kɒst/", k: "Price amount", t: "Нархланмоқ / Нарх", e: "How much does scooter cost?" },
+        { w: "Credit card", p: "/ˈkred.ɪt/", k: "Plastic bank card", t: "Кредит / Банк картаси", e: "Swipe credit card on terminal." },
+        { w: "Customer", p: "/ˈkʌs.tə.mər/", k: "Shopper buyer", t: "Мижоз, харидор", e: "Customer bought blue shirt." },
+        { w: "Discount", p: "/ˈdɪs.kaʊnt/", k: "Price drop % off", t: "Чегирма", e: "Students get 10% discount." },
+        { w: "Earn", p: "/ɜːn/", k: "Make money salary", t: "Ишлаб топмоқ", e: "Coders earn high salaries." },
+        { w: "Expensive", p: "/ɪkˈspen.sɪv/", k: "High cost price", t: "Қиммат", e: "Gold jewelry is expensive." },
+        { w: "Lend", p: "/lend/", k: "Give temporary cash", t: "Қарзга бериб турмоқ", e: "Lend me your book today." },
+        { w: "Online shopping", p: "/ˈɒn.laɪn/", k: "E-commerce web buy", t: "Онлайн харид", e: "Online shopping saves time." },
+        { w: "Pay", p: "/peɪ/", k: "Transfer cash money", t: "Тўламоқ", e: "Pay by phone contactless." },
+        { w: "Receipt", p: "/rɪˈsiːt/", k: "Payment proof paper", t: "Чек (тўлов чеки)", e: "Keep receipt for returns." },
+        { w: "Refund", p: "/ˈriː.fʌnd/", k: "Returned cash money", t: "Пулини қайтариб бериш", e: "Store offered full refund." },
+        { w: "Save", p: "/seɪv/", k: "Put cash aside", t: "Жамғармоқ", e: "Save money in bank account." },
+        { w: "Shopkeeper", p: "/ˈʃɒpˌkiː.pər/", k: "Store vendor owner", t: "Дўкондор, сотувчи", e: "Shopkeeper greeted shoppers." },
+        { w: "Spend", p: "/spend/", k: "Pay money out", t: "Сарфламоқ", e: "Don't spend cash foolishly." },
+        { w: "Wallet", p: "/ˈwɒl.ɪt/", k: "Pocket cash leather", t: "Ҳамён, кошелек", e: "Put banknotes inside wallet." },
+        { w: "Purchase", p: "/ˈpɜː.tʃəs/", k: "Buy item, Acquisition", t: "Харид қилмоқ / Харид", e: "Confirm online purchase." },
+        { w: "Queue", p: "/kjuː/", k: "Line of waiting shoppers", t: "Навбат", e: "Wait in ticket queue." },
+        { w: "Special offer", p: "/ˈspeʃ.əl/", k: "Sale promotion deal", t: "Махсус таклиф", e: "Buy 1 get 1 free offer." },
+        { w: "Waste money", p: "/weɪst/", k: "Squander cash", t: "Пулни беҳуда сарфламоқ", e: "Buying junk is waste of money." },
+        { w: "Currency", p: "/ˈkʌr.ən.si/", k: "Som, Dollar, Euro", t: "Валюта", e: "Som is national currency." },
+        { w: "Debt", p: "/det/", k: "Owed cash money", t: "Қарз", e: "Pay off bank debt fast." },
+        { w: "Fee", p: "/fiː/", k: "Service charge pay", t: "Тоʻлов, йиғим", e: "Pay bank transfer fee." },
+        { w: "Income", p: "/ˈɪn.kʌm/", k: "Earnings revenue", t: "Даромад", e: "Monthly income increased." },
+        { w: "Interest rate", p: "/ˈɪn.trəst/", k: "Bank % charge", t: "Фоиз ставкаси", e: "Bank offers 5% interest." },
+        { w: "Invest", p: "/ɪnˈvest/", k: "Put cash in business", t: "Инвестиция киритмоқ", e: "Invest savings in stocks." },
+        { w: "Price tag", p: "/praɪs/", k: "Cost label sticker", t: "Нарх ёрлиғи", e: "Check price tag on coat." },
+        { w: "Sale", p: "/seɪl/", k: "Discount shopping event", t: "Сотув, чегирмали савдо", e: "Winter sale starts today." },
+        { w: "Trolley", p: "/ˈtrɒl.i/", k: "Wheeled store basket", t: "Аравача (супермаркетда)", e: "Fill shopping trolley." },
+        { w: "ATM / Cash machine", p: "/ˌeɪ.tiːˈem/", k: "Cash withdrawal spot", t: "Банкомат", e: "Withdraw cash from ATM." },
+        { w: "Bank account", p: "/bæŋk/", k: "Personal bank store", t: "Банк ҳисоб рақами", e: "Deposit funds to account." },
+        { w: "Overpriced", p: "/ˌəʊ.vəˈpraɪst/", k: "Too expensive", t: "Ҳаддан ташқари қиммат", e: "Coffee here is overpriced." },
+        { w: "Valuable", p: "/ˈvæl.ju.ə.bəl/", k: "High worth item", t: "Қимматбаҳо, қадрли", e: "Keep valuable gems safe." },
+        { w: "Worth", p: "/wɜːθ/", k: "Monetary value", t: "Арзимоқ, қийматида бўлмоқ", e: "Watch is worth 100 dollars." },
+        { w: "Exchange rate", p: "/ɪksˈtʃeɪndʒ/", k: "Currency trade price", t: "Валюта айрибошлаш курси", e: "Check dollar exchange rate." },
+        { w: "Financial", p: "/faɪˈnæn.ʃəl/", k: "Money related", t: "Молиявий", e: "Plan your financial future." }
+      ]
+    };
+
+    // Application State
+    let currentUnit = 1;
+    let activeWords = [];
+    let currentIndex = 0;
+    let learnedSet = new Set(JSON.parse(localStorage.getItem('gw_learned_words') || '[]'));
+    let quizScore = 0;
+
+    // Initialization
+    window.onload = () => {
+      changeUnit('1');
+      updateGlobalProgress();
+    };
+
+    function getUnitWords(unit) {
+      if (unit === 'all') {
+        let all = [];
+        for (let u = 1; u <= 10; u++) {
+          all = all.concat(vocabData[u]);
+        }
+        return all;
+      }
+      return vocabData[unit] || [];
+    }
+
+    function changeUnit(unit) {
+      currentUnit = unit;
+      activeWords = getUnitWords(unit);
+      currentIndex = 0;
+      renderCurrentCard();
+      updateGlobalProgress();
+      
+      // Reset Quiz or Match if active
+      if (!document.getElementById('mode-quiz').classList.contains('hidden')) {
+        generateQuizQuestion();
+      }
+      if (!document.getElementById('mode-match').classList.contains('hidden')) {
+        setupMatchGame();
+      }
+      if (!document.getElementById('mode-dict').classList.contains('hidden')) {
+        renderDictionary();
+      }
+    }
+
+    function updateGlobalProgress() {
+      const totalWords = getUnitWords('all').length;
+      document.getElementById('learned-count').textContent = learnedSet.size;
+      document.getElementById('total-count').textContent = totalWords;
+      const pct = Math.round((learnedSet.size / totalWords) * 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+    }
+
+    // MODE SWITCHING
+    function switchMode(mode) {
+      ['cards', 'quiz', 'match', 'dict'].forEach(m => {
+        document.getElementById(`mode-${m}`).classList.add('hidden');
+        document.getElementById(`btn-${m}`).className = "px-4 py-2 rounded-lg hover:text-indigo-400 transition-all duration-200";
+      });
+
+      document.getElementById(`mode-${mode}`).classList.remove('hidden');
+      document.getElementById(`btn-${mode}`).className = "px-4 py-2 rounded-lg bg-indigo-600 text-white transition-all duration-200";
+
+      if (mode === 'quiz') generateQuizQuestion();
+      if (mode === 'match') setupMatchGame();
+      if (mode === 'dict') renderDictionary();
+    }
+
+    // 1. FLASHCARDS LOGIC
+    function renderCurrentCard() {
+      if (activeWords.length === 0) return;
+      const item = activeWords[currentIndex];
+
+      // Unflip card
+      document.getElementById('card-inner').classList.remove('rotate-y-180');
+
+      document.getElementById('card-word').textContent = item.w;
+      document.getElementById('card-phonetic').textContent = item.p;
+      document.getElementById('card-keywords').textContent = item.k;
+      document.getElementById('card-translation').textContent = item.t;
+      document.getElementById('card-example').textContent = `"${item.e}"`;
+      document.getElementById('card-unit-tag').textContent = currentUnit === 'all' ? 'All Units' : `Unit ${currentUnit}`;
+      document.getElementById('card-index').textContent = `${currentIndex + 1} / ${activeWords.length}`;
+    }
+
+    function flipCard() {
+      document.getElementById('card-inner').classList.toggle('rotate-y-180');
+    }
+
+    function nextCard() {
+      if (currentIndex < activeWords.length - 1) {
+        currentIndex++;
+        renderCurrentCard();
+      }
+    }
+
+    function prevCard() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderCurrentCard();
+      }
+    }
+
+    function markLearned(status) {
+      const item = activeWords[currentIndex];
+      if (status) {
+        learnedSet.add(item.w);
+      } else {
+        learnedSet.delete(item.w);
+      }
+      localStorage.setItem('gw_learned_words', JSON.stringify(Array.from(learnedSet)));
+      updateGlobalProgress();
+      nextCard();
+    }
+
+    function speakCurrentWord(event) {
+      event.stopPropagation();
+      const word = activeWords[currentIndex].w;
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // 2. QUIZ MODE LOGIC
+    function generateQuizQuestion() {
+      if (activeWords.length < 4) return;
+      const current = activeWords[Math.floor(Math.random() * activeWords.length)];
+      document.getElementById('quiz-word').textContent = current.w;
+
+      // Select 3 random incorrect answers
+      let options = [current.t];
+      while (options.length < 4) {
+        const randItem = activeWords[Math.floor(Math.random() * activeWords.length)];
+        if (!options.includes(randItem.t)) {
+          options.push(randItem.t);
+        }
+      }
+
+      // Shuffle options
+      options.sort(() => Math.random() - 0.5);
+
+      const optionsContainer = document.getElementById('quiz-options');
+      optionsContainer.innerHTML = '';
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "w-full py-3 px-4 bg-slate-700/60 hover:bg-slate-700 text-slate-200 border border-slate-600/60 rounded-xl text-sm font-semibold transition text-left flex justify-between items-center";
+        btn.textContent = opt;
+        btn.onclick = () => checkQuizAnswer(btn, opt === current.t);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkQuizAnswer(button, isCorrect) {
+      if (isCorrect) {
+        button.className = "w-full py-3 px-4 bg-emerald-600/30 text-emerald-200 border border-emerald-500 rounded-xl text-sm font-semibold text-left";
+        quizScore += 10;
+      } else {
+        button.className = "w-full py-3 px-4 bg-rose-600/30 text-rose-200 border border-rose-500 rounded-xl text-sm font-semibold text-left";
+      }
+      document.getElementById('quiz-score').textContent = `Score: ${quizScore}`;
+    }
+
+    // 3. MATCHING GAME LOGIC
+    let selectedCards = [];
+    function setupMatchGame() {
+      const grid = document.getElementById('match-grid');
+      grid.innerHTML = '';
+
+      // Pick 6 random words
+      const subset = [...activeWords].sort(() => Math.random() - 0.5).slice(0, 6);
+      let cards = [];
+
+      subset.forEach(item => {
+        cards.push({ id: item.w, text: item.w, type: 'en' });
+        cards.push({ id: item.w, text: item.t, type: 'uz' });
+      });
+
+      cards.sort(() => Math.random() - 0.5);
+
+      cards.forEach((c, idx) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = "p-4 bg-slate-800 border border-slate-700 rounded-xl text-center text-sm font-medium cursor-pointer hover:border-indigo-500 transition shadow";
+        cardEl.textContent = c.text;
+        cardEl.dataset.id = c.id;
+        cardEl.onclick = () => handleMatchClick(cardEl);
+        grid.appendChild(cardEl);
+      });
+    }
+
+    function handleMatchClick(cardEl) {
+      if (selectedCards.length === 2 || cardEl.classList.contains('bg-indigo-600')) return;
+
+      cardEl.classList.add('bg-indigo-600', 'text-white');
+      selectedCards.push(cardEl);
+
+      if (selectedCards.length === 2) {
+        const [c1, c2] = selectedCards;
+        if (c1.dataset.id === c2.dataset.id && c1 !== c2) {
+          setTimeout(() => {
+            c1.style.visibility = 'hidden';
+            c2.style.visibility = 'hidden';
+            selectedCards = [];
+          }, 400);
+        } else {
+          setTimeout(() => {
+            c1.classList.remove('bg-indigo-600', 'text-white');
+            c2.classList.remove('bg-indigo-600', 'text-white');
+            selectedCards = [];
+          }, 800);
+        }
+      }
+    }
+
+    // 4. DICTIONARY MODE LOGIC
+    function renderDictionary() {
+      const query = document.getElementById('dict-search').value.toLowerCase();
+      const list = document.getElementById('dict-list');
+      list.innerHTML = '';
+
+      const filtered = activeWords.filter(item => 
+        item.w.toLowerCase().includes(query) || 
+        item.t.toLowerCase().includes(query) ||
+        item.k.toLowerCase().includes(query)
+      );
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = "p-4 bg-slate-800/80 border border-slate-700/70 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-2 hover:border-indigo-500/50 transition";
+        div.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-bold text-white">${item.w}</span>
+              <span class="text-xs font-mono text-indigo-400">${item.p}</span>
+              <span class="text-xs bg-slate-700/60 text-amber-300 px-2 py-0.5 rounded border border-amber-500/20">${item.k}</span>
+            </div>
+            <p class="text-xs text-slate-400 italic mt-1">"${item.e}"</p>
+          </div>
+          <div class="text-sm font-semibold text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1 rounded-lg">
+            ${item.t}
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/saifiddinovnuriddin-prog/vocab.git
+git push -u origin main
